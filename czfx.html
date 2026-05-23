@@ -2,377 +2,340 @@
 <html lang="zh">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>艾宾浩斯·错别字复习日历</title>
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', 'PingFang SC', sans-serif;
       background: #f5f7fb;
-      padding: 16px 12px 30px;
+      padding: env(safe-area-inset-top) env(safe-area-inset-right) calc(env(safe-area-inset-bottom) + 30px) env(safe-area-inset-left);
       color: #1a2a3a;
       max-width: 550px;
       margin: 0 auto;
+      -webkit-text-size-adjust: 100%;
+      touch-action: manipulation;
     }
-    .app {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
+    .app { display: flex; flex-direction: column; gap: 14px; }
+    .main-title { text-align: center; font-size: 22px; font-weight: 700; color: #0b1f33; margin-bottom: 4px; }
     .top-banner {
-      background: #eaf0fa;
-      padding: 12px 14px;
-      border-radius: 18px;
-      font-size: 13.5px;
-      color: #1e3a5f;
-      line-height: 1.45;
-      border-left: 5px solid #3b82f6;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+      background: #eaf0fa; padding: 10px 14px; border-radius: 18px; font-size: 13.5px;
+      color: #1e3a5f; line-height: 1.45; border-left: 5px solid #3b82f6;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.02); text-align: center;
     }
+    .today-stats {
+      display: flex; justify-content: space-around; background: white; padding: 16px 8px;
+      border-radius: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.03); border: 1px solid #e2e8f0;
+      margin: 8px 0 4px;
+    }
+    .today-stat-item { text-align: center; flex: 1; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+    .today-stat-item:nth-child(5) { cursor: pointer; }
+    .today-stat-label { font-size: 15px; font-weight: 500; color: #475569; margin-bottom: 8px; }
+    .today-stat-value { font-size: 36px; font-weight: 700; }
+    .today-stat-item:nth-child(1) .today-stat-value { color: #2563eb; }
+    .today-stat-item:nth-child(3) .today-stat-value { color: #b45309; }
+    .today-stat-item:nth-child(5) .today-stat-value { color: #15803d; }
+    .stat-divider { color: #cbd5e1; font-size: 24px; font-weight: 300; align-self: center; }
     .calendar-card {
-      background: #ffffff;
-      border-radius: 24px;
-      padding: 16px 12px 14px;
-      box-shadow: 0 6px 14px rgba(0,0,0,0.04);
-      border: 1px solid #e2e8f0;
+      background: #ffffff; border-radius: 24px; padding: 16px 12px 14px;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.04); border: 1px solid #e2e8f0;
     }
-    .cal-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 16px;
-      padding: 0 4px;
-    }
-    .cal-month-year {
-      font-weight: 650;
-      font-size: 19px;
-      color: #0b1f33;
-    }
-    .nav-buttons {
-      display: flex;
-      gap: 12px;
-    }
+    .cal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; padding: 0 4px; }
+    .cal-month-year { font-weight: 650; font-size: 19px; color: #0b1f33; }
+    .nav-buttons { display: flex; gap: 12px; }
     .nav-buttons button {
-      background: #f1f5f9;
-      border: none;
-      width: 42px;
-      height: 42px;
-      border-radius: 42px;
-      font-size: 24px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      color: #1e3a5f;
-      font-weight: 400;
-      transition: 0.15s;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+      background: #f1f5f9; border: none; width: 42px; height: 42px; border-radius: 42px;
+      font-size: 24px; display: flex; align-items: center; justify-content: center;
+      cursor: pointer; color: #1e3a5f; transition: 0.15s; box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+      -webkit-appearance: none; -webkit-tap-highlight-color: transparent;
     }
-    .nav-buttons button:hover {
-      background: #dbeafe;
-    }
+    .nav-buttons button:hover { background: #dbeafe; }
     .weekdays {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      text-align: center;
-      font-weight: 500;
-      font-size: 13px;
-      color: #64748b;
-      margin-bottom: 8px;
+      display: grid; grid-template-columns: repeat(7, 1fr); text-align: center;
+      font-weight: 500; font-size: 13px; color: #64748b; margin-bottom: 8px;
     }
-    .calendar-grid {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 5px;
-    }
+    .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; }
     .cal-cell {
-      background: #fbfdff;
-      border-radius: 16px;
-      padding: 8px 3px 6px;
-      min-height: 76px;
-      border: 1px solid #e9eef4;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      cursor: pointer;
-      transition: all 0.12s;
+      background: #fbfdff; border-radius: 16px; padding: 8px 3px 6px; min-height: 76px;
+      border: 1px solid #e9eef4; display: flex; flex-direction: column; align-items: center;
+      cursor: pointer; transition: all 0.12s; -webkit-tap-highlight-color: transparent;
     }
-    .cal-cell.selected {
-      background: #e2edff;
-      border: 2px solid #3b82f6;
-    }
-    .cal-cell.other-month {
-      opacity: 0.45;
-    }
-    .day-num {
-      font-weight: 600;
-      font-size: 16px;
-      margin-bottom: 6px;
-      color: #1e2f40;
-    }
-    .badge-container {
-      display: flex;
-      justify-content: center;
-      gap: 5px;
-      flex-wrap: wrap;
-    }
+    .cal-cell.selected { background: #e2edff; border: 2px solid #3b82f6; }
+    .cal-cell.other-month { opacity: 0.45; }
+    .day-num { font-weight: 600; font-size: 16px; margin-bottom: 6px; color: #1e2f40; }
+    .badge-container { display: flex; justify-content: center; gap: 5px; flex-wrap: wrap; }
     .badge {
-      width: 27px;
-      height: 27px;
-      border-radius: 27px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 13px;
-      font-weight: 650;
-      color: white;
+      width: 27px; height: 27px; border-radius: 27px; display: flex; align-items: center;
+      justify-content: center; font-size: 13px; font-weight: 650; color: white;
       box-shadow: 0 2px 5px rgba(0,0,0,0.06);
     }
     .badge.blue { background: #3b82f6; }
     .badge.yellow { background: #eab308; color: #0f172a; }
     .badge.red { background: #ef4444; }
-    .detail-section {
-      background: white;
-      border-radius: 24px;
-      padding: 18px 15px;
-      box-shadow: 0 6px 14px rgba(0,0,0,0.03);
-      border: 1px solid #e2e8f0;
+    .footer-badge {
+      display: flex; justify-content: space-between; align-items: center; margin-top: 12px; padding: 0 8px;
     }
-    .detail-header-date {
-      font-size: 19px;
-      font-weight: 650;
-      margin-bottom: 16px;
-      color: #0f263b;
+    .permanent-tag { background: #f1f5f9; padding: 6px 16px; border-radius: 30px; font-size: 13px; font-weight: 500; color: #475569; }
+    .electronic-tag { background: #e2e8f0; padding: 6px 16px; border-radius: 30px; font-size: 13px; font-weight: 500; color: #475569; }
+    .page-number { font-size: 18px; font-weight: 600; color: #64748b; }
+    .modal-overlay {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5);
+      display: none; justify-content: center; align-items: center; z-index: 1000;
+      padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
     }
-    .stats-three {
-      display: flex;
-      justify-content: space-around;
-      background: #f1f6fd;
-      padding: 10px 6px;
-      border-radius: 48px;
-      margin-bottom: 18px;
+    .modal-overlay.show { display: flex; }
+    .modal-page {
+      background: white; width: 100%; max-width: 550px; height: 90vh; max-height: 750px;
+      border-radius: 28px; padding: 0; box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      overflow-y: auto; display: flex; flex-direction: column;
     }
-    .stat-block {
-      text-align: center;
-      cursor: pointer;
-      padding: 5px 18px;
-      border-radius: 40px;
-      transition: 0.15s;
+    .modal-page-header {
+      padding: 16px 16px 8px; border-bottom: 1px solid #eef2f6;
     }
-    .stat-block.active {
-      background: white;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    .modal-banner {
+      background: #eaf0fa; padding: 10px 14px; border-radius: 18px; font-size: 13px;
+      color: #1e3a5f; line-height: 1.4; border-left: 5px solid #3b82f6; margin-bottom: 12px;
     }
-    .stat-label {
-      font-size: 15px;
-      color: #334e68;
-      font-weight: 500;
+    .modal-date-row {
+      display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;
     }
-    .stat-value {
-      font-size: 28px;
-      font-weight: 700;
-      margin-top: 3px;
+    .modal-date-text { font-size: 19px; font-weight: 650; color: #0f263b; }
+    .modal-close-btn {
+      background: #f1f5f9; border: none; width: 40px; height: 40px; border-radius: 40px;
+      font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; color: #475569;
+      -webkit-appearance: none; -webkit-tap-highlight-color: transparent;
     }
-    .stat-block:nth-child(1) .stat-value { color: #2563eb; }
-    .stat-block:nth-child(2) .stat-value { color: #b45309; }
-    .stat-block:nth-child(3) .stat-value { color: #b91c1c; }
-    .cards-container {
-      margin-top: 8px;
+    .stats-row-inline {
+      display: flex; justify-content: space-around; background: #f1f6fd; padding: 8px 6px;
+      border-radius: 48px; margin-bottom: 16px;
     }
-    .review-card {
-      background: #fbfdff;
-      border-radius: 22px;
-      padding: 18px 16px;
-      margin-bottom: 16px;
-      border: 1px solid #dde5ef;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.02);
+    .stat-inline { text-align: center; cursor: pointer; padding: 5px 18px; border-radius: 40px; transition: 0.15s; -webkit-tap-highlight-color: transparent; }
+    .stat-inline.active { background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+    .stat-label { font-size: 15px; color: #334e68; font-weight: 500; }
+    .stat-value { font-size: 24px; font-weight: 700; margin-top: 3px; }
+    .stat-inline:nth-child(1) .stat-value { color: #2563eb; }
+    .stat-inline:nth-child(2) .stat-value { color: #b45309; }
+    .stat-inline:nth-child(3) .stat-value { color: #b91c1c; }
+    .modal-cards-container { flex: 1; padding: 16px; overflow-y: auto; }
+    .new-word-list { list-style: none; }
+    .new-word-item {
+      display: flex; align-items: center; padding: 12px 8px; border-bottom: 1px solid #edf2f8;
+      font-size: 17px;
     }
-    .card-title-row {
-      display: flex;
-      justify-content: space-between;
-      font-size: 13px;
-      color: #2b4a6e;
-      margin-bottom: 12px;
-    }
-    .word-big {
-      font-size: 38px;
-      font-weight: 700;
-      text-align: center;
-      margin: 6px 0 14px;
-      letter-spacing: 2px;
-      color: #0b1e2e;
-    }
-    .strength-line {
-      display: flex;
-      justify-content: space-between;
-      font-size: 14.5px;
-      margin: 12px 0 18px;
-      color: #1f405e;
-    }
-    .action-row {
-      display: flex;
-      gap: 16px;
-      margin: 6px 0 16px;
-    }
-    .btn-remember, .btn-forget {
-      flex: 1;
-      padding: 15px 0;
-      border-radius: 60px;
+    .new-word-index { color: #64748b; margin-right: 16px; min-width: 24px; }
+    .new-word-text { flex: 1; font-weight: 500; }
+    .new-word-strength { color: #2563eb; font-weight: 500; font-size: 15px; margin-right: 12px; }
+    /* 删除按钮样式 */
+    .delete-word-btn {
+      background: #ef4444;
+      color: white;
       border: none;
-      font-weight: 600;
-      font-size: 18px;
-      cursor: pointer;
-    }
-    .btn-remember {
-      background: #1f8b4c;
-      color: white;
-      box-shadow: 0 4px 8px rgba(31,139,76,0.2);
-    }
-    .btn-forget {
-      background: #b91c1c;
-      color: white;
-      box-shadow: 0 4px 8px rgba(185,28,28,0.15);
-    }
-    .history-row {
-      display: flex;
-      justify-content: space-between;
-      font-size: 13.5px;
-      margin-top: 8px;
-      padding-top: 6px;
-      border-top: 1px dashed #cbd5e1;
-    }
-    .history-left {
-      color: #395d7e;
-    }
-    .history-right.correct {
-      color: #15803d;
-      font-weight: 500;
-    }
-    .history-right.wrong {
-      color: #b91c1c;
-      font-weight: 500;
-    }
-    .reviewed-card .result-line {
-      display: flex;
-      justify-content: space-between;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
       font-size: 14px;
-      margin: 8px 0 6px;
-      color: #1f3f5c;
-    }
-    .result-badge {
+      cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 5px;
+      justify-content: center;
+      -webkit-appearance: none;
+      -webkit-tap-highlight-color: transparent;
+      flex-shrink: 0;
     }
+    .delete-word-btn:active {
+      transform: scale(0.9);
+    }
+    .review-card {
+      background: #fbfdff; border-radius: 18px; padding: 16px; margin-bottom: 14px;
+      border: 1px solid #dde5ef; box-shadow: 0 3px 6px rgba(0,0,0,0.02);
+    }
+    .card-header-row { display: flex; justify-content: space-between; font-size: 13px; color: #2b4a6e; margin-bottom: 8px; }
+    .word-big { font-size: 32px; font-weight: 700; text-align: center; margin: 4px 0 10px; }
+    .strength-row { display: flex; justify-content: space-between; font-size: 14px; margin: 10px 0 14px; color: #1f405e; }
+    .action-btns { display: flex; gap: 14px; margin: 8px 0 12px; }
+    .btn-remember, .btn-forget {
+      flex: 1; padding: 12px 0; border-radius: 50px; border: none;
+      font-weight: 600; font-size: 16px; cursor: pointer;
+      -webkit-appearance: none; -webkit-tap-highlight-color: transparent;
+    }
+    .btn-remember { background: #1f8b4c; color: white; }
+    .btn-forget { background: #b91c1c; color: white; }
+    .history-row { display: flex; justify-content: space-between; font-size: 13px; margin-top: 8px; padding-top: 6px; border-top: 1px dashed #cbd5e1; }
+    .history-left { color: #395d7e; }
+    .history-right.correct { color: #15803d; font-weight: 500; }
+    .history-right.wrong { color: #b91c1c; font-weight: 500; }
+    .reviewed-card .result-line { display: flex; justify-content: space-between; font-size: 13.5px; margin: 6px 0; }
     .check-green { color: #15803d; font-weight: 600; }
     .cross-red { color: #b91c1c; font-weight: 600; }
-    .input-area {
-      background: white;
-      border-radius: 24px;
-      padding: 20px 16px;
-      box-shadow: 0 6px 14px rgba(0,0,0,0.03);
-      border: 1px solid #e2e8f0;
-      margin-top: 6px;
+    .modal-input-section {
+      padding: 12px 16px 16px; border-top: 1px solid #eef2f6; background: white;
     }
-    .input-field {
-      width: 100%;
-      padding: 18px 16px;
-      border: 1.5px solid #d0ddee;
-      border-radius: 48px;
-      font-size: 15px;
-      background: white;
-      outline: none;
-      transition: 0.15s;
-    }
-    .input-field:focus {
-      border-color: #3b82f6;
-    }
-    .input-example {
-      margin: 10px 0 14px;
-      color: #6b7f96;
-      font-size: 14px;
-      padding-left: 8px;
-    }
-    .add-btn {
-      width: 100%;
-      background: #2563eb;
-      color: white;
-      border: none;
-      padding: 16px 0;
-      border-radius: 60px;
-      font-weight: 650;
-      font-size: 18px;
-      cursor: pointer;
-      box-shadow: 0 6px 12px rgba(37,99,235,0.2);
+    .input-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
       margin-bottom: 8px;
     }
-    .custom-tip {
-      text-align: center;
-      font-size: 13.5px;
-      color: #617b9b;
+    .modal-input-field {
+      flex: 1;
+      padding: 16px 14px;
+      border: 1.5px solid #d0ddee;
+      border-radius: 48px;
+      font-size: 14px;
+      background: white;
+      outline: none;
+      -webkit-appearance: none;
     }
-    .empty-msg {
-      text-align: center;
-      padding: 24px;
-      color: #7a8ea8;
-    }
-    .footer-note {
-      text-align: right;
-      font-size: 12px;
-      margin-top: 4px;
-      color: #8ba0b8;
-    }
-    /* 新增：删除按钮样式 */
-    .delete-btn {
-      background: transparent;
-      border: 1px solid #cbd5e1;
-      color: #64748b;
-      padding: 6px 14px;
-      border-radius: 20px;
-      font-size: 12px;
+    .modal-input-field:focus { border-color: #3b82f6; }
+    .camera-btn {
+      width: 56px;
+      height: 56px;
+      border: none;
+      border-radius: 50%;
+      background: #2563eb;
+      color: white;
+      font-size: 24px;
       cursor: pointer;
-      transition: 0.15s;
-      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 6px 12px rgba(37,99,235,0.2);
+      -webkit-appearance: none;
+      -webkit-tap-highlight-color: transparent;
+      flex-shrink: 0;
     }
-    .delete-btn:hover {
-      background: #fee2e2;
-      border-color: #ef4444;
-      color: #b91c1c;
+    .camera-btn:active { transform: scale(0.95); }
+    .modal-input-example { margin: 6px 0 14px; color: #6b7f96; font-size: 13px; padding-left: 8px; }
+    .modal-add-btn {
+      width: 100%; background: #2563eb; color: white; border: none; padding: 14px 0;
+      border-radius: 60px; font-weight: 650; font-size: 17px; cursor: pointer;
+      box-shadow: 0 6px 12px rgba(37,99,235,0.2); margin-bottom: 6px;
+      -webkit-appearance: none; -webkit-tap-highlight-color: transparent;
     }
-    .delete-btn-container {
-      text-align: right;
-      margin-top: 4px;
+    .modal-custom-tip { text-align: center; font-size: 13px; color: #617b9b; }
+    .modal-footer-note {
+      padding: 12px 16px; text-align: right; font-size: 12px; color: #8ba0b8;
+      border-top: 1px solid #eef2f6;
     }
-    /* 新增：重置按钮样式 */
-    .reset-area {
+    .empty-msg { text-align: center; padding: 30px; color: #7a8ea8; }
+    .mastered-header {
+      padding: 16px; text-align: center; border-bottom: 1px solid #eef2f6;
+    }
+    .mastered-header h3 { color: #15803d; font-size: 22px; }
+    .dual-buttons {
+      display: flex; gap: 12px; margin-top: 0;
+    }
+    .dual-buttons .modal-add-btn {
+      flex: 1; margin-bottom: 0;
+    }
+    .btn-custom {
+      background: #8b5cf6; color: white; border: none; padding: 14px 0;
+      border-radius: 60px; font-weight: 650; font-size: 17px; cursor: pointer;
+      box-shadow: 0 6px 12px rgba(139,92,246,0.2); flex: 1;
+      -webkit-appearance: none; -webkit-tap-highlight-color: transparent;
+    }
+    .custom-plan-modal {
+      background: white; padding: 24px; border-radius: 28px; width: 90%; max-width: 400px;
+    }
+    .custom-plan-modal h3 { margin-bottom: 16px; color: #0f263b; }
+    .custom-plan-input {
+      width: 100%; padding: 16px; border: 1.5px solid #d0ddee; border-radius: 48px;
+      font-size: 15px; margin-bottom: 20px;
+      -webkit-appearance: none;
+    }
+    .custom-plan-actions {
+      display: flex; gap: 12px;
+    }
+    .custom-plan-actions button {
+      flex: 1; padding: 14px 0; border-radius: 60px; border: none;
+      font-weight: 600; font-size: 16px; cursor: pointer;
+      -webkit-appearance: none; -webkit-tap-highlight-color: transparent;
+    }
+    .btn-confirm { background: #2563eb; color: white; }
+    .btn-cancel { background: #f1f5f9; color: #475569; }
+    .ocr-loading {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0,0,0,0.8);
+      color: white;
+      padding: 20px 30px;
+      border-radius: 16px;
+      font-size: 16px;
+      z-index: 2000;
+      display: none;
+    }
+
+    /* 自定义删除确认弹窗样式 - 与网页风格完全一致 */
+    .custom-confirm-modal {
+      background: white;
+      padding: 28px 24px 24px;
+      border-radius: 28px;
+      width: 90%;
+      max-width: 360px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
       text-align: center;
-      margin-top: 12px;
     }
-    .reset-btn {
-      background: transparent;
-      border: 1px dashed #cbd5e1;
-      color: #94a3b8;
-      padding: 8px 20px;
-      border-radius: 20px;
-      font-size: 13px;
+    .confirm-text {
+      font-size: 17px;
+      color: #1e3a5f;
+      font-weight: 500;
+      margin-bottom: 24px;
+      line-height: 1.5;
+    }
+    .confirm-actions {
+      display: flex;
+      gap: 12px;
+    }
+    .btn-confirm-delete {
+      flex: 1;
+      padding: 14px 0;
+      border-radius: 60px;
+      border: none;
+      font-weight: 650;
+      font-size: 17px;
       cursor: pointer;
-      transition: 0.15s;
+      background: #ef4444;
+      color: white;
+      box-shadow: 0 4px 10px rgba(239,68,68,0.25);
+      -webkit-appearance: none;
+      -webkit-tap-highlight-color: transparent;
     }
-    .reset-btn:hover {
-      border-color: #ef4444;
-      color: #b91c1c;
-      background: #fef2f2;
+    .btn-cancel-delete {
+      flex: 1;
+      padding: 14px 0;
+      border-radius: 60px;
+      border: none;
+      font-weight: 650;
+      font-size: 17px;
+      cursor: pointer;
+      background: #f1f5f9;
+      color: #475569;
+      -webkit-appearance: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    @media (max-width: 480px) {
+      .camera-btn {
+        width: 52px;
+        height: 52px;
+        font-size: 22px;
+      }
     }
   </style>
 </head>
 <body>
 <div class="app">
-  <div class="top-banner">
-    基于艾宾浩斯记忆曲线，自动生成第2、4、7、15天复习内容，帮助孩子高效消灭错别字。
+  <div class="main-title">艾宾浩斯日历</div>
+  <div class="top-banner">基于莱特纳卡片盒学习方法，自动生成第1、2、4、7、15天复习内容，帮助孩子高效消灭错别字。</div>
+  <div class="today-stats">
+    <div class="today-stat-item" id="homeNewStat"><div class="today-stat-label">今日新增</div><div class="today-stat-value" id="todayNew">0</div></div>
+    <span class="stat-divider">|</span>
+    <div class="today-stat-item" id="homePendingStat"><div class="today-stat-label">今日需复习</div><div class="today-stat-value" id="todayPending">0</div></div>
+    <span class="stat-divider">|</span>
+    <div class="today-stat-item" id="homeMasteredStat"><div class="today-stat-label">已100%学会</div><div class="today-stat-value" id="todayMastered">0</div></div>
   </div>
   <div class="calendar-card">
     <div class="cal-header">
@@ -382,482 +345,460 @@
         <button id="nextMonthBtn">→</button>
       </div>
     </div>
-    <div class="weekdays">
-      <span>周日</span><span>周一</span><span>周二</span><span>周三</span><span>周四</span><span>周五</span><span>周六</span>
-    </div>
+    <div class="weekdays"><span>周日</span><span>周一</span><span>周二</span><span>周三</span><span>周四</span><span>周五</span><span>周六</span></div>
     <div class="calendar-grid" id="calendarGrid"></div>
-  </div>
-  <div class="detail-section" id="detailPanel">
-    <div class="detail-header-date" id="selectedDateDisplay">2026年4月21日 星期二</div>
-    <div class="stats-three">
-      <div class="stat-block" id="statNewBlock">
-        <div class="stat-label">新增</div>
-        <div class="stat-value" id="statNew">0</div>
-      </div>
-      <div class="stat-block active" id="statPendingBlock">
-        <div class="stat-label">待复习</div>
-        <div class="stat-value" id="statPending">0</div>
-      </div>
-      <div class="stat-block" id="statReviewedBlock">
-        <div class="stat-label">已复习</div>
-        <div class="stat-value" id="statReviewed">0</div>
-      </div>
+    <!-- 仅保留「可永久使用」，删除了电子版和页码 -->
+    <div class="footer-badge">
+      <span class="permanent-tag">可永久使用</span>
     </div>
-    <div class="cards-container" id="cardsContainer"></div>
-    <div class="footer-note" id="viewModeHint">待复习视图</div>
-    <!-- 新增：重置所有数据按钮 -->
-    <div class="reset-area">
-      <button class="reset-btn" id="resetAllBtn">重置所有数据</button>
-    </div>
-  </div>
-  <div class="input-area">
-    <input type="text" class="input-field" id="wordInput" placeholder="输入需要消灭的错别字（用空格分隔多个错别字）" autocomplete="off">
-    <div class="input-example">例如：温暖 滴答 似乎 鼠标</div>
-    <button class="add-btn" id="addWordsBtn">添加错别字</button>
-    <div class="custom-tip">可自定义输入内容</div>
   </div>
 </div>
+
+<div class="ocr-loading" id="ocrLoading">正在识别文字，请稍候...</div>
+
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-page">
+    <div class="modal-page-header">
+      <div class="modal-banner">基于莱特纳卡片盒学习方法，自动生成第1、2、4、7、15天复习内容，帮助孩子高效消灭错别字。</div>
+      <div class="modal-date-row">
+        <span class="modal-date-text" id="modalDateDisplay">2026年4月21日 星期二</span>
+        <button class="modal-close-btn" id="modalCloseBtn">✕</button>
+      </div>
+      <div class="stats-row-inline">
+        <div class="stat-inline" id="modalNewTab"><div class="stat-label">新增</div><div class="stat-value" id="modalNewVal">0</div></div>
+        <div class="stat-inline" id="modalPendingTab"><div class="stat-label">待复习</div><div class="stat-value" id="modalPendingVal">0</div></div>
+        <div class="stat-inline" id="modalReviewedTab"><div class="stat-label">已复习</div><div class="stat-value" id="modalReviewedVal">0</div></div>
+      </div>
+    </div>
+    <div class="modal-cards-container" id="modalCardsContainer"></div>
+    <div class="modal-input-section" id="modalInputSection" style="display:none;">
+      <div class="input-row">
+        <input type="text" class="modal-input-field" id="modalWordInput" placeholder="输入需要消灭的错别字（用空格分隔多个错别字）" autocomplete="off">
+        <button class="camera-btn" id="cameraBtn">📷</button>
+        <input type="file" id="fileInput" accept="image/*" capture="environment" style="display:none;">
+      </div>
+      <div class="modal-input-example">例如：温暖 滴答 似乎 鼠标 | 也可点击相机拍照识别</div>
+      <div class="dual-buttons">
+        <button class="modal-add-btn" id="modalAddBtn">添加</button>
+        <button class="btn-custom" id="customPlanBtn">定制计划</button>
+      </div>
+      <div class="modal-custom-tip">可自定义输入内容</div>
+    </div>
+    <div class="modal-footer-note" id="modalFooterHint">可自定义输入内容</div>
+  </div>
+</div>
+<div class="modal-overlay" id="masteredModalOverlay">
+  <div class="modal-page">
+    <div class="modal-page-header">
+      <div class="modal-date-row">
+        <span class="modal-date-text">已100%学会的字词</span>
+        <button class="modal-close-btn" id="masteredModalCloseBtn">✕</button>
+      </div>
+    </div>
+    <div class="modal-cards-container" id="masteredModalContainer"></div>
+    <div class="modal-footer-note">共 <span id="masteredCount">0</span> 个</div>
+  </div>
+</div>
+<div class="modal-overlay" id="customPlanOverlay">
+  <div class="custom-plan-modal">
+    <h3>定制复习计划</h3>
+    <input type="text" class="custom-plan-input" id="customPlanInput" placeholder="例如：1,3,7,14,30" autocomplete="off">
+    <div class="custom-plan-actions">
+      <button class="btn-confirm" id="confirmCustomPlan">确认</button>
+      <button class="btn-cancel" id="cancelCustomPlan">取消</button>
+    </div>
+  </div>
+</div>
+
+<!-- 自定义删除确认弹窗 HTML -->
+<div class="modal-overlay" id="deleteConfirmOverlay">
+  <div class="custom-confirm-modal">
+    <div class="confirm-text">确定要清除该字词的所有复习计划吗？</div>
+    <div class="confirm-actions">
+      <button class="btn-confirm-delete" id="confirmDeleteBtn">确认</button>
+      <button class="btn-cancel-delete" id="cancelDeleteBtn">取消</button>
+    </div>
+  </div>
+</div>
+
 <script>
-  (function(){
-    "use strict";
-    // ---------- 数据存储 ----------
-    const STORAGE_KEY = 'cuozi_review_wordsData_v1';
-    let wordsData = [];
-    let currentDisplayDate = new Date(2026, 3, 21);
-    let selectedDateStr = '2026-04-21';
-    let currentViewMode = 'pending';
-    const REVIEW_INTERVALS = [2, 4, 7, 15];
+(function(){
+  "use strict";
+  
+  // ========== localStorage 持久化存储 ==========
+  const STORAGE_KEY = 'cuozi_review_v3';
+  function saveData() {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(wordsData)); } catch(e) {}
+  }
+  function loadData() {
+    try {
+      const d = localStorage.getItem(STORAGE_KEY);
+      if (d) return JSON.parse(d);
+    } catch(e) {}
+    return null;
+  }
+  // ========== 以上为持久化代码 ==========
+  
+  let wordsData = [];
+  let currentDisplayDate = new Date();
+  let selectedDateStr = formatYMD(new Date());
+  let currentViewMode = 'new';
+  const DEFAULT_INTERVALS = [1, 2, 4, 7, 15];
+  let pendingDeleteWordId = null; // 暂存待删除的字词ID
+  
+  function formatYMD(d){ 
+    const y=d.getFullYear(); 
+    const m=String(d.getMonth()+1).padStart(2,'0'); 
+    const day=String(d.getDate()).padStart(2,'0'); 
+    return `${y}-${m}-${day}`; 
+  }
+  
+  function parseYMD(s){ 
+    const p=s.split('-').map(Number); 
+    return new Date(p[0],p[1]-1,p[2]); 
+  }
+  
+  function addDays(d, days){ 
+    const nd=new Date(d); 
+    nd.setDate(nd.getDate()+days); 
+    return nd; 
+  }
+  
+  function formatChineseDate(d){ 
+    const y=d.getFullYear(); 
+    const m=d.getMonth()+1; 
+    const day=d.getDate(); 
+    const w=['星期日','星期一','星期二','星期三','星期四','星期五','星期六']; 
+    return `${y}年${m}月${day}日 ${w[d.getDay()]}`; 
+  }
+  
+  function getTodayStr(){ 
+    const today = new Date();
+    return formatYMD(today);
+  }
 
-    // ---------- localStorage 持久化 ----------
-    function saveToStorage() {
-      try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(wordsData));
-      } catch (e) {
-        console.warn('数据保存失败，存储空间可能已满');
-      }
-    }
-
-    function loadFromStorage() {
-      try {
-        const saved = localStorage.getItem(STORAGE_KEY);
-        if (saved) {
-          const parsed = JSON.parse(saved);
-          if (Array.isArray(parsed)) {
-            wordsData = parsed;
-            return true;
-          }
-        }
-      } catch (e) {
-        console.warn('数据读取失败，将使用默认数据');
-      }
-      return false;
-    }
-
-    function clearStorage() {
-      localStorage.removeItem(STORAGE_KEY);
-    }
-
-    // ---------- 辅助函数 ----------
-    function formatYMD(date) {
-      const y = date.getFullYear();
-      const m = String(date.getMonth() + 1).padStart(2, '0');
-      const d = String(date.getDate()).padStart(2, '0');
-      return `${y}-${m}-${d}`;
-    }
-
-    function parseYMD(str) {
-      const parts = str.split('-').map(Number);
-      return new Date(parts[0], parts[1]-1, parts[2]);
-    }
-
-    function addDays(date, days) {
-      const d = new Date(date);
-      d.setDate(d.getDate() + days);
-      return d;
-    }
-
-    function formatChineseDate(date) {
-      const y = date.getFullYear();
-      const m = date.getMonth() + 1;
-      const d = date.getDate();
-      const weekdays = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
-      return `${y}年${m}月${d}日 ${weekdays[date.getDay()]}`;
-    }
-
-    function getDateStats(dateStr) {
-      let newCount = 0, pendingCount = 0, reviewedCount = 0;
-      wordsData.forEach(word => {
-        if (word.learnDate === dateStr) newCount++;
-        if (word.reviewDates.includes(dateStr)) {
-          const hasReviewedToday = word.reviewHistory.some(h => h.date === dateStr);
-          if (!hasReviewedToday) pendingCount++;
-        }
-        if (word.reviewHistory.some(h => h.date === dateStr)) reviewedCount++;
+  function computeStrength(w){ 
+    let s=25; 
+    w.reviewHistory.forEach(r=>{ 
+      if(r.result==='correct') s=Math.min(100,s+25); 
+      else s=Math.max(0,s-10); 
+    }); 
+    return s; 
+  }
+  
+  function updateHomeStats(){
+    const t=getTodayStr(); 
+    let n=0,p=0,m=0;
+    wordsData.forEach(w=>{ 
+      if(w.learnDate===t) n++; 
+      if(w.reviewDates.includes(t) && !w.reviewHistory.some(h=>h.date===t)) p++; 
+      if(computeStrength(w)>=100) m++; 
+    });
+    document.getElementById('todayNew').textContent=n; 
+    document.getElementById('todayPending').textContent=p; 
+    document.getElementById('todayMastered').textContent=m;
+  }
+  
+  function getDateStats(ds){ 
+    let n=0,p=0,r=0; 
+    wordsData.forEach(w=>{ 
+      if(w.learnDate===ds) n++; 
+      if(w.reviewDates.includes(ds)){ 
+        if(!w.reviewHistory.some(h=>h.date===ds)) p++; 
+      } 
+      if(w.reviewHistory.some(h=>h.date===ds)) r++; 
+    }); 
+    return {newCount:n, pendingCount:p, reviewedCount:r}; 
+  }
+  
+  function getNewWords(ds){ return wordsData.filter(w=> w.learnDate===ds); }
+  function getPendingCards(ds){ return wordsData.filter(w=> w.reviewDates.includes(ds) && !w.reviewHistory.some(h=>h.date===ds)); }
+  function getAllReviewedWords(){ return wordsData.filter(w=> w.reviewHistory.length > 0 && computeStrength(w) < 100); }
+  function getMasteredWords(){ return wordsData.filter(w=> computeStrength(w)>=100); }
+  function scheduleNextReviews(w, baseStr){
+    if(computeStrength(w)>=100){ w.reviewDates=[]; return; }
+    const base=parseYMD(baseStr); 
+    const idx=w.reviewHistory.length;
+    const intervals = w.customIntervals || DEFAULT_INTERVALS;
+    const interval = intervals[idx % intervals.length];
+    const nextDate = addDays(base, interval);
+    const nextStr = formatYMD(nextDate);
+    if(!w.reviewDates.includes(nextStr)) w.reviewDates.push(nextStr);
+  }
+  
+  // 删除字词函数
+  function deleteWord(wordId) {
+    wordsData = wordsData.filter(w => w.id !== wordId);
+    saveData();
+    renderAll(); 
+    updateHomeStats(); 
+    renderModalContent(selectedDateStr);
+  }
+  
+  function processReview(wordId, isCorrect){
+    const w=wordsData.find(w=>w.id===wordId); if(!w) return;
+    const today=selectedDateStr; 
+    const idx=w.reviewHistory.length;
+    const intervals = w.customIntervals || DEFAULT_INTERVALS;
+    const intervalIndex = idx % intervals.length;
+    const dayLabel = intervals[intervalIndex] + '天复习';
+    w.reviewHistory.push({ date:today, reviewNumber:idx+1, dayLabel:`第${dayLabel}`, result:isCorrect?'correct':'wrong' });
+    scheduleNextReviews(w, today); 
+    if(computeStrength(w)>=100) w.reviewDates=[];
+    saveData();
+    currentViewMode = 'reviewed';
+    renderAll(); updateHomeStats(); renderModalContent(selectedDateStr);
+  }
+  function addNewWords(raw, customIntervals = null){
+    if(!raw.trim()) return; 
+    const words=raw.trim().split(/\s+/); 
+    const today=selectedDateStr;
+    const intervals = customIntervals || DEFAULT_INTERVALS;
+    words.forEach(txt=>{
+      const id = Date.now() + Math.random() + txt; 
+      const base = parseYMD(today);
+      const dates = intervals.map(iv => formatYMD(addDays(base, iv)));
+      wordsData.push({ 
+        id, word:txt, learnDate:today, reviewDates:dates, reviewHistory:[],
+        customIntervals: customIntervals ? intervals : null
       });
-      let exactReviewed = 0;
-      wordsData.forEach(w => {
-        if (w.reviewHistory.some(h => h.date === dateStr)) exactReviewed++;
+    });
+    document.getElementById('modalWordInput').value = ''; 
+    saveData();
+    renderAll(); updateHomeStats(); renderModalContent(selectedDateStr);
+  }
+  function renderCalendar(){
+    const y=currentDisplayDate.getFullYear(), m=currentDisplayDate.getMonth();
+    const first=new Date(y,m,1); const startDay=first.getDay(); const daysInMonth=new Date(y,m+1,0).getDate();
+    const prev=new Date(y,m,0); const prevDays=prev.getDate();
+    const grid=document.getElementById('calendarGrid');
+    document.getElementById('currentMonthDisplay').textContent=`${y}年${m+1}月`;
+    let cells=[];
+    for(let i=startDay-1;i>=0;i--){ cells.push({ date:new Date(y,m-1,prevDays-i), isCurrentMonth:false }); }
+    for(let d=1;d<=daysInMonth;d++){ cells.push({ date:new Date(y,m,d), isCurrentMonth:true }); }
+    const rem=42-cells.length; for(let d=1;d<=rem;d++){ cells.push({ date:new Date(y,m+1,d), isCurrentMonth:false }); }
+    grid.innerHTML='';
+    cells.forEach(c=>{
+      const d=c.date, ds=formatYMD(d), st=getDateStats(ds), sel=ds===selectedDateStr;
+      const div=document.createElement('div'); 
+      div.className=`cal-cell ${c.isCurrentMonth?'':'other-month'} ${sel?'selected':''}`;
+      div.innerHTML=`<div class="day-num">${d.getDate()}</div><div class="badge-container">${st.newCount>0?`<span class="badge blue">${st.newCount}</span>`:''}${st.pendingCount>0?`<span class="badge yellow">${st.pendingCount}</span>`:''}${st.reviewedCount>0?`<span class="badge red">${st.reviewedCount}</span>`:''}</div>`;
+      div.addEventListener('click',()=>{ selectedDateStr=ds; currentDisplayDate=new Date(d); currentViewMode='new'; renderCalendar(); openModal(ds); });
+      grid.appendChild(div);
+    });
+  }
+  const modal=document.getElementById('modalOverlay');
+  const masteredModal=document.getElementById('masteredModalOverlay');
+  const customPlanOverlay=document.getElementById('customPlanOverlay');
+  const deleteConfirmOverlay=document.getElementById('deleteConfirmOverlay'); // 删除确认弹窗元素
+  const ocrLoading=document.getElementById('ocrLoading');
+  
+  function openModal(ds){ selectedDateStr=ds; renderModalContent(ds); modal.classList.add('show'); }
+  function closeModal(){ modal.classList.remove('show'); }
+  function openMasteredModal(){ renderMasteredModal(); masteredModal.classList.add('show'); }
+  function closeMasteredModal(){ masteredModal.classList.remove('show'); }
+  function openCustomPlanOverlay(){ customPlanOverlay.classList.add('show'); }
+  function closeCustomPlanOverlay(){ customPlanOverlay.classList.remove('show'); }
+  // 打开/关闭删除确认弹窗
+  function openDeleteConfirmModal(){ deleteConfirmOverlay.classList.add('show'); }
+  function closeDeleteConfirmModal(){ 
+    pendingDeleteWordId = null;
+    deleteConfirmOverlay.classList.remove('show'); 
+  }
+
+  function renderMasteredModal(){
+    const mastered = getMasteredWords();
+    const container = document.getElementById('masteredModalContainer');
+    document.getElementById('masteredCount').textContent = mastered.length;
+    if(!mastered.length){ container.innerHTML='<div class="empty-msg">暂无100%学会的字词</div>'; return; }
+    container.innerHTML = mastered.map(w => {
+      const s = computeStrength(w);
+      const hist = [...w.reviewHistory].sort((a,b)=>a.date.localeCompare(b.date));
+      let histHtml = hist.map(h=>`<div class="history-row"><span class="history-left">${h.date} ${h.dayLabel}:</span><span class="history-right ${h.result==='correct'?'correct':'wrong'}">${h.result==='correct'?'正确':'错误'}</span></div>`).join('');
+      return `<div class="review-card reviewed-card">
+        <div class="card-header-row"><span>已掌握</span><span>学习于: ${w.learnDate}</span></div>
+        <div class="word-big">${w.word}</div>
+        <div class="result-line"><span>最终记忆强度: ${s}%</span><span>✓ 已完全掌握</span></div>
+        ${histHtml}
+      </div>`;
+    }).join('');
+  }
+  function renderModalContent(ds){
+    const dt=parseYMD(ds); const st=getDateStats(ds);
+    document.getElementById('modalDateDisplay').textContent=formatChineseDate(dt);
+    document.getElementById('modalNewVal').textContent=st.newCount;
+    document.getElementById('modalPendingVal').textContent=st.pendingCount;
+    const allReviewed = getAllReviewedWords();
+    document.getElementById('modalReviewedVal').textContent=allReviewed.length;
+    document.getElementById('modalNewTab').classList.toggle('active', currentViewMode==='new');
+    document.getElementById('modalPendingTab').classList.toggle('active', currentViewMode==='pending');
+    document.getElementById('modalReviewedTab').classList.toggle('active', currentViewMode==='reviewed');
+    
+    const container=document.getElementById('modalCardsContainer');
+    const hint=document.getElementById('modalFooterHint');
+    const inputSection=document.getElementById('modalInputSection');
+    
+    if(currentViewMode==='new'){
+      inputSection.style.display='block'; hint.textContent='可自定义输入内容';
+      const newWords=getNewWords(ds);
+      if(!newWords.length){ container.innerHTML='<div class="empty-msg">暂无新增字词</div>'; return; }
+      let html='<ul class="new-word-list">';
+      newWords.forEach((w,idx)=>{ 
+        html+=`<li class="new-word-item" data-word-id="${w.id}">
+          <span class="new-word-index">${idx+1}.</span>
+          <span class="new-word-text">${w.word}</span>
+          <span class="new-word-strength">记忆强度: ${computeStrength(w)}%</span>
+          <button class="delete-word-btn">✕</button>
+        </li>`; 
       });
-      return { newCount, pendingCount, reviewedCount: exactReviewed };
-    }
+      html+='</ul>'; 
+      container.innerHTML=html;
 
-    function getPendingCards(dateStr) {
-      return wordsData.filter(word => {
-        if (!word.reviewDates.includes(dateStr)) return false;
-        const already = word.reviewHistory.some(h => h.date === dateStr);
-        return !already;
-      });
-    }
-
-    function getReviewedCards(dateStr) {
-      return wordsData.filter(word => word.reviewHistory.some(h => h.date === dateStr));
-    }
-
-    function computeStrength(word) {
-      let strength = 25;
-      word.reviewHistory.forEach(rec => {
-        if (rec.result === 'correct') strength = Math.min(100, strength + 25);
-        else strength = Math.max(0, strength - 10);
-      });
-      return strength;
-    }
-
-    function scheduleNextReviews(word, baseDateStr) {
-      if (computeStrength(word) >= 100) {
-        word.reviewDates = [];
-        return;
-      }
-      const baseDate = parseYMD(baseDateStr);
-      const historyLen = word.reviewHistory.length;
-      const interval = REVIEW_INTERVALS[historyLen % REVIEW_INTERVALS.length];
-      const nextDate = addDays(baseDate, interval);
-      const nextStr = formatYMD(nextDate);
-      if (!word.reviewDates.includes(nextStr)) {
-        word.reviewDates = [nextStr];
-      }
-    }
-
-    function processReview(wordId, isCorrect) {
-      const word = wordsData.find(w => w.id === wordId);
-      if (!word) return;
-      const todayStr = formatYMD(currentDisplayDate);
-      const reviewIndex = word.reviewHistory.length + 1;
-      const intervalIdx = (reviewIndex-1) % REVIEW_INTERVALS.length;
-      const dayLabelText = REVIEW_INTERVALS[intervalIdx] + '天复习';
-      const historyEntry = {
-        date: todayStr,
-        reviewNumber: reviewIndex,
-        dayLabel: `第${dayLabelText}`,
-        result: isCorrect ? 'correct' : 'wrong',
-      };
-      word.reviewHistory.push(historyEntry);
-      scheduleNextReviews(word, todayStr);
-      if (computeStrength(word) >= 100) word.reviewDates = [];
-      saveToStorage(); // 持久化保存
-      renderAll();
-    }
-
-    function addNewWords(inputStr) {
-      const raw = inputStr.trim();
-      if (!raw) return;
-      const words = raw.split(/\s+/).filter(w => w.length > 0);
-      const todayStr = formatYMD(currentDisplayDate);
-      words.forEach(wordText => {
-        const id = Date.now() + '_' + Math.random().toString(36).substr(2, 9) + '_' + wordText;
-        const base = parseYMD(todayStr);
-        const reviewDates = REVIEW_INTERVALS.map(interval => formatYMD(addDays(base, interval)));
-        wordsData.push({
-          id: id,
-          word: wordText,
-          learnDate: todayStr,
-          reviewDates: reviewDates,
-          reviewHistory: [],
-        });
-      });
-      document.getElementById('wordInput').value = '';
-      saveToStorage(); // 持久化保存
-      renderAll();
-    }
-
-    // 删除单个词
-    function deleteWord(wordId) {
-      if (!confirm('确定要删除这个词吗？此操作不可恢复。')) return;
-      wordsData = wordsData.filter(w => w.id !== wordId);
-      saveToStorage();
-      renderAll();
-    }
-
-    // 重置所有数据
-    function resetAllData() {
-      if (!confirm('确定要清除所有错别字数据吗？此操作不可恢复！')) return;
-      if (!confirm('再次确认：所有学习记录和复习进度都将被永久删除！')) return;
-      wordsData = [];
-      clearStorage();
-      renderAll();
-    }
-
-    // ---------- 渲染 ----------
-    function renderCalendar() {
-      const year = currentDisplayDate.getFullYear();
-      const month = currentDisplayDate.getMonth();
-      const firstDay = new Date(year, month, 1);
-      const startDay = firstDay.getDay();
-      const daysInMonth = new Date(year, month+1, 0).getDate();
-      const prevMonthDate = new Date(year, month, 0);
-      const daysInPrevMonth = prevMonthDate.getDate();
-      const grid = document.getElementById('calendarGrid');
-      const monthDisplay = document.getElementById('currentMonthDisplay');
-      monthDisplay.textContent = `${year}年${month+1}月`;
-      let cells = [];
-      for (let i = startDay-1; i >= 0; i--) {
-        const d = daysInPrevMonth - i;
-        const date = new Date(year, month-1, d);
-        cells.push({ date, isCurrentMonth: false });
-      }
-      for (let d = 1; d <= daysInMonth; d++) {
-        const date = new Date(year, month, d);
-        cells.push({ date, isCurrentMonth: true });
-      }
-      const remaining = 42 - cells.length;
-      for (let d = 1; d <= remaining; d++) {
-        const date = new Date(year, month+1, d);
-        cells.push({ date, isCurrentMonth: false });
-      }
-      grid.innerHTML = '';
-      cells.forEach(cell => {
-        const date = cell.date;
-        const dateStr = formatYMD(date);
-        const stats = getDateStats(dateStr);
-        const isSelected = (dateStr === selectedDateStr);
-        const cellDiv = document.createElement('div');
-        cellDiv.className = `cal-cell ${cell.isCurrentMonth ? '' : 'other-month'} ${isSelected ? 'selected' : ''}`;
-        cellDiv.innerHTML = `
-          <div class="day-num">${date.getDate()}</div>
-          <div class="badge-container">
-            ${stats.newCount > 0 ? `<span class="badge blue">${stats.newCount}</span>` : ''}
-            ${stats.pendingCount > 0 ? `<span class="badge yellow">${stats.pendingCount}</span>` : ''}
-            ${stats.reviewedCount > 0 ? `<span class="badge red">${stats.reviewedCount}</span>` : ''}
-          </div>
-        `;
-        cellDiv.addEventListener('click', () => {
-          selectedDateStr = dateStr;
-          currentDisplayDate = new Date(date);
-          renderAll();
-        });
-        grid.appendChild(cellDiv);
-      });
-    }
-
-    function renderDetailPanel() {
-      const selDate = parseYMD(selectedDateStr);
-      document.getElementById('selectedDateDisplay').textContent = formatChineseDate(selDate);
-      const stats = getDateStats(selectedDateStr);
-      document.getElementById('statNew').textContent = stats.newCount;
-      document.getElementById('statPending').textContent = stats.pendingCount;
-      document.getElementById('statReviewed').textContent = stats.reviewedCount;
-      document.getElementById('statPendingBlock').classList.toggle('active', currentViewMode === 'pending');
-      document.getElementById('statReviewedBlock').classList.toggle('active', currentViewMode === 'reviewed');
-      const container = document.getElementById('cardsContainer');
-      const hint = document.getElementById('viewModeHint');
-      if (currentViewMode === 'pending') {
-        hint.textContent = '待复习视图';
-        const pendingCards = getPendingCards(selectedDateStr);
-        if (pendingCards.length === 0) {
-          container.innerHTML = '<div class="empty-msg">暂无待复习字词</div>';
-          return;
-        }
-        container.innerHTML = pendingCards.map(word => renderPendingCard(word)).join('');
-      } else {
-        hint.textContent = '已复习视图';
-        const reviewedCards = getReviewedCards(selectedDateStr);
-        if (reviewedCards.length === 0) {
-          container.innerHTML = '<div class="empty-msg">暂无已复习记录</div>';
-          return;
-        }
-        container.innerHTML = reviewedCards.map(word => renderReviewedCard(word)).join('');
-      }
-      // 绑定待复习按钮
-      if (currentViewMode === 'pending') {
-        document.querySelectorAll('.btn-remember').forEach(btn => {
-          btn.addEventListener('click', (e) => {
-            const wordId = e.target.closest('.review-card')?.dataset.wordId;
-            if (wordId) processReview(wordId, true);
-          });
-        });
-        document.querySelectorAll('.btn-forget').forEach(btn => {
-          btn.addEventListener('click', (e) => {
-            const wordId = e.target.closest('.review-card')?.dataset.wordId;
-            if (wordId) processReview(wordId, false);
-          });
-        });
-      }
-      // 绑定删除按钮（待复习和已复习都要）
-      document.querySelectorAll('.delete-btn').forEach(btn => {
+      // 绑定删除按钮事件 - 改为打开自定义弹窗
+      container.querySelectorAll('.delete-word-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
-          const wordId = e.target.closest('.review-card')?.dataset.wordId;
-          if (wordId) deleteWord(wordId);
+          e.stopPropagation();
+          const wordId = e.target.closest('.new-word-item').dataset.wordId;
+          if (wordId) {
+            pendingDeleteWordId = wordId;
+            openDeleteConfirmModal();
+          }
         });
       });
-    }
-
-    function renderPendingCard(word) {
-      const strength = computeStrength(word);
-      const increase = (() => {
-        // 模拟本次正确后的增加值
-        let s = strength;
-        s = Math.min(100, s + 25);
-        return s - strength;
-      })();
-      const history = [...word.reviewHistory].sort((a,b)=>a.date.localeCompare(b.date));
-      const reviewIndex = word.reviewHistory.length + 1;
-      const intervalIdx = (reviewIndex-1) % REVIEW_INTERVALS.length;
-      const dayLabel = REVIEW_INTERVALS[intervalIdx] + '天复习';
-      const titleLeft = `复习#${reviewIndex} 第${dayLabel}`;
-      const learnDate = word.learnDate;
-      let historyHtml = '';
-      if (history.length > 0) {
-        historyHtml = history.map(h => {
-          const resultClass = h.result === 'correct' ? 'correct' : 'wrong';
-          const resultText = h.result === 'correct' ? '正确' : '错误';
-          return `<div class="history-row">
-            <span class="history-left">${h.date} ${h.dayLabel}:</span>
-            <span class="history-right ${resultClass}">${resultText}</span>
-          </div>`;
-        }).join('');
-      }
-      return `
-        <div class="review-card" data-word-id="${word.id}">
-          ${word.reviewHistory.length > 0 ? `
-          <div class="card-title-row">
-            <span>${titleLeft}</span>
-            <span>学习于: ${learnDate}</span>
-          </div>` : ''}
-          <div class="word-big">${word.word}</div>
-          <div class="strength-line">
-            <span>当前记忆强度: ${strength}%</span>
-            <span>本次复习正确可增加: ${increase}%</span>
-          </div>
-          <div class="action-row">
-            <button class="btn-remember">已记住</button>
-            <button class="btn-forget">忘记</button>
-          </div>
-          ${historyHtml}
-          <div class="delete-btn-container">
-            <button class="delete-btn">删除此词</button>
-          </div>
-        </div>
-      `;
-    }
-
-    function renderReviewedCard(word) {
-      const strength = computeStrength(word);
-      const history = [...word.reviewHistory].sort((a,b)=>a.date.localeCompare(b.date));
-      const last = history[history.length-1];
-      if (!last) return '';
-      const strengthBefore = (() => {
-        let s = 25;
-        for (let i=0; i<history.length-1; i++) {
-          s += (history[i].result==='correct'?25:-10);
-        }
-        return Math.min(100, Math.max(0, s));
-      })();
-      const change = last.result === 'correct' ? '+25%' : '-10%';
-      const resultSymbol = last.result === 'correct' ? '✓' : '✗';
-      const resultText = last.result === 'correct' ? '正确' : '错误';
-      const titleLeft = `已复习 #${last.reviewNumber} ${last.dayLabel}`;
-      let historyHtml = history.map(h => {
-        const cls = h.result === 'correct' ? 'correct' : 'wrong';
-        const txt = h.result === 'correct' ? '正确' : '错误';
-        return `<div class="history-row">
-          <span class="history-left">${h.date} ${h.dayLabel}:</span>
-          <span class="history-right ${cls}">${txt}</span>
-        </div>`;
+    } else if(currentViewMode==='pending'){
+      inputSection.style.display='none'; hint.textContent='自动生成复习日历';
+      const cards=getPendingCards(ds);
+      if(!cards.length){ container.innerHTML='<div class="empty-msg">暂无待复习字词</div>'; return; }
+      container.innerHTML=cards.map(w=>{
+        const s=computeStrength(w); const hist=[...w.reviewHistory].sort((a,b)=>a.date.localeCompare(b.date));
+        const idx=w.reviewHistory.length; 
+        const intervals = w.customIntervals || DEFAULT_INTERVALS;
+        const dayLabel=intervals[idx % intervals.length]+'天复习';
+        const title=`复习#${idx+1} 第${dayLabel}`;
+        let histHtml=''; if(hist.length){ histHtml=hist.map(h=>`<div class="history-row"><span class="history-left">${h.date} ${h.dayLabel}:</span><span class="history-right ${h.result==='correct'?'correct':'wrong'}">${h.result==='correct'?'正确':'错误'}</span></div>`).join(''); }
+        return `<div class="review-card" data-word-id="${w.id}">
+          ${w.reviewHistory.length?`<div class="card-header-row"><span>${title}</span><span>学习于: ${w.learnDate}</span></div>`:''}
+          <div class="word-big">${w.word}</div>
+          <div class="strength-row"><span>当前记忆强度: ${s}%</span><span>本次复习正确可增加: 25%</span></div>
+          <div class="action-btns"><button class="btn-remember">已记住</button><button class="btn-forget">忘记</button></div>
+          ${histHtml}</div>`;
       }).join('');
-      return `
-        <div class="review-card reviewed-card" data-word-id="${word.id}">
-          <div class="card-title-row">
-            <span>${titleLeft}</span>
-            <span>学习于: ${word.learnDate}</span>
-          </div>
-          <div class="word-big">${word.word}</div>
-          <div class="result-line">
-            <span class="result-badge">复习结果: <span class="${last.result==='correct'?'check-green':'cross-red'}">${resultSymbol} ${resultText}</span></span>
-            <span>记忆强度变化: ${change}</span>
-          </div>
-          <div class="result-line">
-            <span>复习前记忆强度: ${strengthBefore}%</span>
-            <span>→ 当前记忆强度: ${strength}%</span>
-          </div>
-          ${historyHtml}
-          <div class="delete-btn-container">
-            <button class="delete-btn">删除此词</button>
-          </div>
-        </div>
-      `;
+      container.querySelectorAll('.btn-remember').forEach(b=>b.addEventListener('click',e=>{ const id=e.target.closest('.review-card')?.dataset.wordId; if(id) processReview(id,true); }));
+      container.querySelectorAll('.btn-forget').forEach(b=>b.addEventListener('click',e=>{ const id=e.target.closest('.review-card')?.dataset.wordId; if(id) processReview(id,false); }));
+    } else {
+      inputSection.style.display='none'; hint.textContent='推荐电脑或手机使用';
+      const cards = getAllReviewedWords();
+      if(!cards.length){ container.innerHTML='<div class="empty-msg">暂无已复习记录</div>'; return; }
+      container.innerHTML=cards.map(w=>{
+        const s=computeStrength(w); const hist=[...w.reviewHistory].sort((a,b)=>a.date.localeCompare(b.date)); const last=hist[hist.length-1]; if(!last) return '';
+        let before=25; for(let i=0;i<hist.length-1;i++){ before+=(hist[i].result==='correct'?25:-10); before=Math.min(100,Math.max(0,before)); }
+        const ch=last.result==='correct'?'+25%':'-10%', sym=last.result==='correct'?'✓':'✗', txt=last.result==='correct'?'正确':'错误';
+        let histHtml=hist.map(h=>`<div class="history-row"><span class="history-left">${h.date} ${h.dayLabel}:</span><span class="history-right ${h.result==='correct'?'correct':'wrong'}">${h.result==='correct'?'正确':'错误'}</span></div>`).join('');
+        return `<div class="review-card reviewed-card" data-word-id="${w.id}">
+          <div class="card-header-row"><span>已复习 #${last.reviewNumber} ${last.dayLabel}</span><span>学习于: ${w.learnDate}</span></div>
+          <div class="word-big">${w.word}</div>
+          <div class="result-line"><span>复习结果: <span class="${last.result==='correct'?'check-green':'cross-red'}">${sym} ${txt}</span></span><span>记忆强度变化: ${ch}</span></div>
+          <div class="result-line"><span>复习前记忆强度: ${before}%</span><span>→ 当前记忆强度: ${s}%</span></div>
+          ${histHtml}</div>`;
+      }).join('');
     }
+  }
+  function renderAll(){ renderCalendar(); updateHomeStats(); }
 
-    function renderAll() {
-      renderCalendar();
-      renderDetailPanel();
-    }
+  function initCameraOCR() {
+    const cameraBtn = document.getElementById('cameraBtn');
+    const fileInput = document.getElementById('fileInput');
+    const wordInput = document.getElementById('modalWordInput');
 
-    // ---------- 初始化 ----------
-    function init() {
-      // 尝试从 localStorage 恢复数据
-      const hasSavedData = loadFromStorage();
+    cameraBtn.addEventListener('click', () => {
+      fileInput.click();
+    });
 
-      // 如果没有保存的数据，使用初始示例数据
-      if (!hasSavedData || wordsData.length === 0) {
-        const today = new Date(2026, 3, 21);
-        const tStr = formatYMD(today);
-        wordsData = [
-          { id: '1', word: '初始', learnDate: '2025-12-01', reviewDates: [], reviewHistory: [
-            {date:'2025-12-02', reviewNumber:1, dayLabel:'第2天复习', result:'correct'},
-            {date:'2025-12-04', reviewNumber:2, dayLabel:'第4天复习', result:'correct'},
-          ]},
-          { id: '2', word: '地震', learnDate: '2025-12-01', reviewDates: [tStr], reviewHistory: [
-            {date:'2025-12-02', reviewNumber:1, dayLabel:'第2天复习', result:'correct'},
-          ]},
-          { id: '3', word: '可怜', learnDate: '2025-12-01', reviewDates: [tStr], reviewHistory: [] },
-        ];
-        saveToStorage();
-      }
+    fileInput.addEventListener('change', async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
 
-      // 事件绑定
-      document.getElementById('prevMonthBtn').addEventListener('click', ()=>{
-        currentDisplayDate.setMonth(currentDisplayDate.getMonth()-1);
-        renderAll();
-      });
-      document.getElementById('nextMonthBtn').addEventListener('click', ()=>{
-        currentDisplayDate.setMonth(currentDisplayDate.getMonth()+1);
-        renderAll();
-      });
-      document.getElementById('statPendingBlock').addEventListener('click', ()=>{
-        currentViewMode = 'pending';
-        renderDetailPanel();
-      });
-      document.getElementById('statReviewedBlock').addEventListener('click', ()=>{
-        currentViewMode = 'reviewed';
-        renderDetailPanel();
-      });
-      document.getElementById('addWordsBtn').addEventListener('click', ()=>{
-        const input = document.getElementById('wordInput');
-        addNewWords(input.value);
-      });
-      // 支持回车添加
-      document.getElementById('wordInput').addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') {
-          addNewWords(e.target.value);
+      ocrLoading.style.display = 'block';
+      
+      try {
+        const result = await Tesseract.recognize(
+          file,
+          'chi_sim',
+          {
+            logger: m => console.log(m)
+          }
+        );
+
+        const text = result.data.text
+          .replace(/\n/g, ' ')
+          .replace(/\s+/g, ' ')
+          .trim();
+
+        if (text) {
+          wordInput.value = text;
+        } else {
+          alert('未识别到文字，请重新拍摄');
         }
-      });
-      // 重置按钮
-      document.getElementById('resetAllBtn').addEventListener('click', resetAllData);
+      } catch (error) {
+        console.error('OCR识别失败:', error);
+        alert('识别失败，请检查网络后重试');
+      } finally {
+        ocrLoading.style.display = 'none';
+        fileInput.value = '';
+      }
+    });
+  }
+  
+  function init(){
+    const saved = loadData();
+    wordsData = saved || [];
+    
+    // 原有事件绑定
+    document.getElementById('prevMonthBtn').addEventListener('click',()=>{ currentDisplayDate.setMonth(currentDisplayDate.getMonth()-1); renderAll(); });
+    document.getElementById('nextMonthBtn').addEventListener('click',()=>{ currentDisplayDate.setMonth(currentDisplayDate.getMonth()+1); renderAll(); });
+    document.getElementById('modalCloseBtn').addEventListener('click',closeModal);
+    modal.addEventListener('click',e=>{ if(e.target===modal) closeModal(); });
+    document.getElementById('modalNewTab').addEventListener('click',()=>{ currentViewMode='new'; renderModalContent(selectedDateStr); });
+    document.getElementById('modalPendingTab').addEventListener('click',()=>{ currentViewMode='pending'; renderModalContent(selectedDateStr); });
+    document.getElementById('modalReviewedTab').addEventListener('click',()=>{ currentViewMode='reviewed'; renderModalContent(selectedDateStr); });
+    document.getElementById('modalAddBtn').addEventListener('click',()=>{ addNewWords(document.getElementById('modalWordInput').value); });
+    
+    document.getElementById('customPlanBtn').addEventListener('click',()=>{ openCustomPlanOverlay(); });
+    document.getElementById('cancelCustomPlan').addEventListener('click',closeCustomPlanOverlay);
+    customPlanOverlay.addEventListener('click',e=>{ if(e.target===customPlanOverlay) closeCustomPlanOverlay(); });
+    document.getElementById('confirmCustomPlan').addEventListener('click',()=>{
+      const input = document.getElementById('customPlanInput').value.trim();
+      if(!input) { closeCustomPlanOverlay(); return; }
+      const intervals = input.split(',').map(s=>parseInt(s.trim())).filter(n=>!isNaN(n) && n>0);
+      if(intervals.length===0) { closeCustomPlanOverlay(); return; }
+      const wordInput = document.getElementById('modalWordInput').value;
+      addNewWords(wordInput, intervals);
+      closeCustomPlanOverlay();
+      document.getElementById('customPlanInput').value = '';
+    });
+    
+    document.getElementById('homeMasteredStat').addEventListener('click', openMasteredModal);
+    document.getElementById('masteredModalCloseBtn').addEventListener('click', closeMasteredModal);
+    masteredModal.addEventListener('click',e=>{ if(e.target===masteredModal) closeMasteredModal(); });
 
-      renderAll();
-    }
+    // 删除确认弹窗事件绑定
+    document.getElementById('confirmDeleteBtn').addEventListener('click', () => {
+      if (pendingDeleteWordId) {
+        deleteWord(pendingDeleteWordId);
+      }
+      closeDeleteConfirmModal();
+    });
+    document.getElementById('cancelDeleteBtn').addEventListener('click', closeDeleteConfirmModal);
+    deleteConfirmOverlay.addEventListener('click', e => {
+      if (e.target === deleteConfirmOverlay) closeDeleteConfirmModal();
+    });
 
-    init();
-  })();
+    initCameraOCR();
+    renderAll();
+  }
+  
+  init();
+})();
 </script>
 </body>
 </html>
