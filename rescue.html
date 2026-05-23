@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>📦 错别字复习数据救援</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
+            background: #f5f7fb; color: #1a2a3a; padding: 20px 16px;
+            max-width: 500px; margin: 0 auto; min-height: 100vh;
+        }
+        h2 { text-align: center; font-size: 22px; margin-bottom: 6px; color: #0b1f33; }
+        .subtitle { text-align: center; font-size: 13px; color: #64748b; margin-bottom: 20px; }
+        .card {
+            background: #fff; border-radius: 20px; padding: 20px 16px;
+            margin-bottom: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+            border: 1px solid #e2e8f0;
+        }
+        .card h3 { font-size: 16px; margin-bottom: 12px; color: #1e3a5f; }
+        .status { font-size: 14px; padding: 10px 14px; border-radius: 14px; margin-bottom: 12px; }
+        .status.success { background: #ecfdf5; color: #065f46; border-left: 4px solid #10b981; }
+        .status.fail { background: #fef2f2; color: #991b1b; border-left: 4px solid #ef4444; }
+        .data-preview {
+            background: #f1f5f9; padding: 14px; border-radius: 12px;
+            font-size: 13px; word-break: break-all; max-height: 250px;
+            overflow-y: auto; white-space: pre-wrap; font-family: monospace;
+            margin-bottom: 12px; display: none;
+        }
+        .btn {
+            display: block; width: 100%; padding: 15px 0; border: none;
+            border-radius: 50px; font-size: 17px; font-weight: 650; cursor: pointer;
+            text-align: center; margin-bottom: 10px; transition: 0.15s;
+            -webkit-appearance: none; -webkit-tap-highlight-color: transparent;
+        }
+        .btn:active { transform: scale(0.97); }
+        .btn-primary { background: #3b82f6; color: white; box-shadow: 0 4px 10px rgba(59,130,246,0.25); }
+        .btn-success { background: #10b981; color: white; box-shadow: 0 4px 10px rgba(16,185,129,0.25); }
+        .btn-outline { background: #fff; color: #475569; border: 2px solid #e2e8f0; }
+        .keys-list { font-size: 13px; color: #475569; line-height: 1.8; display: none; }
+        .tip {
+            background: #fffbeb; border-left: 4px solid #f59e0b; padding: 12px 14px;
+            border-radius: 14px; font-size: 13px; color: #92400e; margin-top: 12px;
+        }
+    </style>
+</head>
+<body>
+    <h2>📦 错别字复习数据救援</h2>
+    <p class="subtitle">从浏览器缓存中提取您的学习记录</p>
+
+    <div class="card">
+        <h3>🔍 自动扫描结果</h3>
+        <div id="scanStatus"></div>
+        <div class="data-preview" id="dataPreview"></div>
+        <button class="btn btn-primary" id="btnRescan">🔍 重新扫描</button>
+        <button class="btn btn-success" id="btnCopy" style="display:none">📋 复制数据到剪贴板</button>
+    </div>
+
+    <div class="card">
+        <h3>🗂️ 浏览器中所有存储键</h3>
+        <div class="keys-list" id="keysList"></div>
+    </div>
+
+    <div class="tip">
+        💡 <strong>操作提示：</strong><br>
+        1. 如果找到数据，点击「复制数据」按钮<br>
+        2. 打开手机备忘录，粘贴并保存<br>
+        3. 将文件发送到电脑，重命名为 <code>data.json</code><br>
+        4. 最后告诉我，我帮您把数据导入 GitHub Pages 网站
+    </div>
+
+    <script>
+        const STORAGE_KEY = 'cuozi_review_wordsData_v1';
+        let rawData = '';
+
+        function scan() {
+            const statusDiv = document.getElementById('scanStatus');
+            const previewDiv = document.getElementById('dataPreview');
+            const btnCopy = document.getElementById('btnCopy');
+            const keysListDiv = document.getElementById('keysList');
+
+            // 尝试读取目标键
+            const data = localStorage.getItem(STORAGE_KEY);
+
+            if (data) {
+                try {
+                    const parsed = JSON.parse(data);
+                    const count = Array.isArray(parsed) ? parsed.length : 1;
+                    statusDiv.innerHTML = `<div class="status success">✅ 找到数据！共 <strong>${count}</strong> 条记录（键名：${STORAGE_KEY}）</div>`;
+                    rawData = JSON.stringify(parsed, null, 2);
+                    previewDiv.style.display = 'block';
+                    previewDiv.textContent = rawData.substring(0, 800) + (rawData.length > 800 ? '\n... (数据过长，已截断预览，复制时获取完整数据)' : '');
+                    btnCopy.style.display = 'block';
+                } catch (e) {
+                    statusDiv.innerHTML = '<div class="status success">✅ 找到原始数据（非JSON格式）</div>';
+                    rawData = data;
+                    previewDiv.style.display = 'block';
+                    previewDiv.textContent = rawData.substring(0, 500);
+                    btnCopy.style.display = 'block';
+                }
+            } else {
+                statusDiv.innerHTML = `<div class="status fail">⚠️ 未找到键名为 <strong>${STORAGE_KEY}</strong> 的数据</div>`;
+                previewDiv.style.display = 'none';
+                btnCopy.style.display = 'none';
+            }
+
+            // 列出所有 localStorage 键
+            const allKeys = [];
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                const value = localStorage.getItem(key);
+                const preview = value ? value.substring(0, 60) : '(空)';
+                allKeys.push(`<strong>${key}</strong>: ${preview}${value && value.length > 60 ? '...' : ''}`);
+            }
+            if (allKeys.length > 0) {
+                keysListDiv.style.display = 'block';
+                keysListDiv.innerHTML = allKeys.map(k => `<div style="margin-bottom:6px">${k}</div>`).join('');
+            } else {
+                keysListDiv.innerHTML = '没有找到任何存储数据';
+            }
+        }
+
+        document.getElementById('btnRescan').addEventListener('click', scan);
+        document.getElementById('btnCopy').addEventListener('click', () => {
+            if (!rawData) { alert('请先扫描数据'); return; }
+            navigator.clipboard.writeText(rawData).then(() => {
+                alert('✅ 数据已复制到剪贴板！\n\n请打开备忘录粘贴保存。');
+            }).catch(() => {
+                // 降级方案：选中文本手动复制
+                const previewDiv = document.getElementById('dataPreview');
+                previewDiv.style.display = 'block';
+                previewDiv.textContent = rawData;
+                alert('自动复制失败，请长按上方文本区域手动选择并复制。');
+            });
+        });
+
+        // 初始扫描
+        scan();
+    </script>
+</body>
+</html>
