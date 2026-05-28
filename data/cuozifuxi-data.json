@@ -1,0 +1,776 @@
+[
+  {
+    "id": "1779630218866.774变现",
+    "word": "变现",
+    "learnDate": "2026-05-24",
+    "reviewDates": [],
+    "reviewHistory": [
+      {
+        "date": "2026-05-25",
+        "reviewNumber": 1,
+        "dayLabel": "第1天复习",
+        "result": "correct"
+      },
+      {
+        "date": "2026-05-26",
+        "reviewNumber": 2,
+        "dayLabel": "第2天复习",
+        "result": "correct"
+      },
+      {
+        "date": "2026-05-27",
+        "reviewNumber": 3,
+        "dayLabel": "第4天复习",
+        "result": "correct"
+      }
+    ],
+    "customIntervals": null
+  },
+  {
+    "id": "1779630323379.016已经",
+    "word": "已经",
+    "learnDate": "2026-05-24",
+    "reviewDates": [],
+    "reviewHistory": [
+      {
+        "date": "2026-05-25",
+        "reviewNumber": 1,
+        "dayLabel": "第1天复习",
+        "result": "correct"
+      },
+      {
+        "date": "2026-05-26",
+        "reviewNumber": 2,
+        "dayLabel": "第2天复习",
+        "result": "correct"
+      },
+      {
+        "date": "2026-05-27",
+        "reviewNumber": 3,
+        "dayLabel": "第4天复习",
+        "result": "correct"
+      }
+    ],
+    "customIntervals": null
+  },
+  {
+    "id": "1779630486651.9966注意",
+    "word": "注意",
+    "learnDate": "2026-05-24",
+    "reviewDates": [],
+    "reviewHistory": [
+      {
+        "date": "2026-05-25",
+        "reviewNumber": 1,
+        "dayLabel": "第1天复习",
+        "result": "correct"
+      },
+      {
+        "date": "2026-05-26",
+        "reviewNumber": 2,
+        "dayLabel": "第2天复习",
+        "result": "correct"
+      },
+      {
+        "date": "2026-05-27",
+        "reviewNumber": 3,
+        "dayLabel": "第4天复习",
+        "result": "correct"
+      }
+    ],
+    "customIntervals": null
+  },
+  {
+    "id": "1779630508590.589忘记",
+    "word": "忘记",
+    "learnDate": "2026-05-24",
+    "reviewDates": [],
+    "reviewHistory": [
+      {
+        "date": "2026-05-25",
+        "reviewNumber": 1,
+        "dayLabel": "第1天复习",
+        "result": "correct"
+      },
+      {
+        "date": "2026-05-26",
+        "reviewNumber": 2,
+        "dayLabel": "第2天复习",
+        "result": "correct"
+      },
+      {
+        "date": "2026-05-27",
+        "reviewNumber": 3,
+        "dayLabel": "第4天复习",
+        "result": "correct"
+      }
+    ],
+    "customIntervals": null
+  },
+  {
+    "id": "1779630540260.6418原因",
+    "word": "原因",
+    "learnDate": "2026-05-24",
+    "reviewDates": [
+      "2026-05-25",
+      "2026-05-26",
+      "2026-05-28",
+      "2026-05-31",
+      "2026-06-08",
+      "2026-05-27",
+      "2026-05-30",
+      "2026-06-03"
+    ],
+    "reviewHistory": [
+      {
+        "date": "2026-05-25",
+        "reviewNumber": 1,
+        "dayLabel": "第1天复习",
+        "result": "wrong"
+      },
+      {
+        "date": "2026-05-26",
+        "reviewNumber": 2,
+        "dayLabel": "第2天复习",
+        "result": "correct"
+      },
+      {
+        "date": "2026-05-27",
+        "reviewNumber": 3,
+        "dayLabel": "第4天复习",
+        "result": "wrong"
+      }
+    ],
+    "customIntervals": null
+  },
+  {
+    "id": "1779630555479.7944为什么",
+    "word": "为什么",
+    "learnDate": "2026-05-24",
+    "reviewDates": [],
+    "reviewHistory": [
+      {
+        "date": "2026-05-25",
+        "reviewNumber": 1,
+        "dayLabel": "第1天复习",
+        "result": "correct"
+      },
+      {
+        "date": "2026-05-26",
+        "reviewNumber": 2,
+        "dayLabel": "第2天复习",
+        "result": "correct"
+      },
+      {
+        "date": "2026-05-27",
+        "reviewNumber": 3,
+        "dayLabel": "第4天复习",
+        "result": "correct"
+      }
+    ],
+    "customIntervals": null
+  },
+  {
+    "id": "1779630732521.0808块头",
+    "word": "块头",
+    "learnDate": "2026-05-24",
+    "reviewDates": [
+      "2026-05-25",
+      "2026-05-26",
+      "2026-05-28",
+      "2026-05-31",
+      "2026-06-08",
+      "2026-05-27",
+      "2026-05-30",
+      "2026-06-03"
+    ],
+    "reviewHistory": [
+      {
+        "date": "2026-05-25",
+        "reviewNumber": 1,
+        "dayLabel": "第1天复习",
+        "result": "correct"
+      },
+      {
+        "date": "2026-05-26",
+        "reviewNumber": 2,
+        "dayLabel": "第2天复习",
+        "result": "correct"
+      },
+      {
+        "date": "2026-05-27",
+        "reviewNumber": 3,
+        "dayLabel": "第4天复习",
+        "result": "wrong"
+      }
+    ],
+    "customIntervals": null
+  },
+  {
+    "id": "1779630830801.9863扛",
+    "word": "扛",
+    "learnDate": "2026-05-24",
+    "reviewDates": [],
+    "reviewHistory": [
+      {
+        "date": "2026-05-25",
+        "reviewNumber": 1,
+        "dayLabel": "第1天复习",
+        "result": "correct"
+      },
+      {
+        "date": "2026-05-26",
+        "reviewNumber": 2,
+        "dayLabel": "第2天复习",
+        "result": "correct"
+      },
+      {
+        "date": "2026-05-27",
+        "reviewNumber": 3,
+        "dayLabel": "第4天复习",
+        "result": "correct"
+      }
+    ],
+    "customIntervals": null
+  },
+  {
+    "id": "1779630904839.1875捧花",
+    "word": "捧花",
+    "learnDate": "2026-05-24",
+    "reviewDates": [
+      "2026-05-25",
+      "2026-05-26",
+      "2026-05-28",
+      "2026-05-31",
+      "2026-06-08",
+      "2026-05-27",
+      "2026-05-30",
+      "2026-06-03"
+    ],
+    "reviewHistory": [
+      {
+        "date": "2026-05-25",
+        "reviewNumber": 1,
+        "dayLabel": "第1天复习",
+        "result": "wrong"
+      },
+      {
+        "date": "2026-05-26",
+        "reviewNumber": 2,
+        "dayLabel": "第2天复习",
+        "result": "correct"
+      },
+      {
+        "date": "2026-05-27",
+        "reviewNumber": 3,
+        "dayLabel": "第4天复习",
+        "result": "correct"
+      }
+    ],
+    "customIntervals": null
+  },
+  {
+    "id": "1779631126173.1118追",
+    "word": "追",
+    "learnDate": "2026-05-24",
+    "reviewDates": [
+      "2026-05-25",
+      "2026-05-26",
+      "2026-05-28",
+      "2026-05-31",
+      "2026-06-08",
+      "2026-05-27",
+      "2026-05-30",
+      "2026-06-03"
+    ],
+    "reviewHistory": [
+      {
+        "date": "2026-05-25",
+        "reviewNumber": 1,
+        "dayLabel": "第1天复习",
+        "result": "wrong"
+      },
+      {
+        "date": "2026-05-26",
+        "reviewNumber": 2,
+        "dayLabel": "第2天复习",
+        "result": "correct"
+      },
+      {
+        "date": "2026-05-27",
+        "reviewNumber": 3,
+        "dayLabel": "第4天复习",
+        "result": "correct"
+      }
+    ],
+    "customIntervals": null
+  },
+  {
+    "id": "1779631129706.9902洗澡",
+    "word": "洗澡",
+    "learnDate": "2026-05-24",
+    "reviewDates": [],
+    "reviewHistory": [
+      {
+        "date": "2026-05-25",
+        "reviewNumber": 1,
+        "dayLabel": "第1天复习",
+        "result": "correct"
+      },
+      {
+        "date": "2026-05-26",
+        "reviewNumber": 2,
+        "dayLabel": "第2天复习",
+        "result": "correct"
+      },
+      {
+        "date": "2026-05-27",
+        "reviewNumber": 3,
+        "dayLabel": "第4天复习",
+        "result": "correct"
+      }
+    ],
+    "customIntervals": null
+  },
+  {
+    "id": "1779631160107.7385肥皂",
+    "word": "肥皂",
+    "learnDate": "2026-05-24",
+    "reviewDates": [
+      "2026-05-25",
+      "2026-05-26",
+      "2026-05-28",
+      "2026-05-31",
+      "2026-06-08",
+      "2026-05-27",
+      "2026-05-30",
+      "2026-06-03"
+    ],
+    "reviewHistory": [
+      {
+        "date": "2026-05-25",
+        "reviewNumber": 1,
+        "dayLabel": "第1天复习",
+        "result": "correct"
+      },
+      {
+        "date": "2026-05-26",
+        "reviewNumber": 2,
+        "dayLabel": "第2天复习",
+        "result": "correct"
+      },
+      {
+        "date": "2026-05-27",
+        "reviewNumber": 3,
+        "dayLabel": "第4天复习",
+        "result": "wrong"
+      }
+    ],
+    "customIntervals": null
+  },
+  {
+    "id": "1779631248418.831刷牙",
+    "word": "刷牙",
+    "learnDate": "2026-05-24",
+    "reviewDates": [],
+    "reviewHistory": [
+      {
+        "date": "2026-05-25",
+        "reviewNumber": 1,
+        "dayLabel": "第1天复习",
+        "result": "correct"
+      },
+      {
+        "date": "2026-05-26",
+        "reviewNumber": 2,
+        "dayLabel": "第2天复习",
+        "result": "correct"
+      },
+      {
+        "date": "2026-05-27",
+        "reviewNumber": 3,
+        "dayLabel": "第4天复习",
+        "result": "correct"
+      }
+    ],
+    "customIntervals": null
+  },
+  {
+    "id": "1779631253020.7424梳子",
+    "word": "梳子",
+    "learnDate": "2026-05-24",
+    "reviewDates": [],
+    "reviewHistory": [
+      {
+        "date": "2026-05-25",
+        "reviewNumber": 1,
+        "dayLabel": "第1天复习",
+        "result": "correct"
+      },
+      {
+        "date": "2026-05-26",
+        "reviewNumber": 2,
+        "dayLabel": "第2天复习",
+        "result": "correct"
+      },
+      {
+        "date": "2026-05-27",
+        "reviewNumber": 3,
+        "dayLabel": "第4天复习",
+        "result": "correct"
+      }
+    ],
+    "customIntervals": null
+  },
+  {
+    "id": "1779712525754.1255刷牙",
+    "word": "刷牙",
+    "learnDate": "2026-05-25",
+    "reviewDates": [
+      "2026-05-26",
+      "2026-05-27",
+      "2026-05-29",
+      "2026-06-01",
+      "2026-06-09",
+      "2026-05-28",
+      "2026-05-31"
+    ],
+    "reviewHistory": [
+      {
+        "date": "2026-05-26",
+        "reviewNumber": 1,
+        "dayLabel": "第1天复习",
+        "result": "correct"
+      },
+      {
+        "date": "2026-05-27",
+        "reviewNumber": 2,
+        "dayLabel": "第2天复习",
+        "result": "correct"
+      }
+    ],
+    "customIntervals": null
+  },
+  {
+    "id": "1779712539488.274注意",
+    "word": "注意",
+    "learnDate": "2026-05-25",
+    "reviewDates": [
+      "2026-05-26",
+      "2026-05-27",
+      "2026-05-29",
+      "2026-06-01",
+      "2026-06-09",
+      "2026-05-28",
+      "2026-05-31"
+    ],
+    "reviewHistory": [
+      {
+        "date": "2026-05-26",
+        "reviewNumber": 1,
+        "dayLabel": "第1天复习",
+        "result": "correct"
+      },
+      {
+        "date": "2026-05-27",
+        "reviewNumber": 2,
+        "dayLabel": "第2天复习",
+        "result": "correct"
+      }
+    ],
+    "customIntervals": null
+  },
+  {
+    "id": "1779713070063.6567忘",
+    "word": "忘",
+    "learnDate": "2026-05-25",
+    "reviewDates": [
+      "2026-05-26",
+      "2026-05-27",
+      "2026-05-29",
+      "2026-06-01",
+      "2026-06-09",
+      "2026-05-28",
+      "2026-05-31"
+    ],
+    "reviewHistory": [
+      {
+        "date": "2026-05-26",
+        "reviewNumber": 1,
+        "dayLabel": "第1天复习",
+        "result": "correct"
+      },
+      {
+        "date": "2026-05-27",
+        "reviewNumber": 2,
+        "dayLabel": "第2天复习",
+        "result": "correct"
+      }
+    ],
+    "customIntervals": null
+  },
+  {
+    "id": "1779713070064.8015捧",
+    "word": "捧",
+    "learnDate": "2026-05-25",
+    "reviewDates": [
+      "2026-05-26",
+      "2026-05-27",
+      "2026-05-29",
+      "2026-06-01",
+      "2026-06-09",
+      "2026-05-28",
+      "2026-05-31"
+    ],
+    "reviewHistory": [
+      {
+        "date": "2026-05-26",
+        "reviewNumber": 1,
+        "dayLabel": "第1天复习",
+        "result": "correct"
+      },
+      {
+        "date": "2026-05-27",
+        "reviewNumber": 2,
+        "dayLabel": "第2天复习",
+        "result": "correct"
+      }
+    ],
+    "customIntervals": null
+  },
+  {
+    "id": "1779713076968.4373扔",
+    "word": "扔",
+    "learnDate": "2026-05-25",
+    "reviewDates": [
+      "2026-05-26",
+      "2026-05-27",
+      "2026-05-29",
+      "2026-06-01",
+      "2026-06-09",
+      "2026-05-28",
+      "2026-05-31"
+    ],
+    "reviewHistory": [
+      {
+        "date": "2026-05-26",
+        "reviewNumber": 1,
+        "dayLabel": "第1天复习",
+        "result": "correct"
+      },
+      {
+        "date": "2026-05-27",
+        "reviewNumber": 2,
+        "dayLabel": "第2天复习",
+        "result": "correct"
+      }
+    ],
+    "customIntervals": null
+  },
+  {
+    "id": "1779713609808.3274真好",
+    "word": "真好",
+    "learnDate": "2026-05-25",
+    "reviewDates": [
+      "2026-05-26",
+      "2026-05-27",
+      "2026-05-29",
+      "2026-06-01",
+      "2026-06-09",
+      "2026-05-28",
+      "2026-05-31"
+    ],
+    "reviewHistory": [
+      {
+        "date": "2026-05-26",
+        "reviewNumber": 1,
+        "dayLabel": "第1天复习",
+        "result": "correct"
+      },
+      {
+        "date": "2026-05-27",
+        "reviewNumber": 2,
+        "dayLabel": "第2天复习",
+        "result": "correct"
+      }
+    ],
+    "customIntervals": null
+  },
+  {
+    "id": "1779713720547.4133好吧",
+    "word": "好吧",
+    "learnDate": "2026-05-25",
+    "reviewDates": [
+      "2026-05-26",
+      "2026-05-27",
+      "2026-05-29",
+      "2026-06-01",
+      "2026-06-09",
+      "2026-05-28",
+      "2026-05-31"
+    ],
+    "reviewHistory": [
+      {
+        "date": "2026-05-26",
+        "reviewNumber": 1,
+        "dayLabel": "第1天复习",
+        "result": "correct"
+      },
+      {
+        "date": "2026-05-27",
+        "reviewNumber": 2,
+        "dayLabel": "第2天复习",
+        "result": "wrong"
+      }
+    ],
+    "customIntervals": null
+  },
+  {
+    "id": "1779800570688.2693地点",
+    "word": "地点",
+    "learnDate": "2026-05-26",
+    "reviewDates": [
+      "2026-05-27",
+      "2026-05-28",
+      "2026-05-30",
+      "2026-06-02",
+      "2026-06-10",
+      "2026-05-29"
+    ],
+    "reviewHistory": [
+      {
+        "date": "2026-05-27",
+        "reviewNumber": 1,
+        "dayLabel": "第1天复习",
+        "result": "correct"
+      }
+    ],
+    "customIntervals": null
+  },
+  {
+    "id": "1779861827204.369树林旁边有一片绿油油的草地，小朋友们在草地上快乐地跑步，到处充满了笑声。",
+    "word": "树林旁边有一片绿油油的草地，小朋友们在草地上快乐地跑步，到处充满了笑声。",
+    "learnDate": "2026-05-27",
+    "reviewDates": [
+      "2026-05-28",
+      "2026-05-29",
+      "2026-05-31",
+      "2026-06-03",
+      "2026-06-11"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
+  },
+  {
+    "id": "1779872467252.4617哎呀拼音",
+    "word": "哎呀拼音",
+    "learnDate": "2026-05-27",
+    "reviewDates": [
+      "2026-05-28",
+      "2026-05-29",
+      "2026-05-31",
+      "2026-06-03",
+      "2026-06-11"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
+  },
+  {
+    "id": "1779885374511.7603石块",
+    "word": "石块",
+    "learnDate": "2026-05-27",
+    "reviewDates": [
+      "2026-05-28",
+      "2026-05-29",
+      "2026-05-31",
+      "2026-06-03",
+      "2026-06-11"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
+  },
+  {
+    "id": "1779885374513.6904通道",
+    "word": "通道",
+    "learnDate": "2026-05-27",
+    "reviewDates": [
+      "2026-05-28",
+      "2026-05-29",
+      "2026-05-31",
+      "2026-06-03",
+      "2026-06-11"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
+  },
+  {
+    "id": "1779885374513.8547铅笔",
+    "word": "铅笔",
+    "learnDate": "2026-05-27",
+    "reviewDates": [
+      "2026-05-28",
+      "2026-05-29",
+      "2026-05-31",
+      "2026-06-03",
+      "2026-06-11"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
+  },
+  {
+    "id": "1779887782557.896摇晃",
+    "word": "摇晃",
+    "learnDate": "2026-05-27",
+    "reviewDates": [
+      "2026-05-28",
+      "2026-05-29",
+      "2026-05-31",
+      "2026-06-03",
+      "2026-06-11"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
+  },
+  {
+    "id": "1779887782559.0286腰",
+    "word": "腰",
+    "learnDate": "2026-05-27",
+    "reviewDates": [
+      "2026-05-28",
+      "2026-05-29",
+      "2026-05-31",
+      "2026-06-03",
+      "2026-06-11"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
+  },
+  {
+    "id": "1779887782559.2021小偷",
+    "word": "小偷",
+    "learnDate": "2026-05-27",
+    "reviewDates": [
+      "2026-05-28",
+      "2026-05-29",
+      "2026-05-31",
+      "2026-06-03",
+      "2026-06-11"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
+  },
+  {
+    "id": "1779887782559.7017淘",
+    "word": "淘",
+    "learnDate": "2026-05-27",
+    "reviewDates": [
+      "2026-05-28",
+      "2026-05-29",
+      "2026-05-31",
+      "2026-06-03",
+      "2026-06-11"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
+  }
+]
