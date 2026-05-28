@@ -270,14 +270,37 @@
 
     /* 自定义删除确认弹窗样式 - 与网页风格完全一致 */
     .custom-confirm-modal {
-      background: white;
-      padding: 28px 24px 24px;
-      border-radius: 28px;
-      width: 90%;
-      max-width: 360px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-      text-align: center;
+      background: white; border-radius: 28px; padding: 32px 28px; max-width: 340px;
+      width: 90%; text-align: center;
     }
+    /* ========== 工具栏按钮样式 ========== */
+    .toolbar {
+      display: flex; gap: 10px; justify-content: center; margin-top: 6px;
+    }
+    .toolbar-btn {
+      flex: 1; max-width: 160px; background: white; border: 1px solid #d0d9e6;
+      border-radius: 14px; padding: 10px 12px; font-size: 14px; font-weight: 550;
+      color: #1e3a5f; cursor: pointer; display: flex; align-items: center;
+      justify-content: center; gap: 6px; transition: all 0.12s;
+      -webkit-appearance: none; -webkit-tap-highlight-color: transparent;
+    }
+    .toolbar-btn:active { background: #eef2f7; transform: scale(0.96); }
+    .toolbar-btn svg { width: 18px; height: 18px; flex-shrink: 0; }
+    .toolbar-btn.primary { background: #1e3a5f; color: white; border-color: #1e3a5f; }
+    .toolbar-btn.primary:active { background: #0f263b; }
+    /* ========== GitHub 同步弹窗 ========== */
+    .github-modal { background: white; border-radius: 28px; padding: 28px 24px; max-width: 380px; width: 92%; }
+    .github-modal h3 { font-size: 18px; margin-bottom: 16px; color: #0b1f33; }
+    .github-field { width: 100%; padding: 12px 14px; border: 1px solid #d0d9e6; border-radius: 12px; font-size: 14px; margin-bottom: 12px; outline: none; -webkit-appearance: none; }
+    .github-field:focus { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,0.12); }
+    .github-actions { display: flex; gap: 10px; margin-top: 8px; }
+    .github-btn { flex: 1; padding: 12px; border-radius: 14px; font-size: 15px; font-weight: 600; cursor: pointer; border: none; -webkit-appearance: none; }
+    .github-btn.cancel { background: #f1f5f9; color: #475569; }
+    .github-btn.submit { background: #1e3a5f; color: white; }
+    .github-btn.submit:active { background: #0f263b; }
+    .github-status { margin-top: 12px; font-size: 13px; color: #475569; text-align: center; min-height: 20px; }
+    .github-status.success { color: #15803d; }
+    .github-status.error { color: #dc2626; }
     .confirm-text {
       font-size: 17px;
       color: #1e3a5f;
@@ -352,6 +375,17 @@
       <span class="permanent-tag">可永久使用</span>
     </div>
   </div>
+  <!-- 工具栏 -->
+  <div class="toolbar">
+    <button class="toolbar-btn" id="exportBtn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      导出数据
+    </button>
+    <button class="toolbar-btn primary" id="syncBtn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg>
+      同步 GitHub
+    </button>
+  </div>
 </div>
 
 <div class="ocr-loading" id="ocrLoading">正在识别文字，请稍候...</div>
@@ -418,6 +452,21 @@
       <button class="btn-confirm-delete" id="confirmDeleteBtn">确认</button>
       <button class="btn-cancel-delete" id="cancelDeleteBtn">取消</button>
     </div>
+  </div>
+</div>
+
+<!-- GitHub 同步弹窗 -->
+<div class="modal-overlay" id="githubOverlay">
+  <div class="github-modal">
+    <h3>🔄 同步到 GitHub</h3>
+    <input type="text" class="github-field" id="githubToken" placeholder="GitHub Personal Access Token" autocomplete="off" spellcheck="false">
+    <input type="text" class="github-field" id="githubRepo" placeholder="仓库: owner/repo（例如 username/repo）" autocomplete="off" spellcheck="false">
+    <input type="text" class="github-field" id="githubPath" placeholder="文件路径（例如 data.json）" value="data.json" autocomplete="off" spellcheck="false">
+    <div class="github-actions">
+      <button class="github-btn cancel" id="githubCancel">取消</button>
+      <button class="github-btn submit" id="githubSubmit">同步到 GitHub</button>
+    </div>
+    <div class="github-status" id="githubStatus"></div>
   </div>
 </div>
 
@@ -749,6 +798,104 @@
     });
   }
   
+  // ========== 导出数据 ==========
+  function exportData(){
+    const saved = loadData();
+    if(!saved || saved.length === 0){
+      alert('当前没有数据可导出。');
+      return;
+    }
+    const dataStr = JSON.stringify(saved, null, 2);
+    const blob = new Blob([dataStr], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    const dateStr = formatYMD(new Date());
+    a.download = `cuozi_backup_${dateStr}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+  // ========== 同步到 GitHub ==========
+  let isSyncing = false;
+  function openGithubModal(){
+    document.getElementById('githubToken').value = localStorage.getItem('github_token') || '';
+    document.getElementById('githubRepo').value = localStorage.getItem('github_repo') || '';
+    document.getElementById('githubPath').value = localStorage.getItem('github_path') || 'data.json';
+    document.getElementById('githubStatus').textContent = '';
+    document.getElementById('githubStatus').className = 'github-status';
+    document.getElementById('githubOverlay').classList.add('show');
+  }
+  function closeGithubModal(){
+    document.getElementById('githubOverlay').classList.remove('show');
+  }
+  async function syncToGithub(){
+    if(isSyncing) return;
+    const token = document.getElementById('githubToken').value.trim();
+    const repo = document.getElementById('githubRepo').value.trim();
+    const path = document.getElementById('githubPath').value.trim();
+    const statusEl = document.getElementById('githubStatus');
+    if(!token || !repo || !path){
+      statusEl.textContent = '请填写所有字段';
+      statusEl.className = 'github-status error';
+      return;
+    }
+    const saved = loadData();
+    if(!saved || saved.length === 0){
+      statusEl.textContent = '没有数据可同步';
+      statusEl.className = 'github-status error';
+      return;
+    }
+    isSyncing = true;
+    statusEl.textContent = '正在同步...';
+    statusEl.className = 'github-status';
+    try {
+      const content = btoa(unescape(encodeURIComponent(JSON.stringify(saved, null, 2))));
+      // 先检查文件是否存在，获取 SHA
+      let sha = null;
+      const checkUrl = `https://api.github.com/repos/${repo}/contents/${encodeURIComponent(path)}`;
+      const checkRes = await fetch(checkUrl, {
+        headers: { 'Authorization': `Bearer ${token}`, 'Accept': 'application/vnd.github.v3+json' }
+      });
+      if(checkRes.ok){
+        const existing = await checkRes.json();
+        sha = existing.sha;
+      } else if(checkRes.status !== 404){
+        const err = await checkRes.json();
+        statusEl.textContent = `检查文件失败: ${err.message || checkRes.status}`;
+        statusEl.className = 'github-status error';
+        isSyncing = false;
+        return;
+      }
+      // 创建或更新文件
+      const body = { message: `更新错字复习数据 ${formatYMD(new Date())}`, content };
+      if(sha) body.sha = sha;
+      const res = await fetch(checkUrl, {
+        method: 'PUT',
+        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json', 'Accept': 'application/vnd.github.v3+json' },
+        body: JSON.stringify(body)
+      });
+      if(res.ok){
+        statusEl.textContent = '✅ 同步成功！数据已推送到 GitHub';
+        statusEl.className = 'github-status success';
+        // 保存凭据
+        localStorage.setItem('github_token', token);
+        localStorage.setItem('github_repo', repo);
+        localStorage.setItem('github_path', path);
+      } else {
+        const err = await res.json();
+        statusEl.textContent = `同步失败: ${err.message || res.status}`;
+        statusEl.className = 'github-status error';
+      }
+    } catch(e){
+      statusEl.textContent = `网络错误: ${e.message}`;
+      statusEl.className = 'github-status error';
+    }
+    isSyncing = false;
+  }
+
   function init(){
     const saved = loadData();
     wordsData = saved || [];
@@ -791,6 +938,16 @@
     document.getElementById('cancelDeleteBtn').addEventListener('click', closeDeleteConfirmModal);
     deleteConfirmOverlay.addEventListener('click', e => {
       if (e.target === deleteConfirmOverlay) closeDeleteConfirmModal();
+    });
+
+    // 导出与同步按钮
+    document.getElementById('exportBtn').addEventListener('click', exportData);
+    document.getElementById('syncBtn').addEventListener('click', openGithubModal);
+    document.getElementById('githubCancel').addEventListener('click', closeGithubModal);
+    document.getElementById('githubSubmit').addEventListener('click', syncToGithub);
+    const githubOverlay = document.getElementById('githubOverlay');
+    githubOverlay.addEventListener('click', e => {
+      if(e.target === githubOverlay) closeGithubModal();
     });
 
     initCameraOCR();
