@@ -290,17 +290,25 @@
     .toolbar-btn.primary:active { background: #0f263b; }
     /* ========== GitHub 同步弹窗 ========== */
     .github-modal { background: white; border-radius: 28px; padding: 28px 24px; max-width: 380px; width: 92%; }
-    .github-modal h3 { font-size: 18px; margin-bottom: 16px; color: #0b1f33; }
-    .github-field { width: 100%; padding: 12px 14px; border: 1px solid #d0d9e6; border-radius: 12px; font-size: 14px; margin-bottom: 12px; outline: none; -webkit-appearance: none; }
+    .github-modal h3 { font-size: 18px; margin-bottom: 12px; color: #0b1f33; }
+    .github-modal .desc { font-size: 13px; color: #64748b; line-height: 1.5; margin-bottom: 16px; }
+    .github-modal .desc strong { color: #0b1f33; }
+    .github-field { width: 100%; padding: 12px 14px; border: 1px solid #d0d9e6; border-radius: 12px; font-size: 14px; margin-bottom: 6px; outline: none; -webkit-appearance: none; box-sizing: border-box; }
     .github-field:focus { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,0.12); }
-    .github-actions { display: flex; gap: 10px; margin-top: 8px; }
+    .github-tip { font-size: 12px; color: #94a3b8; margin-bottom: 14px; line-height: 1.4; }
+    .github-tip a { color: #3b82f6; text-decoration: none; }
+    .github-actions { display: flex; gap: 10px; margin-top: 8px; flex-direction: column; }
+    .github-actions.row { flex-direction: row; }
     .github-btn { flex: 1; padding: 12px; border-radius: 14px; font-size: 15px; font-weight: 600; cursor: pointer; border: none; -webkit-appearance: none; }
     .github-btn.cancel { background: #f1f5f9; color: #475569; }
     .github-btn.submit { background: #1e3a5f; color: white; }
     .github-btn.submit:active { background: #0f263b; }
-    .github-status { margin-top: 12px; font-size: 13px; color: #475569; text-align: center; min-height: 20px; }
-    .github-status.success { color: #15803d; }
-    .github-status.error { color: #dc2626; }
+    .github-btn.download { background: #8B5CF6; color: white; }
+    .github-btn.download:active { background: #7C3AED; }
+    .github-status { margin-top: 10px; font-size: 13px; color: #475569; text-align: center; min-height: 20px; padding: 8px 12px; border-radius: 10px; background: #f8fafc; }
+    .github-status.success { color: #15803d; background: #f0fdf4; }
+    .github-status.error { color: #dc2626; background: #fef2f2; }
+    .github-status.loading { color: #1e40af; background: #dbeafe; }
     .confirm-text {
       font-size: 17px;
       color: #1e3a5f;
@@ -458,15 +466,18 @@
 <!-- GitHub 同步弹窗 -->
 <div class="modal-overlay" id="githubOverlay">
   <div class="github-modal">
-    <h3>🔄 同步到 GitHub</h3>
-    <input type="text" class="github-field" id="githubToken" placeholder="GitHub Personal Access Token" autocomplete="off" spellcheck="false">
-    <input type="text" class="github-field" id="githubRepo" placeholder="仓库: owner/repo（例如 username/repo）" autocomplete="off" spellcheck="false">
-    <input type="text" class="github-field" id="githubPath" placeholder="文件路径（例如 data.json）" value="data.json" autocomplete="off" spellcheck="false">
+    <h3>☁️ GitHub 同步</h3>
+    <p class="desc">将学习数据同步到 <strong>wangwx2019/cuozifuxi</strong> 仓库，多设备共享进度。</p>
+    <input type="password" class="github-field" id="githubToken" placeholder="GitHub Personal Access Token" autocomplete="off" spellcheck="false">
+    <p class="github-tip">需要 <strong>repo</strong> 权限。可在 <a href="https://github.com/settings/tokens" target="_blank">GitHub Token设置</a> 生成。</p>
+    <div class="github-status" id="githubStatus">就绪</div>
     <div class="github-actions">
-      <button class="github-btn cancel" id="githubCancel">取消</button>
-      <button class="github-btn submit" id="githubSubmit">同步到 GitHub</button>
+      <div class="github-actions row">
+        <button class="github-btn submit" id="githubSubmit">⬆️ 上传到 GitHub</button>
+        <button class="github-btn download" id="githubDownload">⬇️ 从 GitHub 下载</button>
+      </div>
+      <button class="github-btn cancel" id="githubCancel">关闭</button>
     </div>
-    <div class="github-status" id="githubStatus"></div>
   </div>
 </div>
 
@@ -818,45 +829,50 @@
     URL.revokeObjectURL(url);
   }
 
-  // ========== 同步到 GitHub ==========
-  let isSyncing = false;
+  // ========== 同步到 GitHub（硬编码仓库：wangwx2019/cuozifuxi）==========
+  const GITHUB_REPO_FULL = 'wangwx2019/cuozifuxi';
+  const GITHUB_FILE_PATH = 'data/cuozifuxi-data.json';
+
   function openGithubModal(){
-    document.getElementById('githubToken').value = localStorage.getItem('github_token') || '';
-    document.getElementById('githubRepo').value = localStorage.getItem('github_repo') || '';
-    document.getElementById('githubPath').value = localStorage.getItem('github_path') || 'data.json';
-    document.getElementById('githubStatus').textContent = '';
-    document.getElementById('githubStatus').className = 'github-status';
+    const saved = localStorage.getItem('github_token_cuozifuxi');
+    if (saved) document.getElementById('githubToken').value = saved;
+    const el = document.getElementById('githubStatus');
+    el.textContent = '就绪';
+    el.className = 'github-status';
     document.getElementById('githubOverlay').classList.add('show');
   }
   function closeGithubModal(){
     document.getElementById('githubOverlay').classList.remove('show');
   }
-  async function syncToGithub(){
-    if(isSyncing) return;
+  function setGithubStatus(text, type){
+    const el = document.getElementById('githubStatus');
+    el.textContent = text;
+    el.className = 'github-status' + (type ? ' ' + type : '');
+  }
+  function getGithubToken(){
     const token = document.getElementById('githubToken').value.trim();
-    const repo = document.getElementById('githubRepo').value.trim();
-    const path = document.getElementById('githubPath').value.trim();
-    const statusEl = document.getElementById('githubStatus');
-    if(!token || !repo || !path){
-      statusEl.textContent = '请填写所有字段';
-      statusEl.className = 'github-status error';
-      return;
+    if(!token){
+      setGithubStatus('❌ 请先输入 GitHub Token', 'error');
+      return null;
     }
+    localStorage.setItem('github_token_cuozifuxi', token);
+    return token;
+  }
+  async function syncToGithub(){
+    const token = getGithubToken();
+    if(!token) return;
     const saved = loadData();
     if(!saved || saved.length === 0){
-      statusEl.textContent = '没有数据可同步';
-      statusEl.className = 'github-status error';
+      setGithubStatus('⚠️ 本地没有数据可同步', 'error');
       return;
     }
-    isSyncing = true;
-    statusEl.textContent = '正在同步...';
-    statusEl.className = 'github-status';
+    setGithubStatus('⏳ 正在上传到 GitHub...', 'loading');
     try {
       const content = btoa(unescape(encodeURIComponent(JSON.stringify(saved, null, 2))));
+      const url = `https://api.github.com/repos/${GITHUB_REPO_FULL}/contents/${GITHUB_FILE_PATH}`;
       // 先检查文件是否存在，获取 SHA
       let sha = null;
-      const checkUrl = `https://api.github.com/repos/${repo}/contents/${encodeURIComponent(path)}`;
-      const checkRes = await fetch(checkUrl, {
+      const checkRes = await fetch(url, {
         headers: { 'Authorization': `Bearer ${token}`, 'Accept': 'application/vnd.github.v3+json' }
       });
       if(checkRes.ok){
@@ -864,36 +880,54 @@
         sha = existing.sha;
       } else if(checkRes.status !== 404){
         const err = await checkRes.json();
-        statusEl.textContent = `检查文件失败: ${err.message || checkRes.status}`;
-        statusEl.className = 'github-status error';
-        isSyncing = false;
+        setGithubStatus(`❌ 检查文件失败: ${err.message || checkRes.status}`, 'error');
         return;
       }
-      // 创建或更新文件
       const body = { message: `更新错字复习数据 ${formatYMD(new Date())}`, content };
       if(sha) body.sha = sha;
-      const res = await fetch(checkUrl, {
+      const res = await fetch(url, {
         method: 'PUT',
         headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json', 'Accept': 'application/vnd.github.v3+json' },
         body: JSON.stringify(body)
       });
       if(res.ok){
-        statusEl.textContent = '✅ 同步成功！数据已推送到 GitHub';
-        statusEl.className = 'github-status success';
-        // 保存凭据
-        localStorage.setItem('github_token', token);
-        localStorage.setItem('github_repo', repo);
-        localStorage.setItem('github_path', path);
+        setGithubStatus('✅ 上传成功！数据已同步到 GitHub', 'success');
       } else {
         const err = await res.json();
-        statusEl.textContent = `同步失败: ${err.message || res.status}`;
-        statusEl.className = 'github-status error';
+        setGithubStatus(`❌ 上传失败: ${err.message || res.status}`, 'error');
       }
     } catch(e){
-      statusEl.textContent = `网络错误: ${e.message}`;
-      statusEl.className = 'github-status error';
+      setGithubStatus(`❌ 网络错误: ${e.message}`, 'error');
     }
-    isSyncing = false;
+  }
+  async function downloadFromGithub(){
+    const token = getGithubToken();
+    if(!token) return;
+    setGithubStatus('⏳ 正在从 GitHub 下载...', 'loading');
+    try {
+      const url = `https://api.github.com/repos/${GITHUB_REPO_FULL}/contents/${GITHUB_FILE_PATH}`;
+      const res = await fetch(url, {
+        headers: { 'Authorization': `Bearer ${token}`, 'Accept': 'application/vnd.github.v3+json' }
+      });
+      if(!res.ok){
+        setGithubStatus('❌ 下载失败：仓库中暂无同步数据', 'error');
+        return;
+      }
+      const data = await res.json();
+      const decoded = decodeURIComponent(escape(atob(data.content)));
+      const imported = JSON.parse(decoded);
+      if(!Array.isArray(imported)){
+        setGithubStatus('❌ 云端数据格式不正确', 'error');
+        return;
+      }
+      wordsData = imported;
+      saveData();
+      renderAll();
+      closeGithubModal();
+      alert('✅ 数据下载成功！已从 GitHub 恢复最新数据。\n页面已刷新。');
+    } catch(e){
+      setGithubStatus(`❌ 网络错误: ${e.message}`, 'error');
+    }
   }
 
   function init(){
@@ -945,6 +979,7 @@
     document.getElementById('syncBtn').addEventListener('click', openGithubModal);
     document.getElementById('githubCancel').addEventListener('click', closeGithubModal);
     document.getElementById('githubSubmit').addEventListener('click', syncToGithub);
+    document.getElementById('githubDownload').addEventListener('click', downloadFromGithub);
     const githubOverlay = document.getElementById('githubOverlay');
     githubOverlay.addEventListener('click', e => {
       if(e.target === githubOverlay) closeGithubModal();
