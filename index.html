@@ -468,7 +468,7 @@
   <div class="github-modal">
     <h3>☁️ GitHub 同步</h3>
     <p class="desc">将学习数据同步到 <strong>wangwx2019/cuozifuxi</strong> 仓库，多设备共享进度。</p>
-    <input type="password" class="github-field" id="githubToken" placeholder="GitHub Personal Access Token" autocomplete="off" spellcheck="false">
+    <input type="password" class="github-field" id="githubToken" placeholder="GitHub Personal Access Token" autocomplete="off" spellcheck="false" oninput="localStorage.setItem('github_token_cuozifuxi', this.value.trim())">
     <p class="github-tip">需要 <strong>repo</strong> 权限。可在 <a href="https://github.com/settings/tokens" target="_blank">GitHub Token设置</a> 生成。</p>
     <div class="github-status" id="githubStatus">就绪</div>
     <div class="github-actions">
