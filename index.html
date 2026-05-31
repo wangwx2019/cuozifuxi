@@ -472,10 +472,7 @@
     <p class="github-tip">需要 <strong>repo</strong> 权限。可在 <a href="https://github.com/settings/tokens" target="_blank">GitHub Token设置</a> 生成。</p>
     <div class="github-status" id="githubStatus">就绪</div>
     <div class="github-actions">
-      <div class="github-actions row">
-        <button class="github-btn submit" id="githubSubmit">⬆️ 上传到 GitHub</button>
-        <button class="github-btn download" id="githubDownload">⬇️ 从 GitHub 下载</button>
-      </div>
+      <button class="github-btn submit" id="githubSubmit">☁️ 同步到 GitHub</button>
       <button class="github-btn cancel" id="githubCancel">关闭</button>
     </div>
   </div>
@@ -892,6 +889,7 @@
       });
       if(res.ok){
         setGithubStatus('✅ 上传成功！数据已同步到 GitHub', 'success');
+        closeGithubModal();
       } else {
         const err = await res.json();
         setGithubStatus(`❌ 上传失败: ${err.message || res.status}`, 'error');
@@ -900,39 +898,33 @@
       setGithubStatus(`❌ 网络错误: ${e.message}`, 'error');
     }
   }
-  async function downloadFromGithub(){
-    const token = getGithubToken();
+  // ===== 启动时从 GitHub 自动拉取数据 =====
+  async function loadFromGithub(){
+    const token = localStorage.getItem('github_token_cuozifuxi');
     if(!token) return;
-    setGithubStatus('⏳ 正在从 GitHub 下载...', 'loading');
     try {
       const url = `https://api.github.com/repos/${GITHUB_REPO_FULL}/contents/${GITHUB_FILE_PATH}`;
       const res = await fetch(url, {
         headers: { 'Authorization': `Bearer ${token}`, 'Accept': 'application/vnd.github.v3+json' }
       });
-      if(!res.ok){
-        setGithubStatus('❌ 下载失败：仓库中暂无同步数据', 'error');
-        return;
-      }
+      if(!res.ok) return;
       const data = await res.json();
       const decoded = decodeURIComponent(escape(atob(data.content)));
       const imported = JSON.parse(decoded);
-      if(!Array.isArray(imported)){
-        setGithubStatus('❌ 云端数据格式不正确', 'error');
-        return;
-      }
+      if(!Array.isArray(imported) || imported.length === 0) return;
       wordsData = imported;
       saveData();
       renderAll();
-      closeGithubModal();
-      alert('✅ 数据下载成功！已从 GitHub 恢复最新数据。\n页面已刷新。');
+      console.log('✅ 已从 GitHub 自动加载最新错字数据');
     } catch(e){
-      setGithubStatus(`❌ 网络错误: ${e.message}`, 'error');
+      console.log('📁 从 GitHub 加载失败，使用本地数据');
     }
   }
 
   function init(){
     const saved = loadData();
     wordsData = saved || [];
+    loadFromGithub();
     
     // 原有事件绑定
     document.getElementById('prevMonthBtn').addEventListener('click',()=>{ currentDisplayDate.setMonth(currentDisplayDate.getMonth()-1); renderAll(); });
@@ -979,7 +971,6 @@
     document.getElementById('syncBtn').addEventListener('click', openGithubModal);
     document.getElementById('githubCancel').addEventListener('click', closeGithubModal);
     document.getElementById('githubSubmit').addEventListener('click', syncToGithub);
-    document.getElementById('githubDownload').addEventListener('click', downloadFromGithub);
     const githubOverlay = document.getElementById('githubOverlay');
     githubOverlay.addEventListener('click', e => {
       if(e.target === githubOverlay) closeGithubModal();
