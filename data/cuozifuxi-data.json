@@ -954,5 +954,33 @@
     ],
     "reviewHistory": [],
     "customIntervals": null
+  },
+  {
+    "id": "1780214729832.7905姓名拼音后鼻音",
+    "word": "姓名拼音后鼻音",
+    "learnDate": "2026-05-31",
+    "reviewDates": [
+      "2026-06-01",
+      "2026-06-02",
+      "2026-06-04",
+      "2026-06-07",
+      "2026-06-15"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
+  },
+  {
+    "id": "1780214739512.0764您好前鼻音",
+    "word": "您好前鼻音",
+    "learnDate": "2026-05-31",
+    "reviewDates": [
+      "2026-06-01",
+      "2026-06-02",
+      "2026-06-04",
+      "2026-06-07",
+      "2026-06-15"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
   }
 ]
