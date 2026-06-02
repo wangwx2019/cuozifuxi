@@ -966,7 +966,14 @@
       "2026-06-07",
       "2026-06-15"
     ],
-    "reviewHistory": [],
+    "reviewHistory": [
+      {
+        "date": "2026-06-02",
+        "reviewNumber": 1,
+        "dayLabel": "第1天复习",
+        "result": "correct"
+      }
+    ],
     "customIntervals": null
   },
   {
@@ -979,6 +986,55 @@
       "2026-06-04",
       "2026-06-07",
       "2026-06-15"
+    ],
+    "reviewHistory": [
+      {
+        "date": "2026-06-02",
+        "reviewNumber": 1,
+        "dayLabel": "第1天复习",
+        "result": "wrong"
+      }
+    ],
+    "customIntervals": null
+  },
+  {
+    "id": "1780408204285.9956帮忙",
+    "word": "帮忙",
+    "learnDate": "2026-06-02",
+    "reviewDates": [
+      "2026-06-03",
+      "2026-06-04",
+      "2026-06-06",
+      "2026-06-09",
+      "2026-06-17"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
+  },
+  {
+    "id": "1780408575953.8857好啊",
+    "word": "好啊",
+    "learnDate": "2026-06-02",
+    "reviewDates": [
+      "2026-06-03",
+      "2026-06-04",
+      "2026-06-06",
+      "2026-06-09",
+      "2026-06-17"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
+  },
+  {
+    "id": "1780409058401.2505扔掉",
+    "word": "扔掉",
+    "learnDate": "2026-06-02",
+    "reviewDates": [
+      "2026-06-03",
+      "2026-06-04",
+      "2026-06-06",
+      "2026-06-09",
+      "2026-06-17"
     ],
     "reviewHistory": [],
     "customIntervals": null
