@@ -536,9 +536,10 @@
   }
 
   function computeStrength(w){ 
-    let s=25; 
+    // 每次正确 +20%，5 次全对刚好 100%，与 5 次 Ebbinghaus 间隔匹配
+    let s=0; 
     w.reviewHistory.forEach(r=>{ 
-      if(r.result==='correct') s=Math.min(100,s+25); 
+      if(r.result==='correct') s=Math.min(100,s+20); 
       else s=Math.max(0,s-10); 
     }); 
     return s; 
@@ -751,7 +752,7 @@
         return `<div class="review-card" data-word-id="${w.id}">
           ${w.reviewHistory.length?`<div class="card-header-row"><span>${title}</span><span>学习于: ${w.learnDate}</span></div>`:''}
           <div class="word-big">${w.word}</div>
-          <div class="strength-row"><span>当前记忆强度: ${s}%</span><span>本次复习正确可增加: 25%</span></div>
+          <div class="strength-row"><span>当前记忆强度: ${s}%</span><span>本次复习正确可增加: 20%</span></div>
           <div class="action-btns"><button class="btn-remember">已记住</button><button class="btn-forget">忘记</button></div>
           ${histHtml}</div>`;
       }).join('');
@@ -763,8 +764,8 @@
       if(!cards.length){ container.innerHTML='<div class="empty-msg">暂无已复习记录</div>'; return; }
       container.innerHTML=cards.map(w=>{
         const s=computeStrength(w); const hist=[...w.reviewHistory].sort((a,b)=>a.date.localeCompare(b.date)); const last=hist[hist.length-1]; if(!last) return '';
-        let before=25; for(let i=0;i<hist.length-1;i++){ before+=(hist[i].result==='correct'?25:-10); before=Math.min(100,Math.max(0,before)); }
-        const ch=last.result==='correct'?'+25%':'-10%', sym=last.result==='correct'?'✓':'✗', txt=last.result==='correct'?'正确':'错误';
+        let before=0; for(let i=0;i<hist.length-1;i++){ before+=(hist[i].result==='correct'?20:-10); before=Math.min(100,Math.max(0,before)); }
+        const ch=last.result==='correct'?'+20%':'-10%', sym=last.result==='correct'?'✓':'✗', txt=last.result==='correct'?'正确':'错误';
         let histHtml=hist.map(h=>`<div class="history-row"><span class="history-left">${h.date} ${h.dayLabel}:</span><span class="history-right ${h.result==='correct'?'correct':'wrong'}">${h.result==='correct'?'正确':'错误'}</span></div>`).join('');
         return `<div class="review-card reviewed-card" data-word-id="${w.id}">
           <div class="card-header-row"><span>已复习 #${last.reviewNumber} ${last.dayLabel}</span><span>学习于: ${w.learnDate}</span></div>
@@ -929,7 +930,8 @@
       if(!Array.isArray(imported) || imported.length === 0) return;
       wordsData = imported;
       saveData();
-      renderAll();
+      // 不调用 renderAll()，避免二次渲染闪烁。
+      // 本地数据已渲染，云端数据存到下次打开生效。
       console.log('✅ 已从 GitHub 自动加载最新错字数据');
     } catch(e){
       console.log('📁 从 GitHub 加载失败，使用本地数据');
