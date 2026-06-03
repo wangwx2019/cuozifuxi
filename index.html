@@ -63,6 +63,7 @@
     }
     .cal-cell.selected { background: #e2edff; border: 2px solid #3b82f6; }
     .cal-cell.other-month { opacity: 0.45; }
+    .cal-cell.today { background: #fefce8; border: 2px solid #eab308; }
     .day-num { font-weight: 600; font-size: 16px; margin-bottom: 6px; color: #1e2f40; }
     .badge-container { display: flex; justify-content: center; gap: 5px; flex-wrap: wrap; }
     .badge {
@@ -548,7 +549,8 @@
     let n=0,p=0,m=0;
     wordsData.forEach(w=>{ 
       if(w.learnDate===t) n++; 
-      if(w.reviewDates.includes(t) && !w.reviewHistory.some(h=>h.date===t)) p++; 
+      // 有 ≤ 今天的未完成复习 → 计入今日待复习（含过期未补的）
+      if(w.reviewDates.some(rd => rd <= t) && !w.reviewHistory.some(h=>h.date===t)) p++; 
       if(computeStrength(w)>=100) m++; 
     });
     document.getElementById('todayNew').textContent=n; 
@@ -558,9 +560,12 @@
   
   function getDateStats(ds){ 
     let n=0,p=0,r=0; 
+    const today = getTodayStr();
+    const isToday = ds === today;
     wordsData.forEach(w=>{ 
       if(w.learnDate===ds) n++; 
-      if(w.reviewDates.includes(ds)){ 
+      // 今天→累计过期；其他日期→只显示该日本身的计划
+      if(isToday ? w.reviewDates.some(rd => rd <= ds) : w.reviewDates.includes(ds)){ 
         if(!w.reviewHistory.some(h=>h.date===ds)) p++; 
       } 
       if(w.reviewHistory.some(h=>h.date===ds)) r++; 
@@ -569,15 +574,16 @@
   }
   
   function getNewWords(ds){ return wordsData.filter(w=> w.learnDate===ds); }
-  function getPendingCards(ds){ return wordsData.filter(w=> w.reviewDates.includes(ds) && !w.reviewHistory.some(h=>h.date===ds)); }
+  function getPendingCards(ds){ return wordsData.filter(w=> w.reviewDates.some(rd=> rd <= ds) && !w.reviewHistory.some(h=>h.date===ds)); }
   function getAllReviewedWords(){ return wordsData.filter(w=> w.reviewHistory.length > 0 && computeStrength(w) < 100); }
   function getMasteredWords(){ return wordsData.filter(w=> computeStrength(w)>=100); }
-  function scheduleNextReviews(w, baseStr){
+  function scheduleNextReviews(w, baseStr, forceReset = false){
     if(computeStrength(w)>=100){ w.reviewDates=[]; return; }
     const base=parseYMD(baseStr); 
-    const idx=w.reviewHistory.length;
+    // forceReset=true → 从头开始算间隔（答错时）
+    const effectiveIdx = forceReset ? 0 : w.reviewHistory.length;
     const intervals = w.customIntervals || DEFAULT_INTERVALS;
-    const interval = intervals[idx % intervals.length];
+    const interval = intervals[effectiveIdx % intervals.length];
     const nextDate = addDays(base, interval);
     const nextStr = formatYMD(nextDate);
     if(!w.reviewDates.includes(nextStr)) w.reviewDates.push(nextStr);
@@ -594,16 +600,23 @@
   
   function processReview(wordId, isCorrect){
     const w=wordsData.find(w=>w.id===wordId); if(!w) return;
-    const today=selectedDateStr; 
+    const today = getTodayStr(); // 始终按实际复习日期计算
     const idx=w.reviewHistory.length;
     const intervals = w.customIntervals || DEFAULT_INTERVALS;
     const intervalIndex = idx % intervals.length;
-    const dayLabel = intervals[intervalIndex] + '天复习';
+    // 正确用当前间隔，错误用 intervals[0]（与 forceReset 一致）
+    const effectiveLabel = isCorrect ? intervals[intervalIndex] : intervals[0];
+    const dayLabel = effectiveLabel + '天复习';
     w.reviewHistory.push({ date:today, reviewNumber:idx+1, dayLabel:`第${dayLabel}`, result:isCorrect?'correct':'wrong' });
-    scheduleNextReviews(w, today); 
+    // 清理已过期的旧 reviewDates（早于等于本次的都已失效）
+    w.reviewDates = w.reviewDates.filter(rd => rd > today);
+    // 正确→正常推进；错误→forceReset 回到第1天间隔
+    scheduleNextReviews(w, today, !isCorrect);
     if(computeStrength(w)>=100) w.reviewDates=[];
     saveData();
-    currentViewMode = 'reviewed';
+    // 还有待复习卡片则留在当前 tab，最后一张复习完才切到已复习
+    const remaining = getPendingCards(selectedDateStr);
+    currentViewMode = remaining.length === 0 ? 'reviewed' : 'pending';
     renderAll(); updateHomeStats(); renderModalContent(selectedDateStr);
   }
   function addNewWords(raw, customIntervals = null){
@@ -614,9 +627,10 @@
     words.forEach(txt=>{
       const id = Date.now() + Math.random() + txt; 
       const base = parseYMD(today);
-      const dates = intervals.map(iv => formatYMD(addDays(base, iv)));
+      // 只生成第一次复习日期，后续每次复习完再推算下一次
+      const firstReview = formatYMD(addDays(base, intervals[0]));
       wordsData.push({ 
-        id, word:txt, learnDate:today, reviewDates:dates, reviewHistory:[],
+        id, word:txt, learnDate:today, reviewDates:[firstReview], reviewHistory:[],
         customIntervals: customIntervals ? intervals : null
       });
     });
@@ -635,10 +649,11 @@
     for(let d=1;d<=daysInMonth;d++){ cells.push({ date:new Date(y,m,d), isCurrentMonth:true }); }
     const rem=42-cells.length; for(let d=1;d<=rem;d++){ cells.push({ date:new Date(y,m+1,d), isCurrentMonth:false }); }
     grid.innerHTML='';
+    const todayStr = getTodayStr();
     cells.forEach(c=>{
-      const d=c.date, ds=formatYMD(d), st=getDateStats(ds), sel=ds===selectedDateStr;
+      const d=c.date, ds=formatYMD(d), st=getDateStats(ds), sel=ds===selectedDateStr, ist=ds===todayStr;
       const div=document.createElement('div'); 
-      div.className=`cal-cell ${c.isCurrentMonth?'':'other-month'} ${sel?'selected':''}`;
+      div.className=`cal-cell ${c.isCurrentMonth?'':'other-month'} ${sel?'selected':''} ${ist&&!sel?'today':''}`;
       div.innerHTML=`<div class="day-num">${d.getDate()}</div><div class="badge-container">${st.newCount>0?`<span class="badge blue">${st.newCount}</span>`:''}${st.pendingCount>0?`<span class="badge yellow">${st.pendingCount}</span>`:''}${st.reviewedCount>0?`<span class="badge red">${st.reviewedCount}</span>`:''}</div>`;
       div.addEventListener('click',()=>{ selectedDateStr=ds; currentDisplayDate=new Date(d); currentViewMode='new'; renderCalendar(); openModal(ds); });
       grid.appendChild(div);
@@ -950,6 +965,22 @@
       document.getElementById('customPlanInput').value = '';
     });
     
+    document.getElementById('homeNewStat').addEventListener('click', ()=>{
+      const today = getTodayStr();
+      selectedDateStr = today;
+      currentDisplayDate = parseYMD(today);
+      currentViewMode = 'new';
+      renderAll();
+      openModal(today);
+    });
+    document.getElementById('homePendingStat').addEventListener('click', ()=>{
+      const today = getTodayStr();
+      selectedDateStr = today;
+      currentDisplayDate = parseYMD(today);
+      currentViewMode = 'pending';
+      renderAll();
+      openModal(today);
+    });
     document.getElementById('homeMasteredStat').addEventListener('click', openMasteredModal);
     document.getElementById('masteredModalCloseBtn').addEventListener('click', closeMasteredModal);
     masteredModal.addEventListener('click',e=>{ if(e.target===masteredModal) closeMasteredModal(); });
