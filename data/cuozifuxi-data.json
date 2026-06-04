@@ -1058,13 +1058,20 @@
     "word": "惊吓jing",
     "learnDate": "2026-06-03",
     "reviewDates": [
-      "2026-06-04",
       "2026-06-05",
       "2026-06-07",
       "2026-06-10",
-      "2026-06-18"
+      "2026-06-18",
+      "2026-06-06"
     ],
-    "reviewHistory": [],
+    "reviewHistory": [
+      {
+        "date": "2026-06-04",
+        "reviewNumber": 1,
+        "dayLabel": "第1天复习",
+        "result": "correct"
+      }
+    ],
     "customIntervals": null
   },
   {
@@ -1086,13 +1093,19 @@
     "word": "成熟",
     "learnDate": "2026-06-03",
     "reviewDates": [
-      "2026-06-04",
       "2026-06-05",
       "2026-06-07",
       "2026-06-10",
       "2026-06-18"
     ],
-    "reviewHistory": [],
+    "reviewHistory": [
+      {
+        "date": "2026-06-04",
+        "reviewNumber": 1,
+        "dayLabel": "第1天复习",
+        "result": "wrong"
+      }
+    ],
     "customIntervals": null
   },
   {
@@ -1100,13 +1113,20 @@
     "word": "掉落",
     "learnDate": "2026-06-03",
     "reviewDates": [
-      "2026-06-04",
       "2026-06-05",
       "2026-06-07",
       "2026-06-10",
-      "2026-06-18"
+      "2026-06-18",
+      "2026-06-06"
     ],
-    "reviewHistory": [],
+    "reviewHistory": [
+      {
+        "date": "2026-06-04",
+        "reviewNumber": 1,
+        "dayLabel": "第1天复习",
+        "result": "correct"
+      }
+    ],
     "customIntervals": null
   },
   {
@@ -1114,13 +1134,19 @@
     "word": "小鹿",
     "learnDate": "2026-06-03",
     "reviewDates": [
-      "2026-06-04",
       "2026-06-05",
       "2026-06-07",
       "2026-06-10",
       "2026-06-18"
     ],
-    "reviewHistory": [],
+    "reviewHistory": [
+      {
+        "date": "2026-06-04",
+        "reviewNumber": 1,
+        "dayLabel": "第1天复习",
+        "result": "wrong"
+      }
+    ],
     "customIntervals": null
   },
   {
@@ -1128,13 +1154,19 @@
     "word": "那边",
     "learnDate": "2026-06-03",
     "reviewDates": [
-      "2026-06-04",
       "2026-06-05",
       "2026-06-07",
       "2026-06-10",
       "2026-06-18"
     ],
-    "reviewHistory": [],
+    "reviewHistory": [
+      {
+        "date": "2026-06-04",
+        "reviewNumber": 1,
+        "dayLabel": "第1天复习",
+        "result": "wrong"
+      }
+    ],
     "customIntervals": null
   },
   {
@@ -1156,11 +1188,47 @@
     "word": "带领",
     "learnDate": "2026-06-03",
     "reviewDates": [
-      "2026-06-04",
       "2026-06-05",
       "2026-06-07",
       "2026-06-10",
       "2026-06-18"
+    ],
+    "reviewHistory": [
+      {
+        "date": "2026-06-04",
+        "reviewNumber": 1,
+        "dayLabel": "第1天复习",
+        "result": "wrong"
+      }
+    ],
+    "customIntervals": null
+  },
+  {
+    "id": "1780579470409.1313难过",
+    "word": "难过",
+    "learnDate": "2026-06-04",
+    "reviewDates": [
+      "2026-06-05"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
+  },
+  {
+    "id": "1780579527929.8691借书",
+    "word": "借书",
+    "learnDate": "2026-06-04",
+    "reviewDates": [
+      "2026-06-05"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
+  },
+  {
+    "id": "1780579610951.625拨浪鼓",
+    "word": "拨浪鼓",
+    "learnDate": "2026-06-04",
+    "reviewDates": [
+      "2026-06-05"
     ],
     "reviewHistory": [],
     "customIntervals": null
