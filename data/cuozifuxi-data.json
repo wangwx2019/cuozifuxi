@@ -1707,5 +1707,45 @@
       }
     ],
     "customIntervals": null
+  },
+  {
+    "id": "1780842009787.169门票",
+    "word": "门票",
+    "learnDate": "2026-06-07",
+    "reviewDates": [
+      "2026-06-08"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
+  },
+  {
+    "id": "1780842009789.2466现在",
+    "word": "现在",
+    "learnDate": "2026-06-07",
+    "reviewDates": [
+      "2026-06-08"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
+  },
+  {
+    "id": "1780842009789.439很吵",
+    "word": "很吵",
+    "learnDate": "2026-06-07",
+    "reviewDates": [
+      "2026-06-08"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
+  },
+  {
+    "id": "1780842009789.9678吓人",
+    "word": "吓人",
+    "learnDate": "2026-06-07",
+    "reviewDates": [
+      "2026-06-08"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
   }
 ]
