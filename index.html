@@ -301,8 +301,8 @@
     .github-modal .desc { font-size: 13px; color: #64748b; line-height: 1.5; margin-bottom: 16px; }
     .github-modal .desc strong { color: #0b1f33; }
     /* ========== 学习统计弹窗 ========== */
-    .stats-modal { background: white; border-radius: 28px; padding: 28px 24px; max-width: 420px; width: 92%; overflow: visible; }
-    .stats-modal h3 { font-size: 18px; margin-bottom: 12px; color: #0b1f33; text-align: center; }
+    .stats-modal { background: white; border-radius: 28px; padding: 28px 24px; max-width: 420px; width: 92%; max-height: 85vh; overflow-y: auto; }
+    .stats-modal h3 { font-size: 18px; margin-bottom: 12px; color: #0b1f33; text-align: center; position: sticky; top: 0; background: white; padding-bottom: 8px; z-index: 1; }
     #weekChart { min-height: 200px; }
     .github-field { width: 100%; padding: 12px 14px; border: 1px solid #d0d9e6; border-radius: 12px; font-size: 14px; margin-bottom: 6px; outline: none; -webkit-appearance: none; box-sizing: border-box; }
     .github-field:focus { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,0.12); }
@@ -865,7 +865,10 @@
     focusFirstInModal(overlay);
     
     // 直接渲染图表
-    setTimeout(() => renderStatsChart(), 200);
+    setTimeout(() => {
+      renderStatsChart();
+      renderStatsRanking();
+    }, 200);
   }
   
   function renderStatsContent(content) {
@@ -944,6 +947,8 @@
       </div>
       <div style="font-weight:600;margin-bottom:8px;color:#1e3a5f;">📈 复习趋势</div>
       <div id="weekChart" style="width:100%;height:200px;"></div>
+      <div style="font-weight:600;margin-top:20px;margin-bottom:8px;color:#1e3a5f;">🏆 错字复习排行榜</div>
+      <div id="rankingChart" style="width:100%;"></div>
       <div style="margin-top:12px;font-size:13px;color:#64748b;text-align:center;">
         掌握率: ${total > 0 ? Math.round(mastered / total * 100) : 0}%
         ${mastered >= 10 ? ' 🎉 太棒了！' : mastered >= 5 ? ' 👍 继续加油！' : ''}
@@ -1025,11 +1030,157 @@
     });
   }
   
+  let _rankingChartInstance = null;
+  
+  function renderStatsRanking() {
+    const rankingEl = document.getElementById('rankingChart');
+    if (!rankingEl || typeof Chart === 'undefined') return;
+    
+    // 计算每个字词的复习次数和正确率
+    const wordStats = {};
+    wordsData.forEach(w => {
+      if (w.reviewHistory && w.reviewHistory.length > 0) {
+        let correct = 0, total = 0;
+        w.reviewHistory.forEach(h => {
+          if (h.date >= statsStartDate && h.date <= statsEndDate) {
+            total++;
+            if (h.result === 'correct') correct++;
+          }
+        });
+        if (total > 0) {
+          wordStats[w.word] = { 
+            total, 
+            correct, 
+            rate: Math.round((correct / total) * 100),
+            word: w.word
+          };
+        }
+      }
+    });
+    
+    // 按复习次数排序，取前10
+    const sorted = Object.values(wordStats)
+      .sort((a, b) => b.total - a.total)
+      .slice(0, 10);
+    
+    if (sorted.length === 0) {
+      rankingEl.innerHTML = '<div style="text-align:center;padding:20px;color:#94a3b8;font-size:13px;">该区间暂无复习数据</div>';
+      return;
+    }
+    
+    // 使用 canvas 确保 Chart.js v4 兼容
+    let canvas = rankingEl.querySelector('canvas');
+    if (!canvas) {
+      canvas = document.createElement('canvas');
+      canvas.style.display = 'block';
+      canvas.style.width = '100%';
+      rankingEl.appendChild(canvas);
+    }
+    const rect = rankingEl.getBoundingClientRect();
+    if (rect.width > 0) {
+      const height = Math.max(200, sorted.length * 40 + 60);
+      canvas.width = rect.width * (window.devicePixelRatio || 1);
+      canvas.height = height * (window.devicePixelRatio || 1);
+      canvas.style.width = rect.width + 'px';
+      canvas.style.height = height + 'px';
+    }
+    
+    // 销毁旧图表
+    if (_rankingChartInstance) {
+      _rankingChartInstance.destroy();
+      _rankingChartInstance = null;
+    }
+    const existingChart = Chart.getChart(canvas);
+    if (existingChart) existingChart.destroy();
+    
+    // 奖牌 emoji
+    const medals = ['🥇', '🥈', '🥉'];
+    
+    _rankingChartInstance = new Chart(canvas, {
+      type: 'bar',
+      data: {
+        labels: sorted.map((s, i) => `${medals[i] || (i+1) + '.'} ${s.word}`),
+        datasets: [{
+          label: '复习次数',
+          data: sorted.map(s => s.total),
+          backgroundColor: sorted.map(s => {
+            if (s.rate >= 80) return '#22c55e';
+            if (s.rate >= 60) return '#f59e0b';
+            return '#ef4444';
+          }),
+          borderRadius: 6,
+          barPercentage: 0.8
+        }]
+      },
+      options: {
+        indexAxis: 'y',
+        responsive: true,
+        maintainAspectRatio: false,
+        animation: { duration: 300 },
+        layout: { padding: { right: 10 } },
+        plugins: {
+          legend: { display: false },
+          tooltip: { enabled: false }
+        },
+        scales: {
+          x: { 
+            beginAtZero: true, 
+            ticks: { stepSize: 1, precision: 0 }, 
+            grid: { display: false },
+            max: Math.max(...sorted.map(s => s.total)) * 1.4
+          },
+          y: { 
+            grid: { display: false }, 
+            ticks: { font: { size: 12 } }
+          }
+        }
+      },
+      plugins: [{
+        id: 'insideLabel',
+        afterDatasetsDraw: function(chart) {
+          const ctx = chart.ctx;
+          ctx.save();
+          const xScale = chart.scales.x;
+          chart.data.datasets[0].data.forEach((value, index) => {
+            const meta = chart.getDatasetMeta(0);
+            const bar = meta.data[index];
+            const s = sorted[index];
+            const text = `${s.total}次 ${s.rate}%`;
+            ctx.font = 'bold 11px sans-serif';
+            ctx.textBaseline = 'middle';
+            const textY = bar.y;
+            // 柱子起点(base)到终点(x)的中间位置
+            const barStart = bar.base;
+            const barEnd = bar.x;
+            const barLength = barEnd - barStart;
+            const textWidth = ctx.measureText(text).width;
+            if (barLength > textWidth + 20) {
+              // 文字在整个柱子长度内居中
+              const textX = barStart + barLength / 2;
+              ctx.fillStyle = 'white';
+              ctx.textAlign = 'center';
+              ctx.fillText(text, textX, textY);
+            } else {
+              // 柱子太短，文字显示在柱子右侧
+              ctx.fillStyle = '#64748b';
+              ctx.textAlign = 'left';
+              ctx.fillText(text, barEnd + 6, textY);
+            }
+          });
+          ctx.restore();
+        }
+      }]
+    });
+  }
+  
   window.updateStatsDateRange = function() {
     statsStartDate = document.getElementById('statsStartDate').value;
     statsEndDate = document.getElementById('statsEndDate').value;
     renderStatsContent(document.getElementById('statsContent'));
-    setTimeout(() => renderStatsChart(), 100);
+    setTimeout(() => {
+      renderStatsChart();
+      renderStatsRanking();
+    }, 100);
   };
   
   window.setStatsWeek = function() {
@@ -1037,13 +1188,20 @@
     statsStartDate = weekRange.start;
     statsEndDate = weekRange.end;
     renderStatsContent(document.getElementById('statsContent'));
-    setTimeout(() => renderStatsChart(), 100);
+    setTimeout(() => {
+      renderStatsChart();
+      renderStatsRanking();
+    }, 100);
   };
   function closeStatsModal() {
     // 销毁图表，防止下次打开时残留
     if (_statsChartInstance) {
       _statsChartInstance.destroy();
       _statsChartInstance = null;
+    }
+    if (_rankingChartInstance) {
+      _rankingChartInstance.destroy();
+      _rankingChartInstance = null;
     }
     closeModalWithFocus(document.getElementById('statsOverlay'));
   }
