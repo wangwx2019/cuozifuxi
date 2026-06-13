@@ -10,6 +10,8 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="错字复习">
+  <!-- Chart.js 直接引入 -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -298,6 +300,10 @@
     .github-modal h3 { font-size: 18px; margin-bottom: 12px; color: #0b1f33; }
     .github-modal .desc { font-size: 13px; color: #64748b; line-height: 1.5; margin-bottom: 16px; }
     .github-modal .desc strong { color: #0b1f33; }
+    /* ========== 学习统计弹窗 ========== */
+    .stats-modal { background: white; border-radius: 28px; padding: 28px 24px; max-width: 420px; width: 92%; overflow: visible; }
+    .stats-modal h3 { font-size: 18px; margin-bottom: 12px; color: #0b1f33; text-align: center; }
+    #weekChart { min-height: 200px; }
     .github-field { width: 100%; padding: 12px 14px; border: 1px solid #d0d9e6; border-radius: 12px; font-size: 14px; margin-bottom: 6px; outline: none; -webkit-appearance: none; box-sizing: border-box; }
     .github-field:focus { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,0.12); }
     .github-tip { font-size: 12px; color: #94a3b8; margin-bottom: 14px; line-height: 1.4; }
@@ -436,6 +442,11 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
       导出数据
     </button>
+    <button class="toolbar-btn" id="importBtn" aria-label="导入数据">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+      导入数据
+    </button>
+    <input type="file" id="importFileInput" accept=".json" style="display:none">
     <button class="toolbar-btn" id="statsBtn" aria-label="学习统计">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
       学习统计
@@ -531,9 +542,9 @@
 
 <!-- 学习统计弹窗 -->
 <div class="modal-overlay" id="statsOverlay" role="dialog" aria-modal="true" aria-label="学习统计">
-  <div class="github-modal" style="max-width:420px;">
+  <div class="stats-modal">
     <h3>📊 学习统计</h3>
-    <div id="statsContent" style="margin:16px 0;"></div>
+    <div id="statsContent"></div>
     <div class="github-actions">
       <button class="github-btn cancel" id="statsCloseBtn">关闭</button>
     </div>
@@ -828,35 +839,78 @@
   function openCustomPlanOverlay(){ customPlanOverlay.classList.add('show'); focusFirstInModal(customPlanOverlay); }
   function closeCustomPlanOverlay(){ closeModalWithFocus(customPlanOverlay); }
   // ========== 学习统计 ==========
+  let statsStartDate = null;
+  let statsEndDate = null;
+  
+  function getWeekRange() {
+    const now = new Date();
+    const day = now.getDay();
+    const monday = new Date(now);
+    monday.setDate(now.getDate() - (day === 0 ? 6 : day - 1));
+    return { start: formatYMD(monday), end: formatYMD(now) };
+  }
+  
   async function openStatsModal() {
     const overlay = document.getElementById('statsOverlay');
     const content = document.getElementById('statsContent');
     
-    // 计算统计数据
+    // 默认本周
+    const weekRange = getWeekRange();
+    statsStartDate = statsStartDate || weekRange.start;
+    statsEndDate = statsEndDate || weekRange.end;
+    
+    renderStatsContent(content);
+    
+    overlay.classList.add('show');
+    focusFirstInModal(overlay);
+    
+    // 直接渲染图表
+    setTimeout(() => renderStatsChart(), 200);
+  }
+  
+  function renderStatsContent(content) {
     const total = wordsData.length;
     const mastered = getMasteredWords().length;
     const today = getTodayStr();
     const todayNew = getNewWords(today).length;
     const todayPending = getPendingCards(today).length;
     
-    // 计算最近7天的复习数据
-    const weekStats = [];
-    for (let i = 6; i >= 0; i--) {
-      const d = new Date();
-      d.setDate(d.getDate() - i);
+    // 计算日期区间内的复习数据
+    const stats = [];
+    const start = new Date(statsStartDate);
+    const end = new Date(statsEndDate);
+    const diffDays = Math.floor((end - start) / (1000 * 60 * 60 * 24)) + 1;
+    
+    for (let i = 0; i < diffDays && i <= 30; i++) {
+      const d = new Date(start);
+      d.setDate(start.getDate() + i);
       const ds = formatYMD(d);
       const dayName = ['日','一','二','三','四','五','六'][d.getDay()];
       let correct = 0, wrong = 0;
       wordsData.forEach(w => {
+        if (w.reviewHistory) {
+          w.reviewHistory.forEach(h => {
+            if (h.date === ds) {
+              if (h.result === 'correct') correct++;
+              else wrong++;
+            }
+          });
+        }
+      });
+      stats.push({ day: `${d.getMonth()+1}/${d.getDate()} 周${dayName}`, date: ds, correct, wrong });
+    }
+    
+    let totalCorrect = 0, totalWrong = 0;
+    wordsData.forEach(w => {
+      if (w.reviewHistory) {
         w.reviewHistory.forEach(h => {
-          if (h.date === ds) {
-            if (h.result === 'correct') correct++;
-            else wrong++;
+          if (h.date >= statsStartDate && h.date <= statsEndDate) {
+            if (h.result === 'correct') totalCorrect++;
+            else totalWrong++;
           }
         });
-      });
-      weekStats.push({ day: '周' + dayName, correct, wrong });
-    }
+      }
+    });
     
     content.innerHTML = `
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;">
@@ -877,42 +931,120 @@
           <div style="font-size:24px;font-weight:700;color:#dc2626;">${todayPending}</div>
         </div>
       </div>
-      <div style="font-weight:600;margin-bottom:8px;color:#1e3a5f;">📈 最近7天复习</div>
-      <div id="weekChart" style="width:100%;height:160px;"></div>
+      <div style="background:#f8fafc;padding:12px;border-radius:12px;margin-bottom:16px;">
+        <div style="font-size:13px;color:#64748b;margin-bottom:4px;">区间复习统计</div>
+        <div style="font-size:16px;"><span style="color:#22c55e;font-weight:600;">正确 ${totalCorrect} 次</span>　<span style="color:#ef4444;font-weight:600;">错误 ${totalWrong} 次</span></div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;margin-bottom:12px;flex-wrap:wrap;">
+        <span style="font-size:13px;color:#64748b;">📅 日期区间：</span>
+        <input type="date" id="statsStartDate" value="${statsStartDate}" style="padding:6px 10px;border-radius:8px;border:1px solid #d0d9e6;font-size:13px;" onchange="updateStatsDateRange()">
+        <span style="color:#94a3b8;">至</span>
+        <input type="date" id="statsEndDate" value="${statsEndDate}" style="padding:6px 10px;border-radius:8px;border:1px solid #d0d9e6;font-size:13px;" onchange="updateStatsDateRange()">
+        <button onclick="setStatsWeek()" style="padding:4px 10px;border-radius:8px;border:1px solid #4f6ef7;background:#eef1fe;color:#4f6ef7;font-size:12px;cursor:pointer;">本周</button>
+      </div>
+      <div style="font-weight:600;margin-bottom:8px;color:#1e3a5f;">📈 复习趋势</div>
+      <div id="weekChart" style="width:100%;height:200px;"></div>
       <div style="margin-top:12px;font-size:13px;color:#64748b;text-align:center;">
         掌握率: ${total > 0 ? Math.round(mastered / total * 100) : 0}%
         ${mastered >= 10 ? ' 🎉 太棒了！' : mastered >= 5 ? ' 👍 继续加油！' : ''}
       </div>
     `;
+  }
+  
+  let _statsChartInstance = null;
+
+  function renderStatsChart() {
+    const chartEl = document.getElementById('weekChart');
+    if (!chartEl || typeof Chart === 'undefined') return;
     
-    overlay.classList.add('show');
-    focusFirstInModal(overlay);
+    // 使用 canvas 而非 div，确保 Chart.js v4 兼容
+    let canvas = chartEl.querySelector('canvas');
+    if (!canvas) {
+      canvas = document.createElement('canvas');
+      canvas.style.display = 'block';
+      canvas.style.width = '100%';
+      canvas.style.height = '100%';
+      chartEl.appendChild(canvas);
+    }
+    // 确保 canvas 尺寸与父容器一致
+    const rect = chartEl.getBoundingClientRect();
+    if (rect.width > 0 && rect.height > 0) {
+      canvas.width = rect.width * (window.devicePixelRatio || 1);
+      canvas.height = rect.height * (window.devicePixelRatio || 1);
+      canvas.style.width = rect.width + 'px';
+      canvas.style.height = rect.height + 'px';
+    }
     
-    // 等待弹窗显示后再绘制图表
-    await loadChartJs();
-    requestAnimationFrame(() => {
-        const chartEl = document.getElementById('weekChart');
-        if (chartEl && typeof Chart !== 'undefined') {
-            new Chart(chartEl, {
-                type: 'bar',
-                data: {
-                    labels: weekStats.map(s => s.day),
-                    datasets: [
-                        { label: '正确', data: weekStats.map(s => s.correct), backgroundColor: '#22c55e', borderRadius: 4 },
-                        { label: '错误', data: weekStats.map(s => s.wrong), backgroundColor: '#ef4444', borderRadius: 4 }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { position: 'bottom', labels: { boxWidth: 12 } } },
-                    scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
-                }
-            });
+    const start = new Date(statsStartDate);
+    const end = new Date(statsEndDate);
+    const diffDays = Math.floor((end - start) / (1000 * 60 * 60 * 24)) + 1;
+    const stats = [];
+    
+    for (let i = 0; i < diffDays && i <= 30; i++) {
+      const d = new Date(start);
+      d.setDate(start.getDate() + i);
+      const ds = formatYMD(d);
+      let correct = 0, wrong = 0;
+      wordsData.forEach(w => {
+        if (w.reviewHistory) {
+          w.reviewHistory.forEach(h => {
+            if (h.date === ds) {
+              if (h.result === 'correct') correct++;
+              else wrong++;
+            }
+          });
         }
+      });
+      stats.push({ day: `${d.getMonth()+1}/${d.getDate()}`, correct, wrong });
+    }
+    
+    // 销毁已有图表（通过 canvas 元素查找，兼容 Chart.js v4+）
+    if (_statsChartInstance) {
+      _statsChartInstance.destroy();
+      _statsChartInstance = null;
+    }
+    const existingChart = Chart.getChart(canvas);
+    if (existingChart) existingChart.destroy();
+    
+    _statsChartInstance = new Chart(canvas, {
+      type: 'bar',
+      data: {
+        labels: stats.map(s => s.day),
+        datasets: [
+          { label: '正确', data: stats.map(s => s.correct), backgroundColor: '#22c55e', borderRadius: 4, barPercentage: 0.7, categoryPercentage: 0.8 },
+          { label: '错误', data: stats.map(s => s.wrong), backgroundColor: '#ef4444', borderRadius: 4, barPercentage: 0.7, categoryPercentage: 0.8 }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        animation: { duration: 300 },
+        plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, padding: 16 } } },
+        scales: { y: { beginAtZero: true, ticks: { stepSize: 1, precision: 0 } } }
+      }
     });
   }
+  
+  window.updateStatsDateRange = function() {
+    statsStartDate = document.getElementById('statsStartDate').value;
+    statsEndDate = document.getElementById('statsEndDate').value;
+    renderStatsContent(document.getElementById('statsContent'));
+    setTimeout(() => renderStatsChart(), 100);
+  };
+  
+  window.setStatsWeek = function() {
+    const weekRange = getWeekRange();
+    statsStartDate = weekRange.start;
+    statsEndDate = weekRange.end;
+    renderStatsContent(document.getElementById('statsContent'));
+    setTimeout(() => renderStatsChart(), 100);
+  };
   function closeStatsModal() {
+    // 销毁图表，防止下次打开时残留
+    if (_statsChartInstance) {
+      _statsChartInstance.destroy();
+      _statsChartInstance = null;
+    }
     closeModalWithFocus(document.getElementById('statsOverlay'));
   }
   function openDeleteConfirmModal(){ deleteConfirmOverlay.classList.add('show'); focusFirstInModal(deleteConfirmOverlay); }
@@ -1138,6 +1270,54 @@
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
+    hapticFeedback('success');
+    announce('数据导出成功');
+  }
+  
+  // ========== 导入数据 ==========
+  function importData(file) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      try {
+        const imported = JSON.parse(e.target.result);
+        if (!Array.isArray(imported)) {
+          alert('文件格式无效：应为JSON数组');
+          return;
+        }
+        // 数据校验
+        const validData = imported.filter(item => {
+          if (!item || typeof item !== 'object') return false;
+          if (!item.word || typeof item.word !== 'string') return false;
+          if (!item.id) item.id = Date.now() + Math.random() + '';
+          return true;
+        });
+        if (validData.length === 0) {
+          alert('文件中没有有效的字词数据');
+          return;
+        }
+        // 合并数据（按ID去重）
+        const existingIds = new Set(wordsData.map(w => w.id));
+        let addedCount = 0;
+        validData.forEach(item => {
+          if (!existingIds.has(item.id)) {
+            wordsData.push(item);
+            addedCount++;
+          }
+        });
+        if (addedCount === 0) {
+          alert('没有新的数据需要导入（全部重复）');
+          return;
+        }
+        saveData();
+        renderAll();
+        hapticFeedback('success');
+        announce(`成功导入 ${addedCount} 个字词`);
+        alert(`✅ 导入成功！新增 ${addedCount} 个字词`);
+      } catch(err) {
+        alert('导入失败：文件格式错误');
+      }
+    };
+    reader.readAsText(file);
   }
 
   // ========== 同步到 GitHub（硬编码仓库：wangwx2019/cuozifuxi）==========
@@ -1347,6 +1527,14 @@
 
     // 导出与同步按钮
     document.getElementById('exportBtn').addEventListener('click', exportData);
+    document.getElementById('importBtn').addEventListener('click', () => {
+      document.getElementById('importFileInput').click();
+    });
+    document.getElementById('importFileInput').addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (file) importData(file);
+      this.value = '';
+    });
     document.getElementById('syncBtn').addEventListener('click', openGithubModal);
     document.getElementById('githubCancel').addEventListener('click', closeGithubModal);
     document.getElementById('githubSubmit').addEventListener('click', syncToGithub);
@@ -1395,6 +1583,9 @@
 
     // 延迟加载 GitHub 数据，不阻塞首次渲染
     setTimeout(loadFromGithub, 200);
+    
+    // 预加载 Chart.js
+    setTimeout(loadChartJs, 1000);
   }
   
   init();
