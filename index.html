@@ -4,6 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>艾宾浩斯·错别字复习日历</title>
+  <!-- PWA 支持 -->
+  <link rel="manifest" href="manifest-cuozifuxi.json">
+  <meta name="theme-color" content="#3b82f6">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="错字复习">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -29,7 +35,6 @@
       margin: 8px 0 4px;
     }
     .today-stat-item { text-align: center; flex: 1; cursor: pointer; -webkit-tap-highlight-color: transparent; }
-    .today-stat-item:nth-child(5) { cursor: pointer; }
     .today-stat-label { font-size: 15px; font-weight: 500; color: #475569; margin-bottom: 8px; }
     .today-stat-value { font-size: 36px; font-weight: 700; }
     .today-stat-item:nth-child(1) .today-stat-value { color: #2563eb; }
@@ -355,6 +360,48 @@
         font-size: 22px;
       }
     }
+    
+    /* 深色模式 */
+    @media (prefers-color-scheme: dark) {
+      body { background: #0f172a; color: #e2e8f0; }
+      .main-title { color: #f1f5f9; }
+      .top-banner { background: #1e293b; color: #94a3b8; border-left-color: #3b82f6; }
+      .today-stats { background: #1e293b; border-color: #334155; }
+      .today-stat-label { color: #94a3b8; }
+      .calendar-card { background: #1e293b; border-color: #334155; }
+      .cal-month-year { color: #f1f5f9; }
+      .nav-buttons button { background: #334155; color: #e2e8f0; }
+      .nav-buttons button:hover { background: #475569; }
+      .cal-cell { background: #0f172a; border-color: #334155; }
+      .cal-cell.selected { background: #1e3a5f; border-color: #3b82f6; }
+      .cal-cell.today { background: #1c1917; border-color: #eab308; }
+      .day-num { color: #e2e8f0; }
+      .modal-overlay { background: rgba(0,0,0,0.7); }
+      .modal-page { background: #1e293b; }
+      .modal-page-header { border-color: #334155; }
+      .modal-banner { background: #1e293b; color: #94a3b8; border-left-color: #3b82f6; }
+      .modal-date-text { color: #f1f5f9; }
+      .stats-row-inline { background: #0f172a; }
+      .stat-inline.active { background: #1e293b; }
+      .review-card { background: #0f172a; border-color: #334155; }
+      .new-word-item { border-color: #334155; color: #e2e8f0; }
+      .modal-input-section { background: #1e293b; border-color: #334155; }
+      .modal-input-field { background: #0f172a; color: #e2e8f0; border-color: #475569; }
+      .github-modal { background: #1e293b; }
+      .github-modal h3 { color: #f1f5f9; }
+      .github-field { background: #0f172a; color: #e2e8f0; border-color: #475569; }
+      .github-btn.cancel { background: #334155; color: #94a3b8; }
+      .custom-plan-modal { background: #1e293b; }
+      .custom-confirm-modal { background: #1e293b; }
+      .empty-msg { color: #64748b; }
+      .toolbar-btn { background: #1e293b; color: #e2e8f0; border-color: #475569; }
+    }
+    
+    /* 大字体适配 */
+    @media (min-resolution: 192dpi) {
+      .today-stat-value { font-size: 2rem; }
+      .word-big { font-size: 2rem; }
+    }
   </style>
 </head>
 <body>
@@ -372,8 +419,8 @@
     <div class="cal-header">
       <span class="cal-month-year" id="currentMonthDisplay">2026年4月</span>
       <div class="nav-buttons">
-        <button id="prevMonthBtn">←</button>
-        <button id="nextMonthBtn">→</button>
+        <button id="prevMonthBtn" aria-label="上一月">←</button>
+        <button id="nextMonthBtn" aria-label="下一月">→</button>
       </div>
     </div>
     <div class="weekdays"><span>周日</span><span>周一</span><span>周二</span><span>周三</span><span>周四</span><span>周五</span><span>周六</span></div>
@@ -385,11 +432,15 @@
   </div>
   <!-- 工具栏 -->
   <div class="toolbar">
-    <button class="toolbar-btn" id="exportBtn">
+    <button class="toolbar-btn" id="exportBtn" aria-label="导出数据">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
       导出数据
     </button>
-    <button class="toolbar-btn primary" id="syncBtn">
+    <button class="toolbar-btn" id="statsBtn" aria-label="学习统计">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+      学习统计
+    </button>
+    <button class="toolbar-btn primary" id="syncBtn" aria-label="同步GitHub">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg>
       同步 GitHub
     </button>
@@ -398,13 +449,13 @@
 
 <div class="ocr-loading" id="ocrLoading">正在识别文字，请稍候...</div>
 
-<div class="modal-overlay" id="modalOverlay">
+<div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-label="日期详情">
   <div class="modal-page">
     <div class="modal-page-header">
       <div class="modal-banner">基于莱特纳卡片盒学习方法，自动生成第1、2、4、7、15天复习内容，帮助孩子高效消灭错别字。</div>
       <div class="modal-date-row">
         <span class="modal-date-text" id="modalDateDisplay">2026年4月21日 星期二</span>
-        <button class="modal-close-btn" id="modalCloseBtn">✕</button>
+        <button class="modal-close-btn" id="modalCloseBtn" aria-label="关闭">✕</button>
       </div>
       <div class="stats-row-inline">
         <div class="stat-inline" id="modalNewTab"><div class="stat-label">新增</div><div class="stat-value" id="modalNewVal">0</div></div>
@@ -429,19 +480,19 @@
     <div class="modal-footer-note" id="modalFooterHint">可自定义输入内容</div>
   </div>
 </div>
-<div class="modal-overlay" id="masteredModalOverlay">
+<div class="modal-overlay" id="masteredModalOverlay" role="dialog" aria-modal="true" aria-label="已掌握字词">
   <div class="modal-page">
     <div class="modal-page-header">
       <div class="modal-date-row">
         <span class="modal-date-text">已100%学会的字词</span>
-        <button class="modal-close-btn" id="masteredModalCloseBtn">✕</button>
+        <button class="modal-close-btn" id="masteredModalCloseBtn" aria-label="关闭">✕</button>
       </div>
     </div>
     <div class="modal-cards-container" id="masteredModalContainer"></div>
     <div class="modal-footer-note">共 <span id="masteredCount">0</span> 个</div>
   </div>
 </div>
-<div class="modal-overlay" id="customPlanOverlay">
+<div class="modal-overlay" id="customPlanOverlay" role="dialog" aria-modal="true" aria-label="定制复习计划">
   <div class="custom-plan-modal">
     <h3>定制复习计划</h3>
     <input type="text" class="custom-plan-input" id="customPlanInput" placeholder="例如：1,3,7,14,30" autocomplete="off">
@@ -453,7 +504,7 @@
 </div>
 
 <!-- 自定义删除确认弹窗 HTML -->
-<div class="modal-overlay" id="deleteConfirmOverlay">
+<div class="modal-overlay" id="deleteConfirmOverlay" role="alertdialog" aria-modal="true" aria-label="确认删除">
   <div class="custom-confirm-modal">
     <div class="confirm-text">确定要清除该字词的所有复习计划吗？</div>
     <div class="confirm-actions">
@@ -464,10 +515,10 @@
 </div>
 
 <!-- GitHub 同步弹窗 -->
-<div class="modal-overlay" id="githubOverlay">
+<div class="modal-overlay" id="githubOverlay" role="dialog" aria-modal="true" aria-label="GitHub同步">
   <div class="github-modal">
     <h3>☁️ GitHub 同步</h3>
-    <p class="desc">将学习数据同步到 <strong>wangwx2019/cuozifuxi</strong> 仓库，多设备共享进度。</p>
+    <p class="desc">将学习数据同步到 <strong>***xi</strong> 仓库，多设备共享进度。</p>
     <input type="password" class="github-field" id="githubToken" placeholder="GitHub Personal Access Token" autocomplete="off" spellcheck="false" oninput="localStorage.setItem('github_token_cuozifuxi', this.value.trim())">
     <p class="github-tip">需要 <strong>repo</strong> 权限。可在 <a href="https://github.com/settings/tokens" target="_blank">GitHub Token设置</a> 生成。</p>
     <div class="github-status" id="githubStatus">就绪</div>
@@ -478,12 +529,97 @@
   </div>
 </div>
 
+<!-- 学习统计弹窗 -->
+<div class="modal-overlay" id="statsOverlay" role="dialog" aria-modal="true" aria-label="学习统计">
+  <div class="github-modal" style="max-width:420px;">
+    <h3>📊 学习统计</h3>
+    <div id="statsContent" style="margin:16px 0;"></div>
+    <div class="github-actions">
+      <button class="github-btn cancel" id="statsCloseBtn">关闭</button>
+    </div>
+  </div>
+</div>
+
 <script>
 (function(){
   "use strict";
   
-  // ========== localStorage 持久化存储 ==========
+  // ========== 常量 ==========
   const STORAGE_KEY = 'cuozi_review_v3';
+  const DEFAULT_INTERVALS = [1, 2, 4, 7, 15];
+  const STRENGTH_CORRECT = 20;   // 正确加20%
+  const STRENGTH_WRONG = -10;    // 错误减10%
+  const UNDO_DURATION = 4000;    // 撤销提示4秒
+  const HAPTIC_SHORT = 50;       // 短振动
+  const HAPTIC_PATTERN = [30, 20, 30]; // 警告振动
+  const CHARTJS_CDN = 'https://cdn.jsdelivr.net/npm/chart.js';
+  
+  // ========== 触觉反馈 ==========
+  function hapticFeedback(type) {
+    if (!navigator.vibrate) return;
+    switch(type) {
+      case 'success': navigator.vibrate(HAPTIC_SHORT); break;
+      case 'warning': navigator.vibrate(HAPTIC_PATTERN); break;
+      default: navigator.vibrate(25);
+    }
+  }
+  
+  // ========== XSS 防护 ==========
+  function escapeHtml(str) {
+    if (!str) return '';
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  }
+  
+  // ========== 屏幕阅读器播报 ==========
+  function announce(message) {
+    let announcer = document.getElementById('srAnnouncer');
+    if (!announcer) {
+      announcer = document.createElement('div');
+      announcer.id = 'srAnnouncer';
+      announcer.setAttribute('aria-live', 'assertive');
+      announcer.setAttribute('aria-atomic', 'true');
+      announcer.style.cssText = 'position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;';
+      document.body.appendChild(announcer);
+    }
+    announcer.textContent = '';
+    setTimeout(() => { announcer.textContent = message; }, 100);
+  }
+  
+  // ========== 撤销功能 ==========
+  let lastAction = null;
+  let undoToast = null;
+  function showUndoToast(message, callback) {
+    lastAction = callback;
+    if (!undoToast) {
+      undoToast = document.createElement('div');
+      undoToast.id = 'undoToast';
+      undoToast.style.cssText = 'position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:10px 20px;border-radius:20px;font-size:14px;z-index:99999;display:flex;align-items:center;gap:10px;box-shadow:0 4px 12px rgba(0,0,0,0.3);';
+      undoToast.innerHTML = '<span id="undoToastMsg"></span><button id="undoToastBtn" style="background:#3b82f6;color:#fff;border:none;border-radius:12px;padding:6px 14px;font-weight:600;cursor:pointer;">撤销</button>';
+      document.body.appendChild(undoToast);
+      document.getElementById('undoToastBtn').addEventListener('click', () => {
+        if (lastAction) lastAction();
+        lastAction = null;
+        undoToast.style.display = 'none';
+      });
+    }
+    document.getElementById('undoToastMsg').textContent = message;
+    undoToast.style.display = 'flex';
+    clearTimeout(undoToast._timer);
+    undoToast._timer = setTimeout(() => { undoToast.style.display = 'none'; lastAction = null; }, UNDO_DURATION);
+  }
+  
+  // ========== Chart.js 按需加载 ==========
+  let _chartLoaded = false;
+  function loadChartJs() {
+    return new Promise((resolve, reject) => {
+      if (_chartLoaded && typeof Chart !== 'undefined') { resolve(); return; }
+      const script = document.createElement('script');
+      script.src = CHARTJS_CDN;
+      script.onload = () => { _chartLoaded = true; resolve(); };
+      script.onerror = reject;
+      document.head.appendChild(script);
+    });
+  }
   function saveData() {
     try { localStorage.setItem(STORAGE_KEY, JSON.stringify(wordsData)); } catch(e) {}
   }
@@ -500,7 +636,6 @@
   let currentDisplayDate = new Date();
   let selectedDateStr = formatYMD(new Date());
   let currentViewMode = 'new';
-  const DEFAULT_INTERVALS = [1, 2, 4, 7, 15];
   let pendingDeleteWordId = null; // 暂存待删除的字词ID
   
   function formatYMD(d){ 
@@ -535,11 +670,10 @@
   }
 
   function computeStrength(w){ 
-    // 每次正确 +20%，5 次全对刚好 100%，与 5 次 Ebbinghaus 间隔匹配
     let s=0; 
     w.reviewHistory.forEach(r=>{ 
-      if(r.result==='correct') s=Math.min(100,s+20); 
-      else s=Math.max(0,s-10); 
+      if(r.result==='correct') s=Math.min(100,s+STRENGTH_CORRECT); 
+      else s=Math.max(0,s+STRENGTH_WRONG); 
     }); 
     return s; 
   }
@@ -665,17 +799,124 @@
   const deleteConfirmOverlay=document.getElementById('deleteConfirmOverlay'); // 删除确认弹窗元素
   const ocrLoading=document.getElementById('ocrLoading');
   
-  function openModal(ds){ selectedDateStr=ds; renderModalContent(ds); modal.classList.add('show'); }
-  function closeModal(){ modal.classList.remove('show'); }
-  function openMasteredModal(){ renderMasteredModal(); masteredModal.classList.add('show'); }
-  function closeMasteredModal(){ masteredModal.classList.remove('show'); }
-  function openCustomPlanOverlay(){ customPlanOverlay.classList.add('show'); }
-  function closeCustomPlanOverlay(){ customPlanOverlay.classList.remove('show'); }
-  // 打开/关闭删除确认弹窗
-  function openDeleteConfirmModal(){ deleteConfirmOverlay.classList.add('show'); }
+  // ========== 焦点管理 ==========
+  let lastFocusedElement = null;
+  function focusFirstInModal(modal) {
+    lastFocusedElement = document.activeElement;
+    setTimeout(() => {
+      const focusable = modal.querySelector('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+      if (focusable) focusable.focus();
+    }, 100);
+  }
+  function closeModalWithFocus(modal) {
+    modal.classList.remove('show');
+    if (lastFocusedElement) { lastFocusedElement.focus(); lastFocusedElement = null; }
+  }
+  function trapFocus(e, modal) {
+    const focusable = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+    if (focusable.length === 0) return;
+    const first = focusable[0], last = focusable[focusable.length - 1];
+    if (e.key === 'Tab') {
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+  }
+  function openModal(ds){ selectedDateStr=ds; renderModalContent(ds); modal.classList.add('show'); focusFirstInModal(modal); }
+  function closeModal(){ closeModalWithFocus(modal); }
+  function openMasteredModal(){ renderMasteredModal(); masteredModal.classList.add('show'); focusFirstInModal(masteredModal); }
+  function closeMasteredModal(){ closeModalWithFocus(masteredModal); }
+  function openCustomPlanOverlay(){ customPlanOverlay.classList.add('show'); focusFirstInModal(customPlanOverlay); }
+  function closeCustomPlanOverlay(){ closeModalWithFocus(customPlanOverlay); }
+  // ========== 学习统计 ==========
+  async function openStatsModal() {
+    const overlay = document.getElementById('statsOverlay');
+    const content = document.getElementById('statsContent');
+    
+    // 计算统计数据
+    const total = wordsData.length;
+    const mastered = getMasteredWords().length;
+    const today = getTodayStr();
+    const todayNew = getNewWords(today).length;
+    const todayPending = getPendingCards(today).length;
+    
+    // 计算最近7天的复习数据
+    const weekStats = [];
+    for (let i = 6; i >= 0; i--) {
+      const d = new Date();
+      d.setDate(d.getDate() - i);
+      const ds = formatYMD(d);
+      const dayName = ['日','一','二','三','四','五','六'][d.getDay()];
+      let correct = 0, wrong = 0;
+      wordsData.forEach(w => {
+        w.reviewHistory.forEach(h => {
+          if (h.date === ds) {
+            if (h.result === 'correct') correct++;
+            else wrong++;
+          }
+        });
+      });
+      weekStats.push({ day: '周' + dayName, correct, wrong });
+    }
+    
+    content.innerHTML = `
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;">
+        <div style="background:#f1f5f9;padding:12px;border-radius:12px;text-align:center;">
+          <div style="font-size:13px;color:#64748b;">总字词数</div>
+          <div style="font-size:24px;font-weight:700;color:#2563eb;">${total}</div>
+        </div>
+        <div style="background:#f0fdf4;padding:12px;border-radius:12px;text-align:center;">
+          <div style="font-size:13px;color:#64748b;">已掌握</div>
+          <div style="font-size:24px;font-weight:700;color:#15803d;">${mastered}</div>
+        </div>
+        <div style="background:#fefce8;padding:12px;border-radius:12px;text-align:center;">
+          <div style="font-size:13px;color:#64748b;">今日新增</div>
+          <div style="font-size:24px;font-weight:700;color:#b45309;">${todayNew}</div>
+        </div>
+        <div style="background:#fef2f2;padding:12px;border-radius:12px;text-align:center;">
+          <div style="font-size:13px;color:#64748b;">待复习</div>
+          <div style="font-size:24px;font-weight:700;color:#dc2626;">${todayPending}</div>
+        </div>
+      </div>
+      <div style="font-weight:600;margin-bottom:8px;color:#1e3a5f;">📈 最近7天复习</div>
+      <div id="weekChart" style="width:100%;height:160px;"></div>
+      <div style="margin-top:12px;font-size:13px;color:#64748b;text-align:center;">
+        掌握率: ${total > 0 ? Math.round(mastered / total * 100) : 0}%
+        ${mastered >= 10 ? ' 🎉 太棒了！' : mastered >= 5 ? ' 👍 继续加油！' : ''}
+      </div>
+    `;
+    
+    overlay.classList.add('show');
+    focusFirstInModal(overlay);
+    
+    // 绘制图表
+    await loadChartJs();
+    const chartEl = document.getElementById('weekChart');
+    if (chartEl && typeof Chart !== 'undefined') {
+      new Chart(chartEl, {
+        type: 'bar',
+        data: {
+          labels: weekStats.map(s => s.day),
+          datasets: [
+            { label: '正确', data: weekStats.map(s => s.correct), backgroundColor: '#22c55e', borderRadius: 4 },
+            { label: '错误', data: weekStats.map(s => s.wrong), backgroundColor: '#ef4444', borderRadius: 4 }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { position: 'bottom', labels: { boxWidth: 12 } } },
+          scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
+        }
+      });
+    }
+  }
+  function closeStatsModal() {
+    closeModalWithFocus(document.getElementById('statsOverlay'));
+  }
+  function openDeleteConfirmModal(){ deleteConfirmOverlay.classList.add('show'); focusFirstInModal(deleteConfirmOverlay); }
   function closeDeleteConfirmModal(){ 
     pendingDeleteWordId = null;
-    deleteConfirmOverlay.classList.remove('show'); 
+    closeModalWithFocus(deleteConfirmOverlay); 
   }
 
   function renderMasteredModal(){
@@ -755,8 +996,42 @@
           <div class="action-btns"><button class="btn-remember">已记住</button><button class="btn-forget">忘记</button></div>
           ${histHtml}</div>`;
       }).join('');
-      container.querySelectorAll('.btn-remember').forEach(b=>b.addEventListener('click',e=>{ const id=e.target.closest('.review-card')?.dataset.wordId; if(id) processReview(id,true); }));
-      container.querySelectorAll('.btn-forget').forEach(b=>b.addEventListener('click',e=>{ const id=e.target.closest('.review-card')?.dataset.wordId; if(id) processReview(id,false); }));
+      container.querySelectorAll('.btn-remember').forEach(b=>b.addEventListener('click',e=>{
+        const id=e.target.closest('.review-card')?.dataset.wordId;
+        if(id) {
+          hapticFeedback('success');
+          processReview(id,true);
+          showUndoToast('已记住', () => {
+            const w = wordsData.find(w => w.id === id);
+            if (w && w.reviewHistory.length > 0) {
+              w.reviewHistory.pop();
+              w.reviewDates = w.reviewDates.filter(rd => rd > getTodayStr());
+              scheduleNextReviews(w, w.learnDate);
+              saveData();
+              renderAll(); renderModalContent(selectedDateStr);
+            }
+          });
+          announce('已记住');
+        }
+      }));
+      container.querySelectorAll('.btn-forget').forEach(b=>b.addEventListener('click',e=>{
+        const id=e.target.closest('.review-card')?.dataset.wordId;
+        if(id) {
+          hapticFeedback('warning');
+          processReview(id,false);
+          showUndoToast('忘记', () => {
+            const w = wordsData.find(w => w.id === id);
+            if (w && w.reviewHistory.length > 0) {
+              w.reviewHistory.pop();
+              w.reviewDates = w.reviewDates.filter(rd => rd > getTodayStr());
+              scheduleNextReviews(w, w.learnDate);
+              saveData();
+              renderAll(); renderModalContent(selectedDateStr);
+            }
+          });
+          announce('已标记为忘记');
+        }
+      }));
     } else {
       inputSection.style.display='none'; hint.textContent='推荐电脑或手机使用';
       const cards = getAllReviewedWords();
@@ -775,7 +1050,11 @@
       }).join('');
     }
   }
-  function renderAll(){ renderCalendar(); updateHomeStats(); }
+  // ========== 渲染优化：脏标记 ==========
+  let _calendarDirty = true;
+  function markDirty() { _calendarDirty = true; }
+  function renderCalendarIfDirty() { if (_calendarDirty) { renderCalendar(); _calendarDirty = false; } }
+  function renderAll(){ markDirty(); renderCalendarIfDirty(); updateHomeStats(); }
 
   // 懒加载 tesseract.js（只在用户首次使用拍照时下载 ~25MB）
   let _tesseractPromise = null;
@@ -896,23 +1175,55 @@
       setGithubStatus('⚠️ 本地没有数据可同步', 'error');
       return;
     }
-    setGithubStatus('⏳ 正在上传到 GitHub...', 'loading');
+    setGithubStatus('⏳ 正在检查远程数据...', 'loading');
     try {
-      const content = btoa(unescape(encodeURIComponent(JSON.stringify(saved, null, 2))));
       const url = `https://api.github.com/repos/${GITHUB_REPO_FULL}/contents/${GITHUB_FILE_PATH}`;
-      // 先检查文件是否存在，获取 SHA
       let sha = null;
+      let remoteData = null;
       const checkRes = await fetch(url, {
         headers: { 'Authorization': `Bearer ${token}`, 'Accept': 'application/vnd.github.v3+json' }
       });
       if(checkRes.ok){
         const existing = await checkRes.json();
         sha = existing.sha;
+        try {
+          remoteData = JSON.parse(decodeURIComponent(escape(atob(existing.content))));
+        } catch(e) {}
       } else if(checkRes.status !== 404){
         const err = await checkRes.json();
         setGithubStatus(`❌ 检查文件失败: ${err.message || checkRes.status}`, 'error');
         return;
       }
+      // 冲突检测
+      if(remoteData && Array.isArray(remoteData) && remoteData.length > 0) {
+        const localCount = saved.length;
+        const remoteCount = remoteData.length;
+        if(remoteCount > localCount) {
+          setGithubStatus(`⚠️ 远程数据更多 (${remoteCount}条 vs 本地${localCount}条)，点击同步将覆盖`, 'loading');
+          // 添加覆盖按钮
+          const submitBtn = document.getElementById('githubSubmit');
+          const overrideBtn = document.createElement('button');
+          overrideBtn.className = 'github-btn download';
+          overrideBtn.textContent = '确认覆盖远程数据';
+          overrideBtn.style.marginTop = '8px';
+          overrideBtn.onclick = async () => {
+            overrideBtn.remove();
+            await doSyncToGithub(saved, sha, token);
+          };
+          submitBtn.parentNode.insertBefore(overrideBtn, submitBtn.nextSibling);
+          return;
+        }
+      }
+      await doSyncToGithub(saved, sha, token);
+    } catch(e){
+      setGithubStatus(`❌ 网络错误: ${e.message}`, 'error');
+    }
+  }
+  async function doSyncToGithub(data, sha, token) {
+    setGithubStatus('⏳ 正在上传到 GitHub...', 'loading');
+    try {
+      const content = btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2))));
+      const url = `https://api.github.com/repos/${GITHUB_REPO_FULL}/contents/${GITHUB_FILE_PATH}`;
       const body = { message: `更新错字复习数据 ${formatYMD(new Date())}`, content };
       if(sha) body.sha = sha;
       const res = await fetch(url, {
@@ -922,7 +1233,7 @@
       });
       if(res.ok){
         setGithubStatus('✅ 上传成功！数据已同步到 GitHub', 'success');
-        closeGithubModal();
+        setTimeout(closeGithubModal, 1000);
       } else {
         const err = await res.json();
         setGithubStatus(`❌ 上传失败: ${err.message || res.status}`, 'error');
@@ -952,6 +1263,23 @@
       console.log('✅ 已从 GitHub 自动加载最新错字数据');
     } catch(e){
       console.log('📁 从 GitHub 加载失败，使用本地数据');
+    }
+  }
+  
+  // ========== 复习提醒 ==========
+  function checkReviewReminder() {
+    const today = getTodayStr();
+    const pending = getPendingCards(today);
+    if (pending.length > 0 && 'Notification' in window && Notification.permission === 'granted') {
+      new Notification('📝 错字复习提醒', {
+        body: `今天有 ${pending.length} 个字词需要复习`,
+        icon: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">📝</text></svg>'
+      });
+    }
+  }
+  function requestNotificationPermission() {
+    if ('Notification' in window && Notification.permission === 'default') {
+      Notification.requestPermission();
     }
   }
 
@@ -1024,9 +1352,44 @@
     githubOverlay.addEventListener('click', e => {
       if(e.target === githubOverlay) closeGithubModal();
     });
+    
+    // 学习统计
+    document.getElementById('statsBtn').addEventListener('click', openStatsModal);
+    document.getElementById('statsCloseBtn').addEventListener('click', closeStatsModal);
+    document.getElementById('statsOverlay').addEventListener('click', e => {
+      if(e.target === document.getElementById('statsOverlay')) closeStatsModal();
+    });
 
     initCameraOCR();
     renderAll();
+    
+    // 请求通知权限并检查提醒
+    requestNotificationPermission();
+    setTimeout(checkReviewReminder, 1000);
+    
+    // 焦点陷阱：所有弹窗监听 keydown
+    document.querySelectorAll('.modal-overlay').forEach(overlay => {
+      overlay.addEventListener('keydown', (e) => { if (e.key === 'Tab') trapFocus(e, overlay); });
+    });
+    // ESC 关闭弹窗
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        document.querySelectorAll('.modal-overlay.show').forEach(overlay => {
+          if (overlay.id === 'modalOverlay') closeModal();
+          else if (overlay.id === 'masteredModalOverlay') closeMasteredModal();
+          else if (overlay.id === 'customPlanOverlay') closeCustomPlanOverlay();
+          else if (overlay.id === 'deleteConfirmOverlay') closeDeleteConfirmModal();
+          else if (overlay.id === 'githubOverlay') closeGithubModal();
+        });
+      }
+      // Ctrl+Z 撤销
+      if ((e.ctrlKey || e.metaKey) && e.key === 'z' && lastAction) {
+        lastAction();
+        lastAction = null;
+        if (undoToast) undoToast.style.display = 'none';
+        showTip('已撤销');
+      }
+    });
 
     // 延迟加载 GitHub 数据，不阻塞首次渲染
     setTimeout(loadFromGithub, 200);
