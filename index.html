@@ -1628,8 +1628,28 @@
   }
 
   function init(){
-    const saved = loadData();
-    wordsData = saved || [];
+    // 先尝试从 data.json 加载（GitHub Pages 部署时使用）
+    fetch('data/cuozifuxi-data.json?t=' + Date.now())
+      .then(res => {
+        if (!res.ok) throw new Error('no file');
+        return res.json();
+      })
+      .then(data => {
+        if (Array.isArray(data) && data.length > 0) {
+          wordsData = data;
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(wordsData));
+          console.log('✅ 已从 data.json 加载 ' + wordsData.length + ' 条数据');
+        } else {
+          const saved = loadData();
+          wordsData = saved || [];
+        }
+        renderAll();
+      })
+      .catch(() => {
+        const saved = loadData();
+        wordsData = saved || [];
+        renderAll();
+      });
     
     // 原有事件绑定
     document.getElementById('prevMonthBtn').addEventListener('click',()=>{ currentDisplayDate.setMonth(currentDisplayDate.getMonth()-1); renderAll(); });
@@ -1713,7 +1733,6 @@
     });
 
     initCameraOCR();
-    renderAll();
     
     // 请求通知权限并检查提醒
     requestNotificationPermission();
