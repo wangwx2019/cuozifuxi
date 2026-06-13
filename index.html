@@ -1628,28 +1628,50 @@
   }
 
   function init(){
-    // 先尝试从 data.json 加载（GitHub Pages 部署时使用）
-    fetch('data/cuozifuxi-data.json?t=' + Date.now())
-      .then(res => {
-        if (!res.ok) throw new Error('no file');
-        return res.json();
-      })
-      .then(data => {
-        if (Array.isArray(data) && data.length > 0) {
-          wordsData = data;
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(wordsData));
-          console.log('✅ 已从 data.json 加载 ' + wordsData.length + ' 条数据');
-        } else {
-          const saved = loadData();
-          wordsData = saved || [];
-        }
-        renderAll();
-      })
-      .catch(() => {
-        const saved = loadData();
-        wordsData = saved || [];
-        renderAll();
-      });
+    // 询问用户是否加载 GitHub 数据
+    const saved = loadData();
+    wordsData = saved || [];
+    renderAll();
+    
+    if (saved && saved.length > 0) {
+      // 本地有数据，询问是否加载云端最新数据
+      if (confirm('检测到本地有数据，是否从 GitHub 加载最新数据？\n\n选择"确定"：加载 GitHub 数据（覆盖本地）\n选择"取消"：使用本地数据')) {
+        fetch('data/cuozifuxi-data.json?t=' + Date.now())
+          .then(res => {
+            if (!res.ok) throw new Error('no file');
+            return res.json();
+          })
+          .then(data => {
+            if (Array.isArray(data) && data.length > 0) {
+              wordsData = data;
+              localStorage.setItem(STORAGE_KEY, JSON.stringify(wordsData));
+              renderAll();
+              console.log('✅ 已从 GitHub 加载 ' + wordsData.length + ' 条数据');
+            }
+          })
+          .catch(() => {
+            console.log('📁 GitHub 数据加载失败，使用本地数据');
+          });
+      }
+    } else {
+      // 本地无数据，自动加载 GitHub 数据
+      fetch('data/cuozifuxi-data.json?t=' + Date.now())
+        .then(res => {
+          if (!res.ok) throw new Error('no file');
+          return res.json();
+        })
+        .then(data => {
+          if (Array.isArray(data) && data.length > 0) {
+            wordsData = data;
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(wordsData));
+            renderAll();
+            console.log('✅ 已从 GitHub 加载 ' + wordsData.length + ' 条数据');
+          }
+        })
+        .catch(() => {
+          console.log('📁 GitHub 数据加载失败');
+        });
+    }
     
     // 原有事件绑定
     document.getElementById('prevMonthBtn').addEventListener('click',()=>{ currentDisplayDate.setMonth(currentDisplayDate.getMonth()-1); renderAll(); });
