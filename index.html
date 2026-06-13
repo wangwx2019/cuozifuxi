@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>艾宾浩斯·错别字复习日历</title>
-  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -778,12 +777,29 @@
   }
   function renderAll(){ renderCalendar(); updateHomeStats(); }
 
+  // 懒加载 tesseract.js（只在用户首次使用拍照时下载 ~25MB）
+  let _tesseractPromise = null;
+  function loadTesseract() {
+    if (typeof Tesseract !== 'undefined') return Promise.resolve();
+    if (_tesseractPromise) return _tesseractPromise;
+    _tesseractPromise = new Promise((resolve, reject) => {
+      const s = document.createElement('script');
+      s.src = 'https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js';
+      s.onload = resolve;
+      s.onerror = () => reject(new Error('tesseract.js 加载失败'));
+      document.head.appendChild(s);
+    });
+    return _tesseractPromise;
+  }
+
   function initCameraOCR() {
     const cameraBtn = document.getElementById('cameraBtn');
     const fileInput = document.getElementById('fileInput');
     const wordInput = document.getElementById('modalWordInput');
 
     cameraBtn.addEventListener('click', () => {
+      // 预加载 tesseract（用户选照片的同时后台下）
+      loadTesseract().catch(() => {});
       fileInput.click();
     });
 
@@ -792,14 +808,15 @@
       if (!file) return;
 
       ocrLoading.style.display = 'block';
-      
+
       try {
+        // 确保 tesseract 已加载完再开始识别
+        await loadTesseract();
+
         const result = await Tesseract.recognize(
           file,
           'chi_sim',
-          {
-            logger: m => console.log(m)
-          }
+          { logger: m => console.log(m) }
         );
 
         const text = result.data.text
@@ -814,7 +831,7 @@
         }
       } catch (error) {
         console.error('OCR识别失败:', error);
-        alert('识别失败，请检查网络后重试');
+        alert(error.message === 'tesseract.js 加载失败' ? 'OCR引擎加载失败，请检查网络后重试' : '识别失败，请检查网络后重试');
       } finally {
         ocrLoading.style.display = 'none';
         fileInput.value = '';
@@ -941,7 +958,6 @@
   function init(){
     const saved = loadData();
     wordsData = saved || [];
-    loadFromGithub();
     
     // 原有事件绑定
     document.getElementById('prevMonthBtn').addEventListener('click',()=>{ currentDisplayDate.setMonth(currentDisplayDate.getMonth()-1); renderAll(); });
@@ -1011,6 +1027,9 @@
 
     initCameraOCR();
     renderAll();
+
+    // 延迟加载 GitHub 数据，不阻塞首次渲染
+    setTimeout(loadFromGithub, 200);
   }
   
   init();
