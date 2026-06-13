@@ -888,27 +888,29 @@
     overlay.classList.add('show');
     focusFirstInModal(overlay);
     
-    // 绘制图表
+    // 等待弹窗显示后再绘制图表
     await loadChartJs();
-    const chartEl = document.getElementById('weekChart');
-    if (chartEl && typeof Chart !== 'undefined') {
-      new Chart(chartEl, {
-        type: 'bar',
-        data: {
-          labels: weekStats.map(s => s.day),
-          datasets: [
-            { label: '正确', data: weekStats.map(s => s.correct), backgroundColor: '#22c55e', borderRadius: 4 },
-            { label: '错误', data: weekStats.map(s => s.wrong), backgroundColor: '#ef4444', borderRadius: 4 }
-          ]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: { legend: { position: 'bottom', labels: { boxWidth: 12 } } },
-          scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
+    requestAnimationFrame(() => {
+        const chartEl = document.getElementById('weekChart');
+        if (chartEl && typeof Chart !== 'undefined') {
+            new Chart(chartEl, {
+                type: 'bar',
+                data: {
+                    labels: weekStats.map(s => s.day),
+                    datasets: [
+                        { label: '正确', data: weekStats.map(s => s.correct), backgroundColor: '#22c55e', borderRadius: 4 },
+                        { label: '错误', data: weekStats.map(s => s.wrong), backgroundColor: '#ef4444', borderRadius: 4 }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'bottom', labels: { boxWidth: 12 } } },
+                    scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
+                }
+            });
         }
-      });
-    }
+    });
   }
   function closeStatsModal() {
     closeModalWithFocus(document.getElementById('statsOverlay'));
