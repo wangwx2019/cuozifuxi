@@ -707,13 +707,15 @@
     let n=0,p=0,r=0; 
     const today = getTodayStr();
     const isToday = ds === today;
+    const isPastOrToday = ds <= today;
     wordsData.forEach(w=>{ 
       if(w.learnDate===ds) n++; 
       // 今天→累计过期；其他日期→只显示该日本身的计划
       if(isToday ? w.reviewDates.some(rd => rd <= ds) : w.reviewDates.includes(ds)){ 
         if(!w.reviewHistory.some(h=>h.date===ds)) p++; 
       } 
-      if(w.reviewHistory.some(h=>h.date===ds)) r++; 
+      // 已复习：只显示今天或过去日期的复习记录（不显示未来日期）
+      if(isPastOrToday && w.reviewHistory.some(h=> h.date===ds || h.scheduledDate===ds)) r++; 
     }); 
     return {newCount:n, pendingCount:p, reviewedCount:r}; 
   }
@@ -752,7 +754,9 @@
     // 正确用当前间隔，错误用 intervals[0]（与 forceReset 一致）
     const effectiveLabel = isCorrect ? intervals[intervalIndex] : intervals[0];
     const dayLabel = effectiveLabel + '天复习';
-    w.reviewHistory.push({ date:today, reviewNumber:idx+1, dayLabel:`第${dayLabel}`, result:isCorrect?'correct':'wrong' });
+    // 记录计划复习日期（补打昨天复习时，这个日期是昨天）
+    const scheduledDate = w.reviewDates.length > 0 ? w.reviewDates[0] : today;
+    w.reviewHistory.push({ date:today, scheduledDate:scheduledDate, reviewNumber:idx+1, dayLabel:`第${dayLabel}`, result:isCorrect?'correct':'wrong' });
     // 清理已过期的旧 reviewDates（早于等于本次的都已失效）
     w.reviewDates = w.reviewDates.filter(rd => rd > today);
     // 正确→正常推进；错误→forceReset 回到第1天间隔
