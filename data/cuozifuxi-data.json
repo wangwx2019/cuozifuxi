@@ -137,7 +137,7 @@
     "learnDate": "2026-05-24",
     "reviewDates": [
       "2026-06-19",
-      "2026-06-14"
+      "2026-06-21"
     ],
     "reviewHistory": [
       {
@@ -180,6 +180,13 @@
         "date": "2026-06-10",
         "reviewNumber": 7,
         "dayLabel": "第2天复习",
+        "result": "correct"
+      },
+      {
+        "date": "2026-06-14",
+        "scheduledDate": "2026-06-19",
+        "reviewNumber": 8,
+        "dayLabel": "第4天复习",
         "result": "correct"
       }
     ],
@@ -1205,8 +1212,8 @@
     "word": "过问",
     "learnDate": "2026-05-30",
     "reviewDates": [
-      "2026-06-14",
-      "2026-06-18"
+      "2026-06-18",
+      "2026-06-29"
     ],
     "reviewHistory": [
       {
@@ -1225,6 +1232,13 @@
         "date": "2026-06-11",
         "reviewNumber": 3,
         "dayLabel": "第4天复习",
+        "result": "correct"
+      },
+      {
+        "date": "2026-06-14",
+        "scheduledDate": "2026-06-14",
+        "reviewNumber": 4,
+        "dayLabel": "第7天复习",
         "result": "correct"
       }
     ],
@@ -1533,11 +1547,7 @@
     "id": "1780214729832.7905姓名拼音后鼻音",
     "word": "姓名拼音后鼻音",
     "learnDate": "2026-05-31",
-    "reviewDates": [
-      "2026-06-15",
-      "2026-06-14",
-      "2026-06-23"
-    ],
+    "reviewDates": [],
     "reviewHistory": [
       {
         "date": "2026-06-02",
@@ -1562,6 +1572,13 @@
         "reviewNumber": 4,
         "dayLabel": "第7天复习",
         "result": "correct"
+      },
+      {
+        "date": "2026-06-14",
+        "scheduledDate": "2026-06-15",
+        "reviewNumber": 5,
+        "dayLabel": "第15天复习",
+        "result": "correct"
       }
     ],
     "customIntervals": null
@@ -1572,7 +1589,6 @@
     "learnDate": "2026-05-31",
     "reviewDates": [
       "2026-06-15",
-      "2026-06-14",
       "2026-06-23"
     ],
     "reviewHistory": [
@@ -1598,6 +1614,13 @@
         "date": "2026-06-08",
         "reviewNumber": 4,
         "dayLabel": "第7天复习",
+        "result": "correct"
+      },
+      {
+        "date": "2026-06-14",
+        "scheduledDate": "2026-06-15",
+        "reviewNumber": 5,
+        "dayLabel": "第15天复习",
         "result": "correct"
       }
     ],
@@ -2371,7 +2394,7 @@
     "word": "门票",
     "learnDate": "2026-06-07",
     "reviewDates": [
-      "2026-06-14"
+      "2026-06-21"
     ],
     "reviewHistory": [
       {
@@ -2384,6 +2407,13 @@
         "date": "2026-06-10",
         "reviewNumber": 2,
         "dayLabel": "第2天复习",
+        "result": "correct"
+      },
+      {
+        "date": "2026-06-14",
+        "scheduledDate": "2026-06-14",
+        "reviewNumber": 3,
+        "dayLabel": "第4天复习",
         "result": "correct"
       }
     ],
@@ -2394,7 +2424,7 @@
     "word": "现在",
     "learnDate": "2026-06-07",
     "reviewDates": [
-      "2026-06-14"
+      "2026-06-21"
     ],
     "reviewHistory": [
       {
@@ -2407,6 +2437,13 @@
         "date": "2026-06-10",
         "reviewNumber": 2,
         "dayLabel": "第2天复习",
+        "result": "correct"
+      },
+      {
+        "date": "2026-06-14",
+        "scheduledDate": "2026-06-14",
+        "reviewNumber": 3,
+        "dayLabel": "第4天复习",
         "result": "correct"
       }
     ],
@@ -2446,7 +2483,7 @@
     "word": "吓人",
     "learnDate": "2026-06-07",
     "reviewDates": [
-      "2026-06-14"
+      "2026-06-21"
     ],
     "reviewHistory": [
       {
@@ -2459,6 +2496,13 @@
         "date": "2026-06-10",
         "reviewNumber": 2,
         "dayLabel": "第2天复习",
+        "result": "correct"
+      },
+      {
+        "date": "2026-06-14",
+        "scheduledDate": "2026-06-14",
+        "reviewNumber": 3,
+        "dayLabel": "第4天复习",
         "result": "correct"
       }
     ],
@@ -3065,7 +3109,7 @@
     "word": "一则通知",
     "learnDate": "2026-06-12",
     "reviewDates": [
-      "2026-06-14"
+      "2026-06-18"
     ],
     "reviewHistory": [
       {
@@ -3074,6 +3118,13 @@
         "reviewNumber": 1,
         "dayLabel": "第1天复习",
         "result": "wrong"
+      },
+      {
+        "date": "2026-06-14",
+        "scheduledDate": "2026-06-14",
+        "reviewNumber": 2,
+        "dayLabel": "第2天复习",
+        "result": "correct"
       }
     ],
     "customIntervals": null
