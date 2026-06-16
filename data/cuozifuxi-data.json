@@ -1719,11 +1719,7 @@
     "id": "1780408204285.9956帮忙",
     "word": "帮忙",
     "learnDate": "2026-06-02",
-    "reviewDates": [
-      "2026-06-17",
-      "2026-06-16",
-      "2026-06-26"
-    ],
+    "reviewDates": [],
     "reviewHistory": [
       {
         "date": "2026-06-04",
@@ -1748,6 +1744,13 @@
         "reviewNumber": 4,
         "dayLabel": "第7天复习",
         "result": "correct"
+      },
+      {
+        "date": "2026-06-16",
+        "scheduledDate": "2026-06-17",
+        "reviewNumber": 5,
+        "dayLabel": "第15天复习",
+        "result": "correct"
       }
     ],
     "customIntervals": null
@@ -1758,7 +1761,6 @@
     "learnDate": "2026-06-02",
     "reviewDates": [
       "2026-06-17",
-      "2026-06-16",
       "2026-06-26"
     ],
     "reviewHistory": [
@@ -1785,6 +1787,13 @@
         "reviewNumber": 4,
         "dayLabel": "第7天复习",
         "result": "correct"
+      },
+      {
+        "date": "2026-06-16",
+        "scheduledDate": "2026-06-17",
+        "reviewNumber": 5,
+        "dayLabel": "第15天复习",
+        "result": "correct"
       }
     ],
     "customIntervals": null
@@ -1795,7 +1804,6 @@
     "learnDate": "2026-06-02",
     "reviewDates": [
       "2026-06-17",
-      "2026-06-16",
       "2026-06-26"
     ],
     "reviewHistory": [
@@ -1822,6 +1830,13 @@
         "reviewNumber": 4,
         "dayLabel": "第7天复习",
         "result": "correct"
+      },
+      {
+        "date": "2026-06-16",
+        "scheduledDate": "2026-06-17",
+        "reviewNumber": 5,
+        "dayLabel": "第1天复习",
+        "result": "wrong"
       }
     ],
     "customIntervals": null
@@ -2692,7 +2707,7 @@
     "word": "等",
     "learnDate": "2026-06-08",
     "reviewDates": [
-      "2026-06-16"
+      "2026-07-01"
     ],
     "reviewHistory": [
       {
@@ -2713,6 +2728,13 @@
         "reviewNumber": 3,
         "dayLabel": "第1天复习",
         "result": "wrong"
+      },
+      {
+        "date": "2026-06-16",
+        "scheduledDate": "2026-06-16",
+        "reviewNumber": 4,
+        "dayLabel": "第7天复习",
+        "result": "correct"
       }
     ],
     "customIntervals": null
@@ -3350,6 +3372,236 @@
   {
     "id": "1781606489588.1836秋千qiuqian",
     "word": "秋千qiuqian",
+    "learnDate": "2026-06-16",
+    "reviewDates": [
+      "2026-06-17"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
+  },
+  {
+    "id": "1781617278964.2896秋霜降",
+    "word": "秋霜降",
+    "learnDate": "2026-06-16",
+    "reviewDates": [
+      "2026-06-17"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
+  },
+  {
+    "id": "1781617278965.0398冬雪飘",
+    "word": "冬雪飘",
+    "learnDate": "2026-06-16",
+    "reviewDates": [
+      "2026-06-17"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
+  },
+  {
+    "id": "1781617278965.3262姓氏",
+    "word": "姓氏",
+    "learnDate": "2026-06-16",
+    "reviewDates": [
+      "2026-06-17"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
+  },
+  {
+    "id": "1781617278965.7024张开",
+    "word": "张开",
+    "learnDate": "2026-06-16",
+    "reviewDates": [
+      "2026-06-17"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
+  },
+  {
+    "id": "1781617278965.7603弓步",
+    "word": "弓步",
+    "learnDate": "2026-06-16",
+    "reviewDates": [
+      "2026-06-17"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
+  },
+  {
+    "id": "1781617278965.7732情感",
+    "word": "情感",
+    "learnDate": "2026-06-16",
+    "reviewDates": [
+      "2026-06-17"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
+  },
+  {
+    "id": "1781617278965.659事情",
+    "word": "事情",
+    "learnDate": "2026-06-16",
+    "reviewDates": [
+      "2026-06-17"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
+  },
+  {
+    "id": "1781617278965.9785青色",
+    "word": "青色",
+    "learnDate": "2026-06-16",
+    "reviewDates": [
+      "2026-06-17"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
+  },
+  {
+    "id": "1781617278965.1309早晨",
+    "word": "早晨",
+    "learnDate": "2026-06-16",
+    "reviewDates": [
+      "2026-06-17"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
+  },
+  {
+    "id": "1781617278965.8826清风",
+    "word": "清风",
+    "learnDate": "2026-06-16",
+    "reviewDates": [
+      "2026-06-17"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
+  },
+  {
+    "id": "1781617740786.9126生长",
+    "word": "生长",
+    "learnDate": "2026-06-16",
+    "reviewDates": [
+      "2026-06-17"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
+  },
+  {
+    "id": "1781617740787.3813猜想",
+    "word": "猜想",
+    "learnDate": "2026-06-16",
+    "reviewDates": [
+      "2026-06-17"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
+  },
+  {
+    "id": "1781617740787.4302喜欢",
+    "word": "喜欢",
+    "learnDate": "2026-06-16",
+    "reviewDates": [
+      "2026-06-17"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
+  },
+  {
+    "id": "1781617740787.4092时日",
+    "word": "时日",
+    "learnDate": "2026-06-16",
+    "reviewDates": [
+      "2026-06-17"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
+  },
+  {
+    "id": "1781617740787.0193进攻",
+    "word": "进攻",
+    "learnDate": "2026-06-16",
+    "reviewDates": [
+      "2026-06-17"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
+  },
+  {
+    "id": "1781618419614.1484千万",
+    "word": "千万",
+    "learnDate": "2026-06-16",
+    "reviewDates": [
+      "2026-06-17"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
+  },
+  {
+    "id": "1781618419614.4736无比",
+    "word": "无比",
+    "learnDate": "2026-06-16",
+    "reviewDates": [
+      "2026-06-17"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
+  },
+  {
+    "id": "1781618419615.0442计算",
+    "word": "计算",
+    "learnDate": "2026-06-16",
+    "reviewDates": [
+      "2026-06-17"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
+  },
+  {
+    "id": "1781618419615.1199方式",
+    "word": "方式",
+    "learnDate": "2026-06-16",
+    "reviewDates": [
+      "2026-06-17"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
+  },
+  {
+    "id": "1781618419615.504合作",
+    "word": "合作",
+    "learnDate": "2026-06-16",
+    "reviewDates": [
+      "2026-06-17"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
+  },
+  {
+    "id": "1781618419615.2153团结",
+    "word": "团结",
+    "learnDate": "2026-06-16",
+    "reviewDates": [
+      "2026-06-17"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
+  },
+  {
+    "id": "1781618419615.3538卡车",
+    "word": "卡车",
+    "learnDate": "2026-06-16",
+    "reviewDates": [
+      "2026-06-17"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
+  },
+  {
+    "id": "1781618419615.64百合",
+    "word": "百合",
     "learnDate": "2026-06-16",
     "reviewDates": [
       "2026-06-17"
