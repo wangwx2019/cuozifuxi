@@ -6670,9 +6670,17 @@
     "word": "孩子",
     "learnDate": "2026-07-04",
     "reviewDates": [
-      "2026-07-05"
+      "2026-07-07"
     ],
-    "reviewHistory": [],
+    "reviewHistory": [
+      {
+        "date": "2026-07-05",
+        "scheduledDate": "2026-07-05",
+        "reviewNumber": 1,
+        "dayLabel": "第1天复习",
+        "result": "correct"
+      }
+    ],
     "customIntervals": null
   },
   {
@@ -6680,9 +6688,17 @@
     "word": "脑袋",
     "learnDate": "2026-07-04",
     "reviewDates": [
-      "2026-07-05"
+      "2026-07-06"
     ],
-    "reviewHistory": [],
+    "reviewHistory": [
+      {
+        "date": "2026-07-05",
+        "scheduledDate": "2026-07-05",
+        "reviewNumber": 1,
+        "dayLabel": "第1天复习",
+        "result": "wrong"
+      }
+    ],
     "customIntervals": null
   },
   {
@@ -6690,9 +6706,17 @@
     "word": "腿",
     "learnDate": "2026-07-04",
     "reviewDates": [
-      "2026-07-05"
+      "2026-07-06"
     ],
-    "reviewHistory": [],
+    "reviewHistory": [
+      {
+        "date": "2026-07-05",
+        "scheduledDate": "2026-07-05",
+        "reviewNumber": 1,
+        "dayLabel": "第1天复习",
+        "result": "wrong"
+      }
+    ],
     "customIntervals": null
   },
   {
@@ -6700,9 +6724,17 @@
     "word": "教书",
     "learnDate": "2026-07-04",
     "reviewDates": [
-      "2026-07-05"
+      "2026-07-07"
     ],
-    "reviewHistory": [],
+    "reviewHistory": [
+      {
+        "date": "2026-07-05",
+        "scheduledDate": "2026-07-05",
+        "reviewNumber": 1,
+        "dayLabel": "第1天复习",
+        "result": "correct"
+      }
+    ],
     "customIntervals": null
   },
   {
@@ -6710,9 +6742,17 @@
     "word": "欢迎",
     "learnDate": "2026-07-04",
     "reviewDates": [
-      "2026-07-05"
+      "2026-07-06"
     ],
-    "reviewHistory": [],
+    "reviewHistory": [
+      {
+        "date": "2026-07-05",
+        "scheduledDate": "2026-07-05",
+        "reviewNumber": 1,
+        "dayLabel": "第1天复习",
+        "result": "wrong"
+      }
+    ],
     "customIntervals": null
   },
   {
@@ -6720,9 +6760,17 @@
     "word": "嘴巴",
     "learnDate": "2026-07-04",
     "reviewDates": [
-      "2026-07-05"
+      "2026-07-07"
     ],
-    "reviewHistory": [],
+    "reviewHistory": [
+      {
+        "date": "2026-07-05",
+        "scheduledDate": "2026-07-05",
+        "reviewNumber": 1,
+        "dayLabel": "第1天复习",
+        "result": "correct"
+      }
+    ],
     "customIntervals": null
   },
   {
@@ -6730,9 +6778,17 @@
     "word": "龟",
     "learnDate": "2026-07-04",
     "reviewDates": [
-      "2026-07-05"
+      "2026-07-07"
     ],
-    "reviewHistory": [],
+    "reviewHistory": [
+      {
+        "date": "2026-07-05",
+        "scheduledDate": "2026-07-05",
+        "reviewNumber": 1,
+        "dayLabel": "第1天复习",
+        "result": "correct"
+      }
+    ],
     "customIntervals": null
   },
   {
@@ -6740,9 +6796,17 @@
     "word": "打鼓",
     "learnDate": "2026-07-04",
     "reviewDates": [
-      "2026-07-05"
+      "2026-07-07"
     ],
-    "reviewHistory": [],
+    "reviewHistory": [
+      {
+        "date": "2026-07-05",
+        "scheduledDate": "2026-07-05",
+        "reviewNumber": 1,
+        "dayLabel": "第1天复习",
+        "result": "correct"
+      }
+    ],
     "customIntervals": null
   },
   {
@@ -6750,9 +6814,17 @@
     "word": "蹲",
     "learnDate": "2026-07-04",
     "reviewDates": [
-      "2026-07-05"
+      "2026-07-06"
     ],
-    "reviewHistory": [],
+    "reviewHistory": [
+      {
+        "date": "2026-07-05",
+        "scheduledDate": "2026-07-05",
+        "reviewNumber": 1,
+        "dayLabel": "第1天复习",
+        "result": "wrong"
+      }
+    ],
     "customIntervals": null
   },
   {
@@ -6760,7 +6832,135 @@
     "word": "甩",
     "learnDate": "2026-07-04",
     "reviewDates": [
-      "2026-07-05"
+      "2026-07-07"
+    ],
+    "reviewHistory": [
+      {
+        "date": "2026-07-05",
+        "scheduledDate": "2026-07-05",
+        "reviewNumber": 1,
+        "dayLabel": "第1天复习",
+        "result": "correct"
+      }
+    ],
+    "customIntervals": null
+  },
+  {
+    "id": "1783259321646.407别",
+    "word": "别",
+    "learnDate": "2026-07-06",
+    "reviewDates": [
+      "2026-07-07"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
+  },
+  {
+    "id": "1783259321646.6504发",
+    "word": "发",
+    "learnDate": "2026-07-06",
+    "reviewDates": [
+      "2026-07-07"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
+  },
+  {
+    "id": "1783259321646.1633汽车",
+    "word": "汽车",
+    "learnDate": "2026-07-06",
+    "reviewDates": [
+      "2026-07-07"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
+  },
+  {
+    "id": "1783259321646.2446越来",
+    "word": "越来",
+    "learnDate": "2026-07-06",
+    "reviewDates": [
+      "2026-07-07"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
+  },
+  {
+    "id": "1783259321646.786水滴",
+    "word": "水滴",
+    "learnDate": "2026-07-06",
+    "reviewDates": [
+      "2026-07-07"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
+  },
+  {
+    "id": "1783259321646.4963奔跑",
+    "word": "奔跑",
+    "learnDate": "2026-07-06",
+    "reviewDates": [
+      "2026-07-07"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
+  },
+  {
+    "id": "1783259321647.4536没有",
+    "word": "没有",
+    "learnDate": "2026-07-06",
+    "reviewDates": [
+      "2026-07-07"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
+  },
+  {
+    "id": "1783259321647.8364庄稼",
+    "word": "庄稼",
+    "learnDate": "2026-07-06",
+    "reviewDates": [
+      "2026-07-07"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
+  },
+  {
+    "id": "1783259321647.6914房屋",
+    "word": "房屋",
+    "learnDate": "2026-07-06",
+    "reviewDates": [
+      "2026-07-07"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
+  },
+  {
+    "id": "1783259321647.6636带",
+    "word": "带",
+    "learnDate": "2026-07-06",
+    "reviewDates": [
+      "2026-07-07"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
+  },
+  {
+    "id": "1783259321647.156管",
+    "word": "管",
+    "learnDate": "2026-07-06",
+    "reviewDates": [
+      "2026-07-07"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
+  },
+  {
+    "id": "1783259321647.6719太阳",
+    "word": "太阳",
+    "learnDate": "2026-07-06",
+    "reviewDates": [
+      "2026-07-07"
     ],
     "reviewHistory": [],
     "customIntervals": null
