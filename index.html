@@ -1286,7 +1286,7 @@
         const title=`复习#${idx+1} 第${dayLabel}`;
         let histHtml=''; if(hist.length){ histHtml=hist.map(h=>`<div class="history-row"><span class="history-left">${h.date} ${h.dayLabel}:</span><span class="history-right ${h.result==='correct'?'correct':'wrong'}">${h.result==='correct'?'正确':'错误'}</span></div>`).join(''); }
         return `<div class="review-card" data-word-id="${w.id}">
-          ${w.reviewHistory.length?`<div class="card-header-row"><span>${title}</span><span>学习于: ${w.learnDate}</span></div>`:''}
+          <div class="card-header-row"><span>${w.reviewHistory.length?title:'待复习'}</span><span style="display:flex;align-items:center;gap:8px;">学习于: ${w.learnDate}<button class="delete-word-btn">✕</button></span></div>
           <div class="word-big">${w.word}</div>
           <div class="strength-row"><span>当前记忆强度: ${s}%</span><span>本次复习正确可增加: 20%</span></div>
           <div class="action-btns"><button class="btn-remember">已记住</button><button class="btn-forget">忘记</button></div>
@@ -1328,6 +1328,16 @@
           announce('已标记为忘记');
         }
       }));
+      container.querySelectorAll('.delete-word-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const wordId = e.target.closest('.review-card')?.dataset.wordId;
+          if (wordId) {
+            pendingDeleteWordId = wordId;
+            openDeleteConfirmModal();
+          }
+        });
+      });
     } else {
       inputSection.style.display='none'; hint.textContent='推荐电脑或手机使用';
       const cards = getAllReviewedWords();
