@@ -8607,9 +8607,17 @@
     "word": "铁",
     "learnDate": "2026-08-29",
     "reviewDates": [
-      "2026-08-30"
+      "2026-09-08"
     ],
-    "reviewHistory": [],
+    "reviewHistory": [
+      {
+        "date": "2026-09-06",
+        "scheduledDate": "2026-08-30",
+        "reviewNumber": 1,
+        "dayLabel": "第1天复习",
+        "result": "correct"
+      }
+    ],
     "customIntervals": null
   },
   {
@@ -8617,9 +8625,17 @@
     "word": "告诉",
     "learnDate": "2026-08-29",
     "reviewDates": [
-      "2026-08-30"
+      "2026-09-08"
     ],
-    "reviewHistory": [],
+    "reviewHistory": [
+      {
+        "date": "2026-09-06",
+        "scheduledDate": "2026-08-30",
+        "reviewNumber": 1,
+        "dayLabel": "第1天复习",
+        "result": "correct"
+      }
+    ],
     "customIntervals": null
   },
   {
@@ -8627,9 +8643,17 @@
     "word": "四处",
     "learnDate": "2026-08-29",
     "reviewDates": [
-      "2026-08-30"
+      "2026-09-08"
     ],
-    "reviewHistory": [],
+    "reviewHistory": [
+      {
+        "date": "2026-09-06",
+        "scheduledDate": "2026-08-30",
+        "reviewNumber": 1,
+        "dayLabel": "第1天复习",
+        "result": "correct"
+      }
+    ],
     "customIntervals": null
   },
   {
@@ -8637,9 +8661,17 @@
     "word": "到处",
     "learnDate": "2026-08-29",
     "reviewDates": [
-      "2026-08-30"
+      "2026-09-08"
     ],
-    "reviewHistory": [],
+    "reviewHistory": [
+      {
+        "date": "2026-09-06",
+        "scheduledDate": "2026-08-30",
+        "reviewNumber": 1,
+        "dayLabel": "第1天复习",
+        "result": "correct"
+      }
+    ],
     "customIntervals": null
   },
   {
@@ -8647,9 +8679,17 @@
     "word": "连接",
     "learnDate": "2026-08-29",
     "reviewDates": [
-      "2026-08-30"
+      "2026-09-08"
     ],
-    "reviewHistory": [],
+    "reviewHistory": [
+      {
+        "date": "2026-09-06",
+        "scheduledDate": "2026-08-30",
+        "reviewNumber": 1,
+        "dayLabel": "第1天复习",
+        "result": "correct"
+      }
+    ],
     "customIntervals": null
   },
   {
@@ -8657,9 +8697,17 @@
     "word": "红领巾",
     "learnDate": "2026-08-29",
     "reviewDates": [
-      "2026-08-30"
+      "2026-09-08"
     ],
-    "reviewHistory": [],
+    "reviewHistory": [
+      {
+        "date": "2026-09-06",
+        "scheduledDate": "2026-08-30",
+        "reviewNumber": 1,
+        "dayLabel": "第1天复习",
+        "result": "correct"
+      }
+    ],
     "customIntervals": null
   },
   {
@@ -8667,9 +8715,17 @@
     "word": "轻轻",
     "learnDate": "2026-08-29",
     "reviewDates": [
-      "2026-08-30"
+      "2026-09-08"
     ],
-    "reviewHistory": [],
+    "reviewHistory": [
+      {
+        "date": "2026-09-06",
+        "scheduledDate": "2026-08-30",
+        "reviewNumber": 1,
+        "dayLabel": "第1天复习",
+        "result": "correct"
+      }
+    ],
     "customIntervals": null
   },
   {
@@ -8677,7 +8733,115 @@
     "word": "短跑",
     "learnDate": "2026-08-29",
     "reviewDates": [
-      "2026-08-30"
+      "2026-09-08"
+    ],
+    "reviewHistory": [
+      {
+        "date": "2026-09-06",
+        "scheduledDate": "2026-08-30",
+        "reviewNumber": 1,
+        "dayLabel": "第1天复习",
+        "result": "correct"
+      }
+    ],
+    "customIntervals": null
+  },
+  {
+    "id": "1788695073776.0896胆子",
+    "word": "胆子",
+    "learnDate": "2026-09-06",
+    "reviewDates": [
+      "2026-09-07"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
+  },
+  {
+    "id": "1788695073778.9949旅行",
+    "word": "旅行",
+    "learnDate": "2026-09-06",
+    "reviewDates": [
+      "2026-09-07"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
+  },
+  {
+    "id": "1788695106920.6614挺立",
+    "word": "挺立",
+    "learnDate": "2026-09-06",
+    "reviewDates": [
+      "2026-09-07"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
+  },
+  {
+    "id": "1788695143764.0732海底",
+    "word": "海底",
+    "learnDate": "2026-09-06",
+    "reviewDates": [
+      "2026-09-07"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
+  },
+  {
+    "id": "1788695219872.373脚",
+    "word": "脚",
+    "learnDate": "2026-09-06",
+    "reviewDates": [
+      "2026-09-07"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
+  },
+  {
+    "id": "1788695278780.413都是",
+    "word": "都是",
+    "learnDate": "2026-09-06",
+    "reviewDates": [
+      "2026-09-07"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
+  },
+  {
+    "id": "1788695297502.491明朗晴朗",
+    "word": "明朗晴朗",
+    "learnDate": "2026-09-06",
+    "reviewDates": [
+      "2026-09-07"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
+  },
+  {
+    "id": "1788695309010.573暴",
+    "word": "暴",
+    "learnDate": "2026-09-06",
+    "reviewDates": [
+      "2026-09-07"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
+  },
+  {
+    "id": "1788697321429.47大有作为",
+    "word": "大有作为",
+    "learnDate": "2026-09-06",
+    "reviewDates": [
+      "2026-09-07"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
+  },
+  {
+    "id": "1788697321429.444杨柳",
+    "word": "杨柳",
+    "learnDate": "2026-09-06",
+    "reviewDates": [
+      "2026-09-07"
     ],
     "reviewHistory": [],
     "customIntervals": null
