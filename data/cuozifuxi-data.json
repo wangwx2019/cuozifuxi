@@ -9182,5 +9182,25 @@
     ],
     "reviewHistory": [],
     "customIntervals": null
+  },
+  {
+    "id": "1789038110105.0332中央",
+    "word": "中央",
+    "learnDate": "2026-09-10",
+    "reviewDates": [
+      "2026-09-11"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
+  },
+  {
+    "id": "1789038122038.9072倒车",
+    "word": "倒车",
+    "learnDate": "2026-09-10",
+    "reviewDates": [
+      "2026-09-11"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
   }
 ]
