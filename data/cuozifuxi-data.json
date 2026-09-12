@@ -9415,8 +9415,8 @@
     "customIntervals": null
   },
   {
-    "id": "1789199666899.7234眨眨眼",
-    "word": "眨眨眼",
+    "id": "1789199778426.0657剪刀",
+    "word": "剪刀",
     "learnDate": "2026-09-12",
     "reviewDates": [
       "2026-09-13"
@@ -9425,8 +9425,18 @@
     "customIntervals": null
   },
   {
-    "id": "1789199666899.2085摇摇头",
+    "id": "1789199929023.77摇摇头",
     "word": "摇摇头",
+    "learnDate": "2026-09-12",
+    "reviewDates": [
+      "2026-09-13"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
+  },
+  {
+    "id": "1789199929023.5361眨眨眼",
+    "word": "眨眨眼",
     "learnDate": "2026-09-12",
     "reviewDates": [
       "2026-09-13"
