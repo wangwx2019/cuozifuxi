@@ -8607,7 +8607,7 @@
     "word": "铁",
     "learnDate": "2026-08-29",
     "reviewDates": [
-      "2026-09-12"
+      "2026-09-19"
     ],
     "reviewHistory": [
       {
@@ -8622,6 +8622,13 @@
         "scheduledDate": "2026-09-08",
         "reviewNumber": 2,
         "dayLabel": "第2天复习",
+        "result": "correct"
+      },
+      {
+        "date": "2026-09-12",
+        "scheduledDate": "2026-09-12",
+        "reviewNumber": 3,
+        "dayLabel": "第4天复习",
         "result": "correct"
       }
     ],
@@ -8632,7 +8639,7 @@
     "word": "告诉",
     "learnDate": "2026-08-29",
     "reviewDates": [
-      "2026-09-12"
+      "2026-09-19"
     ],
     "reviewHistory": [
       {
@@ -8647,6 +8654,13 @@
         "scheduledDate": "2026-09-08",
         "reviewNumber": 2,
         "dayLabel": "第2天复习",
+        "result": "correct"
+      },
+      {
+        "date": "2026-09-12",
+        "scheduledDate": "2026-09-12",
+        "reviewNumber": 3,
+        "dayLabel": "第4天复习",
         "result": "correct"
       }
     ],
@@ -8657,7 +8671,7 @@
     "word": "四处",
     "learnDate": "2026-08-29",
     "reviewDates": [
-      "2026-09-12"
+      "2026-09-19"
     ],
     "reviewHistory": [
       {
@@ -8672,6 +8686,13 @@
         "scheduledDate": "2026-09-08",
         "reviewNumber": 2,
         "dayLabel": "第2天复习",
+        "result": "correct"
+      },
+      {
+        "date": "2026-09-12",
+        "scheduledDate": "2026-09-12",
+        "reviewNumber": 3,
+        "dayLabel": "第4天复习",
         "result": "correct"
       }
     ],
@@ -8682,7 +8703,7 @@
     "word": "到处",
     "learnDate": "2026-08-29",
     "reviewDates": [
-      "2026-09-12"
+      "2026-09-19"
     ],
     "reviewHistory": [
       {
@@ -8697,6 +8718,13 @@
         "scheduledDate": "2026-09-08",
         "reviewNumber": 2,
         "dayLabel": "第2天复习",
+        "result": "correct"
+      },
+      {
+        "date": "2026-09-12",
+        "scheduledDate": "2026-09-12",
+        "reviewNumber": 3,
+        "dayLabel": "第4天复习",
         "result": "correct"
       }
     ],
@@ -8707,7 +8735,7 @@
     "word": "连接",
     "learnDate": "2026-08-29",
     "reviewDates": [
-      "2026-09-12"
+      "2026-09-19"
     ],
     "reviewHistory": [
       {
@@ -8722,6 +8750,13 @@
         "scheduledDate": "2026-09-08",
         "reviewNumber": 2,
         "dayLabel": "第2天复习",
+        "result": "correct"
+      },
+      {
+        "date": "2026-09-12",
+        "scheduledDate": "2026-09-12",
+        "reviewNumber": 3,
+        "dayLabel": "第4天复习",
         "result": "correct"
       }
     ],
@@ -8732,7 +8767,7 @@
     "word": "红领巾",
     "learnDate": "2026-08-29",
     "reviewDates": [
-      "2026-09-12"
+      "2026-09-19"
     ],
     "reviewHistory": [
       {
@@ -8747,6 +8782,13 @@
         "scheduledDate": "2026-09-08",
         "reviewNumber": 2,
         "dayLabel": "第2天复习",
+        "result": "correct"
+      },
+      {
+        "date": "2026-09-12",
+        "scheduledDate": "2026-09-12",
+        "reviewNumber": 3,
+        "dayLabel": "第4天复习",
         "result": "correct"
       }
     ],
@@ -8757,7 +8799,7 @@
     "word": "轻轻",
     "learnDate": "2026-08-29",
     "reviewDates": [
-      "2026-09-12"
+      "2026-09-19"
     ],
     "reviewHistory": [
       {
@@ -8772,6 +8814,13 @@
         "scheduledDate": "2026-09-08",
         "reviewNumber": 2,
         "dayLabel": "第2天复习",
+        "result": "correct"
+      },
+      {
+        "date": "2026-09-12",
+        "scheduledDate": "2026-09-12",
+        "reviewNumber": 3,
+        "dayLabel": "第4天复习",
         "result": "correct"
       }
     ],
@@ -8782,7 +8831,7 @@
     "word": "短跑",
     "learnDate": "2026-08-29",
     "reviewDates": [
-      "2026-09-12"
+      "2026-09-19"
     ],
     "reviewHistory": [
       {
@@ -8797,6 +8846,13 @@
         "scheduledDate": "2026-09-08",
         "reviewNumber": 2,
         "dayLabel": "第2天复习",
+        "result": "correct"
+      },
+      {
+        "date": "2026-09-12",
+        "scheduledDate": "2026-09-12",
+        "reviewNumber": 3,
+        "dayLabel": "第4天复习",
         "result": "correct"
       }
     ],
@@ -9383,13 +9439,20 @@
     "word": "珍宝",
     "learnDate": "2026-09-10",
     "reviewDates": [
-      "2026-09-12"
+      "2026-09-13"
     ],
     "reviewHistory": [
       {
         "date": "2026-09-11",
         "scheduledDate": "2026-09-11",
         "reviewNumber": 1,
+        "dayLabel": "第1天复习",
+        "result": "wrong"
+      },
+      {
+        "date": "2026-09-12",
+        "scheduledDate": "2026-09-12",
+        "reviewNumber": 2,
         "dayLabel": "第1天复习",
         "result": "wrong"
       }
