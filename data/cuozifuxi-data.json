@@ -9367,7 +9367,7 @@
     "word": "一片",
     "learnDate": "2026-09-09",
     "reviewDates": [
-      "2026-09-13"
+      "2026-09-18"
     ],
     "reviewHistory": [
       {
@@ -9375,6 +9375,13 @@
         "scheduledDate": "2026-09-10",
         "reviewNumber": 1,
         "dayLabel": "第1天复习",
+        "result": "correct"
+      },
+      {
+        "date": "2026-09-14",
+        "scheduledDate": "2026-09-13",
+        "reviewNumber": 2,
+        "dayLabel": "第2天复习",
         "result": "correct"
       }
     ],
@@ -9563,6 +9570,106 @@
     "learnDate": "2026-09-12",
     "reviewDates": [
       "2026-09-13"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
+  },
+  {
+    "id": "1789387265849.916落户安家",
+    "word": "落户安家",
+    "learnDate": "2026-09-14",
+    "reviewDates": [
+      "2026-09-15"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
+  },
+  {
+    "id": "1789387265849.393八仙过海",
+    "word": "八仙过海",
+    "learnDate": "2026-09-14",
+    "reviewDates": [
+      "2026-09-15"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
+  },
+  {
+    "id": "1789387265849.9685文件夹",
+    "word": "文件夹",
+    "learnDate": "2026-09-14",
+    "reviewDates": [
+      "2026-09-15"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
+  },
+  {
+    "id": "1789387265849.2305连环画",
+    "word": "连环画",
+    "learnDate": "2026-09-14",
+    "reviewDates": [
+      "2026-09-15"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
+  },
+  {
+    "id": "1789387265849.9436半斤八两",
+    "word": "半斤八两",
+    "learnDate": "2026-09-14",
+    "reviewDates": [
+      "2026-09-15"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
+  },
+  {
+    "id": "1789387265849.8445取长补短",
+    "word": "取长补短",
+    "learnDate": "2026-09-14",
+    "reviewDates": [
+      "2026-09-15"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
+  },
+  {
+    "id": "1789387285052.901成群结队",
+    "word": "成群结队",
+    "learnDate": "2026-09-14",
+    "reviewDates": [
+      "2026-09-15"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
+  },
+  {
+    "id": "1789387294336.5005升旗",
+    "word": "升旗",
+    "learnDate": "2026-09-14",
+    "reviewDates": [
+      "2026-09-15"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
+  },
+  {
+    "id": "1789387303342.9365轻松",
+    "word": "轻松",
+    "learnDate": "2026-09-14",
+    "reviewDates": [
+      "2026-09-15"
+    ],
+    "reviewHistory": [],
+    "customIntervals": null
+  },
+  {
+    "id": "1789387311030.33识破",
+    "word": "识破",
+    "learnDate": "2026-09-14",
+    "reviewDates": [
+      "2026-09-15"
     ],
     "reviewHistory": [],
     "customIntervals": null
