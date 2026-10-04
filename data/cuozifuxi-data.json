@@ -9153,7 +9153,7 @@
     "word": "明朗晴朗",
     "learnDate": "2026-09-06",
     "reviewDates": [
-      "2026-10-01"
+      "2026-10-05"
     ],
     "reviewHistory": [
       {
@@ -9182,6 +9182,13 @@
         "scheduledDate": "2026-09-16",
         "reviewNumber": 4,
         "dayLabel": "第7天复习",
+        "result": "correct"
+      },
+      {
+        "date": "2026-10-04",
+        "scheduledDate": "2026-10-01",
+        "reviewNumber": 5,
+        "dayLabel": "第15天复习",
         "result": "correct"
       }
     ],
@@ -9289,7 +9296,7 @@
     "word": "杨柳",
     "learnDate": "2026-09-06",
     "reviewDates": [
-      "2026-10-01"
+      "2026-10-05"
     ],
     "reviewHistory": [
       {
@@ -9318,6 +9325,13 @@
         "scheduledDate": "2026-09-16",
         "reviewNumber": 4,
         "dayLabel": "第7天复习",
+        "result": "correct"
+      },
+      {
+        "date": "2026-10-04",
+        "scheduledDate": "2026-10-01",
+        "reviewNumber": 5,
+        "dayLabel": "第15天复习",
         "result": "correct"
       }
     ],
@@ -9406,7 +9420,7 @@
     "word": "拿走",
     "learnDate": "2026-09-08",
     "reviewDates": [
-      "2026-10-01"
+      "2026-10-05"
     ],
     "reviewHistory": [
       {
@@ -9435,6 +9449,13 @@
         "scheduledDate": "2026-09-16",
         "reviewNumber": 4,
         "dayLabel": "第7天复习",
+        "result": "correct"
+      },
+      {
+        "date": "2026-10-04",
+        "scheduledDate": "2026-10-01",
+        "reviewNumber": 5,
+        "dayLabel": "第15天复习",
         "result": "correct"
       }
     ],
@@ -9562,7 +9583,7 @@
     "word": "铜钱",
     "learnDate": "2026-09-08",
     "reviewDates": [
-      "2026-10-01"
+      "2026-10-05"
     ],
     "reviewHistory": [
       {
@@ -9592,6 +9613,13 @@
         "reviewNumber": 4,
         "dayLabel": "第7天复习",
         "result": "correct"
+      },
+      {
+        "date": "2026-10-04",
+        "scheduledDate": "2026-10-01",
+        "reviewNumber": 5,
+        "dayLabel": "第1天复习",
+        "result": "wrong"
       }
     ],
     "customIntervals": null
@@ -9913,7 +9941,7 @@
     "word": "珍宝",
     "learnDate": "2026-09-10",
     "reviewDates": [
-      "2026-10-01"
+      "2026-10-05"
     ],
     "reviewHistory": [
       {
@@ -9942,6 +9970,13 @@
         "scheduledDate": "2026-09-16",
         "reviewNumber": 4,
         "dayLabel": "第7天复习",
+        "result": "correct"
+      },
+      {
+        "date": "2026-10-04",
+        "scheduledDate": "2026-10-01",
+        "reviewNumber": 5,
+        "dayLabel": "第15天复习",
         "result": "correct"
       }
     ],
@@ -9991,7 +10026,7 @@
     "word": "剪刀",
     "learnDate": "2026-09-12",
     "reviewDates": [
-      "2026-10-02"
+      "2026-10-19"
     ],
     "reviewHistory": [
       {
@@ -10014,6 +10049,13 @@
         "reviewNumber": 3,
         "dayLabel": "第4天复习",
         "result": "correct"
+      },
+      {
+        "date": "2026-10-04",
+        "scheduledDate": "2026-10-02",
+        "reviewNumber": 4,
+        "dayLabel": "第7天复习",
+        "result": "correct"
       }
     ],
     "customIntervals": null
@@ -10023,7 +10065,7 @@
     "word": "摇摇头",
     "learnDate": "2026-09-12",
     "reviewDates": [
-      "2026-09-30"
+      "2026-10-05"
     ],
     "reviewHistory": [
       {
@@ -10051,6 +10093,13 @@
         "date": "2026-09-29",
         "scheduledDate": "2026-09-28",
         "reviewNumber": 4,
+        "dayLabel": "第1天复习",
+        "result": "wrong"
+      },
+      {
+        "date": "2026-10-04",
+        "scheduledDate": "2026-09-30",
+        "reviewNumber": 5,
         "dayLabel": "第1天复习",
         "result": "wrong"
       }
@@ -10062,7 +10111,7 @@
     "word": "眨眨眼",
     "learnDate": "2026-09-12",
     "reviewDates": [
-      "2026-09-30"
+      "2026-10-05"
     ],
     "reviewHistory": [
       {
@@ -10092,6 +10141,13 @@
         "reviewNumber": 4,
         "dayLabel": "第1天复习",
         "result": "wrong"
+      },
+      {
+        "date": "2026-10-04",
+        "scheduledDate": "2026-09-30",
+        "reviewNumber": 5,
+        "dayLabel": "第15天复习",
+        "result": "correct"
       }
     ],
     "customIntervals": null
@@ -10140,7 +10196,7 @@
     "word": "列列车排列",
     "learnDate": "2026-09-12",
     "reviewDates": [
-      "2026-10-02"
+      "2026-10-05"
     ],
     "reviewHistory": [
       {
@@ -10163,6 +10219,13 @@
         "reviewNumber": 3,
         "dayLabel": "第4天复习",
         "result": "correct"
+      },
+      {
+        "date": "2026-10-04",
+        "scheduledDate": "2026-10-02",
+        "reviewNumber": 4,
+        "dayLabel": "第1天复习",
+        "result": "wrong"
       }
     ],
     "customIntervals": null
@@ -10250,7 +10313,7 @@
     "word": "且祖粗组",
     "learnDate": "2026-09-12",
     "reviewDates": [
-      "2026-10-01"
+      "2026-10-11"
     ],
     "reviewHistory": [
       {
@@ -10301,6 +10364,13 @@
         "reviewNumber": 7,
         "dayLabel": "第2天复习",
         "result": "correct"
+      },
+      {
+        "date": "2026-10-04",
+        "scheduledDate": "2026-10-01",
+        "reviewNumber": 8,
+        "dayLabel": "第4天复习",
+        "result": "correct"
       }
     ],
     "customIntervals": null
@@ -10310,7 +10380,7 @@
     "word": "占站战钻",
     "learnDate": "2026-09-12",
     "reviewDates": [
-      "2026-10-01"
+      "2026-10-11"
     ],
     "reviewHistory": [
       {
@@ -10361,6 +10431,13 @@
         "reviewNumber": 7,
         "dayLabel": "第2天复习",
         "result": "correct"
+      },
+      {
+        "date": "2026-10-04",
+        "scheduledDate": "2026-10-01",
+        "reviewNumber": 8,
+        "dayLabel": "第4天复习",
+        "result": "correct"
       }
     ],
     "customIntervals": null
@@ -10370,7 +10447,7 @@
     "word": "落户安家",
     "learnDate": "2026-09-14",
     "reviewDates": [
-      "2026-10-02"
+      "2026-10-05"
     ],
     "reviewHistory": [
       {
@@ -10393,6 +10470,13 @@
         "reviewNumber": 3,
         "dayLabel": "第4天复习",
         "result": "correct"
+      },
+      {
+        "date": "2026-10-04",
+        "scheduledDate": "2026-10-02",
+        "reviewNumber": 4,
+        "dayLabel": "第1天复习",
+        "result": "wrong"
       }
     ],
     "customIntervals": null
@@ -10402,7 +10486,7 @@
     "word": "八仙过海",
     "learnDate": "2026-09-14",
     "reviewDates": [
-      "2026-10-02"
+      "2026-10-05"
     ],
     "reviewHistory": [
       {
@@ -10425,6 +10509,13 @@
         "reviewNumber": 3,
         "dayLabel": "第4天复习",
         "result": "correct"
+      },
+      {
+        "date": "2026-10-04",
+        "scheduledDate": "2026-10-02",
+        "reviewNumber": 4,
+        "dayLabel": "第1天复习",
+        "result": "wrong"
       }
     ],
     "customIntervals": null
@@ -10434,7 +10525,7 @@
     "word": "文件夹",
     "learnDate": "2026-09-14",
     "reviewDates": [
-      "2026-10-02"
+      "2026-10-19"
     ],
     "reviewHistory": [
       {
@@ -10456,6 +10547,13 @@
         "scheduledDate": "2026-09-24",
         "reviewNumber": 3,
         "dayLabel": "第4天复习",
+        "result": "correct"
+      },
+      {
+        "date": "2026-10-04",
+        "scheduledDate": "2026-10-02",
+        "reviewNumber": 4,
+        "dayLabel": "第7天复习",
         "result": "correct"
       }
     ],
@@ -10505,7 +10603,7 @@
     "word": "半斤八两",
     "learnDate": "2026-09-14",
     "reviewDates": [
-      "2026-10-02"
+      "2026-10-19"
     ],
     "reviewHistory": [
       {
@@ -10527,6 +10625,13 @@
         "scheduledDate": "2026-09-24",
         "reviewNumber": 3,
         "dayLabel": "第4天复习",
+        "result": "correct"
+      },
+      {
+        "date": "2026-10-04",
+        "scheduledDate": "2026-10-02",
+        "reviewNumber": 4,
+        "dayLabel": "第7天复习",
         "result": "correct"
       }
     ],
@@ -10654,7 +10759,7 @@
     "word": "轻松",
     "learnDate": "2026-09-14",
     "reviewDates": [
-      "2026-10-02"
+      "2026-10-19"
     ],
     "reviewHistory": [
       {
@@ -10676,6 +10781,13 @@
         "scheduledDate": "2026-09-24",
         "reviewNumber": 3,
         "dayLabel": "第4天复习",
+        "result": "correct"
+      },
+      {
+        "date": "2026-10-04",
+        "scheduledDate": "2026-10-02",
+        "reviewNumber": 4,
+        "dayLabel": "第7天复习",
         "result": "correct"
       }
     ],
@@ -10725,7 +10837,7 @@
     "word": "大千世界",
     "learnDate": "2026-09-16",
     "reviewDates": [
-      "2026-10-02"
+      "2026-10-19"
     ],
     "reviewHistory": [
       {
@@ -10748,6 +10860,13 @@
         "reviewNumber": 3,
         "dayLabel": "第4天复习",
         "result": "correct"
+      },
+      {
+        "date": "2026-10-04",
+        "scheduledDate": "2026-10-02",
+        "reviewNumber": 4,
+        "dayLabel": "第7天复习",
+        "result": "correct"
       }
     ],
     "customIntervals": null
@@ -10757,7 +10876,7 @@
     "word": "节拍",
     "learnDate": "2026-09-16",
     "reviewDates": [
-      "2026-10-04"
+      "2026-10-19"
     ],
     "reviewHistory": [
       {
@@ -10780,6 +10899,13 @@
         "reviewNumber": 3,
         "dayLabel": "第4天复习",
         "result": "correct"
+      },
+      {
+        "date": "2026-10-04",
+        "scheduledDate": "2026-10-04",
+        "reviewNumber": 4,
+        "dayLabel": "第7天复习",
+        "result": "correct"
       }
     ],
     "customIntervals": null
@@ -10789,7 +10915,7 @@
     "word": "无休无止",
     "learnDate": "2026-09-16",
     "reviewDates": [
-      "2026-10-02"
+      "2026-10-19"
     ],
     "reviewHistory": [
       {
@@ -10812,6 +10938,13 @@
         "reviewNumber": 3,
         "dayLabel": "第4天复习",
         "result": "correct"
+      },
+      {
+        "date": "2026-10-04",
+        "scheduledDate": "2026-10-02",
+        "reviewNumber": 4,
+        "dayLabel": "第7天复习",
+        "result": "correct"
       }
     ],
     "customIntervals": null
@@ -10821,7 +10954,7 @@
     "word": "爱戴",
     "learnDate": "2026-09-19",
     "reviewDates": [
-      "2026-10-04"
+      "2026-10-05"
     ],
     "reviewHistory": [
       {
@@ -10844,6 +10977,13 @@
         "reviewNumber": 3,
         "dayLabel": "第4天复习",
         "result": "correct"
+      },
+      {
+        "date": "2026-10-04",
+        "scheduledDate": "2026-10-04",
+        "reviewNumber": 4,
+        "dayLabel": "第1天复习",
+        "result": "wrong"
       }
     ],
     "customIntervals": null
@@ -10892,7 +11032,7 @@
     "word": "熊猫",
     "learnDate": "2026-09-19",
     "reviewDates": [
-      "2026-10-04"
+      "2026-10-19"
     ],
     "reviewHistory": [
       {
@@ -10914,6 +11054,13 @@
         "scheduledDate": "2026-09-27",
         "reviewNumber": 3,
         "dayLabel": "第4天复习",
+        "result": "correct"
+      },
+      {
+        "date": "2026-10-04",
+        "scheduledDate": "2026-10-04",
+        "reviewNumber": 4,
+        "dayLabel": "第7天复习",
         "result": "correct"
       }
     ],
@@ -10924,7 +11071,7 @@
     "word": "铜牌",
     "learnDate": "2026-09-19",
     "reviewDates": [
-      "2026-10-04"
+      "2026-10-19"
     ],
     "reviewHistory": [
       {
@@ -10946,6 +11093,13 @@
         "scheduledDate": "2026-09-27",
         "reviewNumber": 3,
         "dayLabel": "第4天复习",
+        "result": "correct"
+      },
+      {
+        "date": "2026-10-04",
+        "scheduledDate": "2026-10-04",
+        "reviewNumber": 4,
+        "dayLabel": "第7天复习",
         "result": "correct"
       }
     ],
@@ -10956,7 +11110,7 @@
     "word": "榕树壮",
     "learnDate": "2026-09-19",
     "reviewDates": [
-      "2026-10-04"
+      "2026-10-19"
     ],
     "reviewHistory": [
       {
@@ -10979,6 +11133,13 @@
         "reviewNumber": 3,
         "dayLabel": "第4天复习",
         "result": "correct"
+      },
+      {
+        "date": "2026-10-04",
+        "scheduledDate": "2026-10-04",
+        "reviewNumber": 4,
+        "dayLabel": "第7天复习",
+        "result": "correct"
       }
     ],
     "customIntervals": null
@@ -10988,7 +11149,7 @@
     "word": "技术",
     "learnDate": "2026-09-21",
     "reviewDates": [
-      "2026-10-04"
+      "2026-10-19"
     ],
     "reviewHistory": [
       {
@@ -11011,6 +11172,13 @@
         "reviewNumber": 3,
         "dayLabel": "第4天复习",
         "result": "correct"
+      },
+      {
+        "date": "2026-10-04",
+        "scheduledDate": "2026-10-04",
+        "reviewNumber": 4,
+        "dayLabel": "第7天复习",
+        "result": "correct"
       }
     ],
     "customIntervals": null
@@ -11020,7 +11188,7 @@
     "word": "狐狸",
     "learnDate": "2026-09-21",
     "reviewDates": [
-      "2026-10-04"
+      "2026-10-19"
     ],
     "reviewHistory": [
       {
@@ -11042,6 +11210,13 @@
         "scheduledDate": "2026-09-26",
         "reviewNumber": 3,
         "dayLabel": "第4天复习",
+        "result": "correct"
+      },
+      {
+        "date": "2026-10-04",
+        "scheduledDate": "2026-10-19",
+        "reviewNumber": 4,
+        "dayLabel": "第7天复习",
         "result": "correct"
       }
     ],
@@ -11084,7 +11259,7 @@
     "word": "蜻蜓",
     "learnDate": "2026-09-21",
     "reviewDates": [
-      "2026-10-04"
+      "2026-10-19"
     ],
     "reviewHistory": [
       {
@@ -11106,6 +11281,13 @@
         "scheduledDate": "2026-09-26",
         "reviewNumber": 3,
         "dayLabel": "第4天复习",
+        "result": "correct"
+      },
+      {
+        "date": "2026-10-04",
+        "scheduledDate": "2026-10-04",
+        "reviewNumber": 4,
+        "dayLabel": "第7天复习",
         "result": "correct"
       }
     ],
@@ -11148,7 +11330,7 @@
     "word": "事半功倍",
     "learnDate": "2026-09-21",
     "reviewDates": [
-      "2026-10-04"
+      "2026-10-05"
     ],
     "reviewHistory": [
       {
@@ -11171,6 +11353,13 @@
         "reviewNumber": 3,
         "dayLabel": "第4天复习",
         "result": "correct"
+      },
+      {
+        "date": "2026-10-04",
+        "scheduledDate": "2026-10-04",
+        "reviewNumber": 4,
+        "dayLabel": "第1天复习",
+        "result": "wrong"
       }
     ],
     "customIntervals": null
@@ -11340,7 +11529,7 @@
     "word": "秀丽",
     "learnDate": "2026-09-22",
     "reviewDates": [
-      "2026-10-04"
+      "2026-10-19"
     ],
     "reviewHistory": [
       {
@@ -11362,6 +11551,13 @@
         "scheduledDate": "2026-09-26",
         "reviewNumber": 3,
         "dayLabel": "第4天复习",
+        "result": "correct"
+      },
+      {
+        "date": "2026-10-04",
+        "scheduledDate": "2026-10-04",
+        "reviewNumber": 4,
+        "dayLabel": "第7天复习",
         "result": "correct"
       }
     ],
@@ -11500,7 +11696,7 @@
     "word": "举牌子",
     "learnDate": "2026-09-22",
     "reviewDates": [
-      "2026-10-04"
+      "2026-10-19"
     ],
     "reviewHistory": [
       {
@@ -11522,6 +11718,13 @@
         "scheduledDate": "2026-09-26",
         "reviewNumber": 3,
         "dayLabel": "第4天复习",
+        "result": "correct"
+      },
+      {
+        "date": "2026-10-04",
+        "scheduledDate": "2026-10-04",
+        "reviewNumber": 4,
+        "dayLabel": "第7天复习",
         "result": "correct"
       }
     ],
@@ -11564,7 +11767,7 @@
     "word": "采摘苹果",
     "learnDate": "2026-09-23",
     "reviewDates": [
-      "2026-10-01"
+      "2026-10-11"
     ],
     "reviewHistory": [
       {
@@ -11579,6 +11782,13 @@
         "scheduledDate": "2026-09-26",
         "reviewNumber": 2,
         "dayLabel": "第2天复习",
+        "result": "correct"
+      },
+      {
+        "date": "2026-10-04",
+        "scheduledDate": "2026-10-01",
+        "reviewNumber": 3,
+        "dayLabel": "第4天复习",
         "result": "correct"
       }
     ],
@@ -11589,7 +11799,7 @@
     "word": "朗读诗歌",
     "learnDate": "2026-09-23",
     "reviewDates": [
-      "2026-10-01"
+      "2026-10-11"
     ],
     "reviewHistory": [
       {
@@ -11605,6 +11815,13 @@
         "reviewNumber": 2,
         "dayLabel": "第2天复习",
         "result": "correct"
+      },
+      {
+        "date": "2026-10-04",
+        "scheduledDate": "2026-10-01",
+        "reviewNumber": 3,
+        "dayLabel": "第4天复习",
+        "result": "correct"
       }
     ],
     "customIntervals": null
@@ -11614,7 +11831,7 @@
     "word": "丰收",
     "learnDate": "2026-09-24",
     "reviewDates": [
-      "2026-10-01"
+      "2026-10-11"
     ],
     "reviewHistory": [
       {
@@ -11630,6 +11847,13 @@
         "reviewNumber": 2,
         "dayLabel": "第2天复习",
         "result": "correct"
+      },
+      {
+        "date": "2026-10-04",
+        "scheduledDate": "2026-10-01",
+        "reviewNumber": 3,
+        "dayLabel": "第4天复习",
+        "result": "correct"
       }
     ],
     "customIntervals": null
@@ -11639,7 +11863,7 @@
     "word": "要",
     "learnDate": "2026-09-24",
     "reviewDates": [
-      "2026-10-01"
+      "2026-10-11"
     ],
     "reviewHistory": [
       {
@@ -11655,6 +11879,13 @@
         "reviewNumber": 2,
         "dayLabel": "第2天复习",
         "result": "correct"
+      },
+      {
+        "date": "2026-10-04",
+        "scheduledDate": "2026-10-01",
+        "reviewNumber": 3,
+        "dayLabel": "第4天复习",
+        "result": "correct"
       }
     ],
     "customIntervals": null
@@ -11664,13 +11895,20 @@
     "word": "交给",
     "learnDate": "2026-09-28",
     "reviewDates": [
-      "2026-09-30"
+      "2026-10-05"
     ],
     "reviewHistory": [
       {
         "date": "2026-09-29",
         "scheduledDate": "2026-09-29",
         "reviewNumber": 1,
+        "dayLabel": "第1天复习",
+        "result": "wrong"
+      },
+      {
+        "date": "2026-10-04",
+        "scheduledDate": "2026-09-30",
+        "reviewNumber": 2,
         "dayLabel": "第1天复习",
         "result": "wrong"
       }
@@ -11682,7 +11920,7 @@
     "word": "香味",
     "learnDate": "2026-09-28",
     "reviewDates": [
-      "2026-10-01"
+      "2026-10-08"
     ],
     "reviewHistory": [
       {
@@ -11690,6 +11928,13 @@
         "scheduledDate": "2026-09-29",
         "reviewNumber": 1,
         "dayLabel": "第1天复习",
+        "result": "correct"
+      },
+      {
+        "date": "2026-10-04",
+        "scheduledDate": "2026-10-01",
+        "reviewNumber": 2,
+        "dayLabel": "第2天复习",
         "result": "correct"
       }
     ],
@@ -11700,13 +11945,20 @@
     "word": "曲目",
     "learnDate": "2026-09-28",
     "reviewDates": [
-      "2026-09-30"
+      "2026-10-05"
     ],
     "reviewHistory": [
       {
         "date": "2026-09-29",
         "scheduledDate": "2026-09-29",
         "reviewNumber": 1,
+        "dayLabel": "第1天复习",
+        "result": "wrong"
+      },
+      {
+        "date": "2026-10-04",
+        "scheduledDate": "2026-09-30",
+        "reviewNumber": 2,
         "dayLabel": "第1天复习",
         "result": "wrong"
       }
@@ -11718,13 +11970,20 @@
     "word": "奇珍异宝",
     "learnDate": "2026-09-28",
     "reviewDates": [
-      "2026-09-30"
+      "2026-10-05"
     ],
     "reviewHistory": [
       {
         "date": "2026-09-29",
         "scheduledDate": "2026-09-29",
         "reviewNumber": 1,
+        "dayLabel": "第1天复习",
+        "result": "wrong"
+      },
+      {
+        "date": "2026-10-04",
+        "scheduledDate": "2026-09-30",
+        "reviewNumber": 2,
         "dayLabel": "第1天复习",
         "result": "wrong"
       }
@@ -11736,7 +11995,7 @@
     "word": "缤纷",
     "learnDate": "2026-09-28",
     "reviewDates": [
-      "2026-10-01"
+      "2026-10-05"
     ],
     "reviewHistory": [
       {
@@ -11745,6 +12004,13 @@
         "reviewNumber": 1,
         "dayLabel": "第1天复习",
         "result": "correct"
+      },
+      {
+        "date": "2026-10-04",
+        "scheduledDate": "2026-10-01",
+        "reviewNumber": 2,
+        "dayLabel": "第1天复习",
+        "result": "wrong"
       }
     ],
     "customIntervals": null
@@ -11754,7 +12020,7 @@
     "word": "跳舞",
     "learnDate": "2026-09-28",
     "reviewDates": [
-      "2026-09-30"
+      "2026-10-08"
     ],
     "reviewHistory": [
       {
@@ -11763,6 +12029,13 @@
         "reviewNumber": 1,
         "dayLabel": "第1天复习",
         "result": "wrong"
+      },
+      {
+        "date": "2026-10-04",
+        "scheduledDate": "2026-09-30",
+        "reviewNumber": 2,
+        "dayLabel": "第2天复习",
+        "result": "correct"
       }
     ],
     "customIntervals": null
@@ -11772,7 +12045,7 @@
     "word": "名山大川",
     "learnDate": "2026-09-28",
     "reviewDates": [
-      "2026-10-01"
+      "2026-10-08"
     ],
     "reviewHistory": [
       {
@@ -11780,6 +12053,13 @@
         "scheduledDate": "2026-09-29",
         "reviewNumber": 1,
         "dayLabel": "第1天复习",
+        "result": "correct"
+      },
+      {
+        "date": "2026-10-04",
+        "scheduledDate": "2026-10-01",
+        "reviewNumber": 2,
+        "dayLabel": "第2天复习",
         "result": "correct"
       }
     ],
@@ -11790,13 +12070,20 @@
     "word": "无价之宝",
     "learnDate": "2026-09-28",
     "reviewDates": [
-      "2026-09-30"
+      "2026-10-05"
     ],
     "reviewHistory": [
       {
         "date": "2026-09-29",
         "scheduledDate": "2026-09-29",
         "reviewNumber": 1,
+        "dayLabel": "第1天复习",
+        "result": "wrong"
+      },
+      {
+        "date": "2026-10-04",
+        "scheduledDate": "2026-09-30",
+        "reviewNumber": 2,
         "dayLabel": "第1天复习",
         "result": "wrong"
       }
@@ -11808,7 +12095,7 @@
     "word": "活蹦乱跳",
     "learnDate": "2026-09-28",
     "reviewDates": [
-      "2026-09-30"
+      "2026-10-08"
     ],
     "reviewHistory": [
       {
@@ -11817,6 +12104,13 @@
         "reviewNumber": 1,
         "dayLabel": "第1天复习",
         "result": "wrong"
+      },
+      {
+        "date": "2026-10-04",
+        "scheduledDate": "2026-09-30",
+        "reviewNumber": 2,
+        "dayLabel": "第2天复习",
+        "result": "correct"
       }
     ],
     "customIntervals": null
@@ -11826,7 +12120,7 @@
     "word": "名人",
     "learnDate": "2026-09-28",
     "reviewDates": [
-      "2026-10-01"
+      "2026-10-08"
     ],
     "reviewHistory": [
       {
@@ -11834,6 +12128,13 @@
         "scheduledDate": "2026-09-29",
         "reviewNumber": 1,
         "dayLabel": "第1天复习",
+        "result": "correct"
+      },
+      {
+        "date": "2026-10-04",
+        "scheduledDate": "2026-10-01",
+        "reviewNumber": 2,
+        "dayLabel": "第2天复习",
         "result": "correct"
       }
     ],
@@ -11844,7 +12145,7 @@
     "word": "刀把",
     "learnDate": "2026-09-28",
     "reviewDates": [
-      "2026-10-01"
+      "2026-10-08"
     ],
     "reviewHistory": [
       {
@@ -11852,6 +12153,13 @@
         "scheduledDate": "2026-09-29",
         "reviewNumber": 1,
         "dayLabel": "第1天复习",
+        "result": "correct"
+      },
+      {
+        "date": "2026-10-04",
+        "scheduledDate": "2026-10-01",
+        "reviewNumber": 2,
+        "dayLabel": "第2天复习",
         "result": "correct"
       }
     ],
@@ -11862,7 +12170,7 @@
     "word": "锦",
     "learnDate": "2026-09-28",
     "reviewDates": [
-      "2026-10-01"
+      "2026-10-08"
     ],
     "reviewHistory": [
       {
@@ -11870,6 +12178,13 @@
         "scheduledDate": "2026-09-29",
         "reviewNumber": 1,
         "dayLabel": "第1天复习",
+        "result": "correct"
+      },
+      {
+        "date": "2026-10-04",
+        "scheduledDate": "2026-10-01",
+        "reviewNumber": 2,
+        "dayLabel": "第2天复习",
         "result": "correct"
       }
     ],
@@ -11880,7 +12195,7 @@
     "word": "jin",
     "learnDate": "2026-09-28",
     "reviewDates": [
-      "2026-10-01"
+      "2026-10-08"
     ],
     "reviewHistory": [
       {
@@ -11888,6 +12203,13 @@
         "scheduledDate": "2026-09-29",
         "reviewNumber": 1,
         "dayLabel": "第1天复习",
+        "result": "correct"
+      },
+      {
+        "date": "2026-10-04",
+        "scheduledDate": "2026-10-01",
+        "reviewNumber": 2,
+        "dayLabel": "第2天复习",
         "result": "correct"
       }
     ],
@@ -11898,7 +12220,7 @@
     "word": "鸡",
     "learnDate": "2026-09-28",
     "reviewDates": [
-      "2026-10-01"
+      "2026-10-08"
     ],
     "reviewHistory": [
       {
@@ -11906,6 +12228,13 @@
         "scheduledDate": "2026-09-29",
         "reviewNumber": 1,
         "dayLabel": "第1天复习",
+        "result": "correct"
+      },
+      {
+        "date": "2026-10-04",
+        "scheduledDate": "2026-10-01",
+        "reviewNumber": 2,
+        "dayLabel": "第2天复习",
         "result": "correct"
       }
     ],
@@ -11916,7 +12245,7 @@
     "word": "杏仁",
     "learnDate": "2026-09-28",
     "reviewDates": [
-      "2026-10-01"
+      "2026-10-08"
     ],
     "reviewHistory": [
       {
@@ -11924,6 +12253,13 @@
         "scheduledDate": "2026-09-29",
         "reviewNumber": 1,
         "dayLabel": "第1天复习",
+        "result": "correct"
+      },
+      {
+        "date": "2026-10-04",
+        "scheduledDate": "2026-10-01",
+        "reviewNumber": 2,
+        "dayLabel": "第2天复习",
         "result": "correct"
       }
     ],
@@ -11934,7 +12270,7 @@
     "word": "xing",
     "learnDate": "2026-09-28",
     "reviewDates": [
-      "2026-10-01"
+      "2026-10-08"
     ],
     "reviewHistory": [
       {
@@ -11942,6 +12278,13 @@
         "scheduledDate": "2026-09-29",
         "reviewNumber": 1,
         "dayLabel": "第1天复习",
+        "result": "correct"
+      },
+      {
+        "date": "2026-10-04",
+        "scheduledDate": "2026-10-01",
+        "reviewNumber": 2,
+        "dayLabel": "第2天复习",
         "result": "correct"
       }
     ],
@@ -11952,7 +12295,7 @@
     "word": "总体",
     "learnDate": "2026-09-28",
     "reviewDates": [
-      "2026-10-01"
+      "2026-10-08"
     ],
     "reviewHistory": [
       {
@@ -11960,6 +12303,13 @@
         "scheduledDate": "2026-09-29",
         "reviewNumber": 1,
         "dayLabel": "第1天复习",
+        "result": "correct"
+      },
+      {
+        "date": "2026-10-04",
+        "scheduledDate": "2026-10-01",
+        "reviewNumber": 2,
+        "dayLabel": "第2天复习",
         "result": "correct"
       }
     ],
@@ -11970,7 +12320,7 @@
     "word": "作曲",
     "learnDate": "2026-09-28",
     "reviewDates": [
-      "2026-09-30"
+      "2026-10-08"
     ],
     "reviewHistory": [
       {
@@ -11979,6 +12329,13 @@
         "reviewNumber": 1,
         "dayLabel": "第1天复习",
         "result": "wrong"
+      },
+      {
+        "date": "2026-10-04",
+        "scheduledDate": "2026-09-30",
+        "reviewNumber": 2,
+        "dayLabel": "第2天复习",
+        "result": "correct"
       }
     ],
     "customIntervals": null
@@ -11988,13 +12345,20 @@
     "word": "存活",
     "learnDate": "2026-09-28",
     "reviewDates": [
-      "2026-09-30"
+      "2026-10-05"
     ],
     "reviewHistory": [
       {
         "date": "2026-09-29",
         "scheduledDate": "2026-09-29",
         "reviewNumber": 1,
+        "dayLabel": "第1天复习",
+        "result": "wrong"
+      },
+      {
+        "date": "2026-10-04",
+        "scheduledDate": "2026-09-30",
+        "reviewNumber": 2,
         "dayLabel": "第1天复习",
         "result": "wrong"
       }
@@ -12006,7 +12370,7 @@
     "word": "香菜",
     "learnDate": "2026-09-28",
     "reviewDates": [
-      "2026-10-01"
+      "2026-10-08"
     ],
     "reviewHistory": [
       {
@@ -12014,6 +12378,13 @@
         "scheduledDate": "2026-09-29",
         "reviewNumber": 1,
         "dayLabel": "第1天复习",
+        "result": "correct"
+      },
+      {
+        "date": "2026-10-04",
+        "scheduledDate": "2026-10-01",
+        "reviewNumber": 2,
+        "dayLabel": "第2天复习",
         "result": "correct"
       }
     ],
@@ -12024,9 +12395,17 @@
     "word": "举世无双",
     "learnDate": "2026-09-29",
     "reviewDates": [
-      "2026-09-30"
+      "2026-10-05"
     ],
-    "reviewHistory": [],
+    "reviewHistory": [
+      {
+        "date": "2026-10-04",
+        "scheduledDate": "2026-09-30",
+        "reviewNumber": 1,
+        "dayLabel": "第1天复习",
+        "result": "wrong"
+      }
+    ],
     "customIntervals": null
   },
   {
@@ -12034,9 +12413,17 @@
     "word": "桦树",
     "learnDate": "2026-09-29",
     "reviewDates": [
-      "2026-09-30"
+      "2026-10-06"
     ],
-    "reviewHistory": [],
+    "reviewHistory": [
+      {
+        "date": "2026-10-04",
+        "scheduledDate": "2026-09-30",
+        "reviewNumber": 1,
+        "dayLabel": "第1天复习",
+        "result": "correct"
+      }
+    ],
     "customIntervals": null
   }
 ]
